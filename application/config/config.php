@@ -17,7 +17,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = '';
+//$config['base_url'] = 'http://127.0.0.1/kata/';
+$config['base_url'] = 'http://127.0.0.1/kata/';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -305,7 +307,7 @@ $config['cache_query_string'] = FALSE;
 | http://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'sistemaKatá';
 
 /*
 |--------------------------------------------------------------------------
