@@ -409,24 +409,25 @@ DELIMITER $$
 CREATE TRIGGER tgr_insert_comunicado
 BEFORE INSERT ON comunicado
 FOR EACH ROW BEGIN
-	-- Declando variável e seta valores para as variáveis
+	/* Declando variável e seta valores para as variáveis */
 	DECLARE dtCriacao DATE;
 	DECLARE dtVencimento DATE;
 	DECLARE dtPublicacao DATE;
 	SET @dtCriacao = NOW();
 	SET @dtVencimento = NEW.dt_vencimento;
 	SET @dtPublicacao = NEW.dt_publicacao;
-	-- Verifica se a data de vencimento é menor que a data de atual
+	NEW.dt_criacao = @dtCriacao;
+	/* Verifica se a data de vencimento é menor que a data de atual */
 	IF @dtVencimento < NOW() THEN
 		SIGNAL SQLSTATE VALUE '45000'
 		SET MESSAGE_TEXT = '[tabela:comunicado] - A data de vencimento não pode ser menor que a data atual.';
 	END IF;
-	-- Verifica se a data de publicação é menor que a data atual
+	/* Verifica se a data de publicação é menor que a data atual */
 	IF @dtPublicacao < NOW() THEN
 		SIGNAL SQLSTATE VALUE '45000'
 		SET MESSAGE_TEXT = '[tabela:comunicado] - A data de publicação não pode ser menor que a data atual.';
 	END IF;
-	-- Verifica se a data de vencimento é menor que a data da publicação
+	/* Verifica se a data de vencimento é menor que a data da publicação */
 	IF @dtVencimento < @dtPublicacao THEN
 		SIGNAL SQLSTATE VALUE '45000'
 		SET MESSAGE_TEXT = '[tabela:comunicado] - A data de vencimento não pode ser menor que a data da publicação.';
@@ -502,7 +503,7 @@ DELIMITER ;
 INSERT INTO pessoa (nome, dt_nascimento, email) VALUES ('Bruno Asato', '1993-06-18', 'asato@gmail.com');
 INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email) VALUES (1, 'Teste 2', '1993-06-18', 'teste@gmail.com');
 
-INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email) VALUES (1, 'teste3', '1990-06-18', 'teste@gmail.com');
+INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email) VALUES (1, 'teste3', '1994-06-18', 'teste@gmail.com');
 
 INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo) VALUES (1, 'Asato', 'O+', 'M');
 INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo) VALUES (5, 'Asato', 'O+', 'M');
@@ -515,7 +516,7 @@ INSERT INTO usuario (id_ta_tipo_usuario, id_ta_situacao, id_pessoa, login, senha
 
 
 INSERT INTO comunicado (titulo, dt_vencimento, dt_publicacao, dt_criacao, descricao) 
-	VALUES ('TESTE', '2015-07-25', '2014-07-20', '2015-07-16','Corpo do comunicado'); 
+	VALUES ('TESTE', '2015-11-01', '2015-10-30', '','Corpo do comunicado'); 
 
 
 INSERT INTO pessoa_dados (id_pessoa_fisica, peso, altura, dt_dados) 
