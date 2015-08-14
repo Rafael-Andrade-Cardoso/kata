@@ -416,7 +416,6 @@ FOR EACH ROW BEGIN
 	SET @dtCriacao = NOW();
 	SET @dtVencimento = NEW.dt_vencimento;
 	SET @dtPublicacao = NEW.dt_publicacao;
-	NEW.dt_criacao = @dtCriacao;
 	/* Verifica se a data de vencimento é menor que a data de atual */
 	IF @dtVencimento < NOW() THEN
 		SIGNAL SQLSTATE VALUE '45000'
