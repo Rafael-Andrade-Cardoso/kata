@@ -7,7 +7,7 @@ class Login extends CI_Controller {
 		$this->load->model("usuario");
 		$this->load->library('form_validation');
 	}
-	
+	 
 	/*
 	*  Carrega a tela de login
 	*/
