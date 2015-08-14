@@ -3,14 +3,12 @@ class MY_Controller extends CI_Controller
 {
 	protected $protegido = true;
 	
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->proteger();
 	}
 	
-	protected function getPost()
-	{
+	protected function getPost() {
 		$obj = new stdClass();
 		foreach($_POST as $post => $valor) {
 	
@@ -53,8 +51,7 @@ class MY_Controller extends CI_Controller
 	/**
 	 * Validações (callbacks)
 	 */
-	public function formatar_numero($str)
-	{
+	public function formatar_numero($str) {
 		return str_replace(',', '.', $str);
 	}
 	
@@ -62,8 +59,7 @@ class MY_Controller extends CI_Controller
 	 * Callback para checkbox ativo
 	 * Seta ativo=0 caso venha vazio
 	 */
-	public function is_ativo($valor, $campo)
-	{
+	public function is_ativo($valor, $campo) {
 		if (!$valor) {
 			$_POST[$campo] = '0';
 			return '0';
