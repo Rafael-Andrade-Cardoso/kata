@@ -36,19 +36,25 @@
 	  <div id="login-page">
 	  	<div class="container">
 	  	    <?php 
-            echo validation_errors();
           //Criação de formulario
-            echo form_open("login/autenticar", array('action' => base_url() . 'index.php/login/autenticar', 'class' => 'form-login'));
+            echo form_open("login/autenticar", array('action' => base_url() . 'login/autenticar', 'class' => 'form-login'));
               echo "<h2 class='form-login-heading'>Entrar agora</h2>";
               echo "<div class='login-wrap'>";
+              //echo validation_errors();
+              if (isset($erro)){
+                  echo "<div class='alert alert-danger'>" . $erro . "</div>";
+              }
+              echo form_error('user');
               echo form_input(array(
                       "name" => "user",
                       "id" => "user",
                       "class" => "form-control",
                       "maxlenth" => "150",
-                      "placeholder" => "Usuário"
+                      "placeholder" => "Usuário",
+                      "value" => ""
                   ));
-              echo "<br />";
+              echo "<br />";          
+              echo form_error('pass');  
               echo form_password(array(
                       "name" => "pass",
                       "id" => "pass",

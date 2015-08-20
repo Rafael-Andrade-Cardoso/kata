@@ -19,6 +19,5 @@
             	</ul>
             </div>
         </header>
-      <!--header end-->
-      
-      
+      <!--header end-->      
+  </section>   

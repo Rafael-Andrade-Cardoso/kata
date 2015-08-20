@@ -522,8 +522,25 @@ INSERT INTO pessoa_dados (id_pessoa_fisica, peso, altura, dt_dados)
 	VALUES (1, 200.00, 2.5, '2015-07-10'); 
 
 
+/* Inserindo menus */
 
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
+	VALUES (null, 'Início', '/dashboard', 1, 'Início', 'fa fa-dashboard'); 
+	
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
+	VALUES (null, 'Aluno', '#', 2, 'Aluno', 'fa fa-user');
+	
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
+	VALUES (null, 'Relatório', '/relatorio', 3, 'Relatório', 'fa fa-file-text');  	
 
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
+	VALUES (null, 'Sistema', '#', 4, 'Cadastro de dados estáticos'); 
+	
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
+	VALUES (2, 'Cadastro', 'aluno/form_aluno', 1, 'Cadastro de alunos');  	
+
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
+	VALUES (5, 'País', 'sistema/form_pais', 1, 'Cadastro de alunos');  
 
 
 

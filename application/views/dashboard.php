@@ -1,2 +1,2 @@
-<?php
-	echo "<H1> DASHBOARD </H1>";
+          	<h3><i class="fa fa-angle-right"></i> Dashboard</h3>
+          	<hr>

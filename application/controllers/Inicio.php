@@ -5,11 +5,18 @@ class Inicio extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library('template'); 
 	}
 	
 	public function index()	{
 		$this->template->load('dashboard');
+	}
+	
+	public function dashboard() {
+		$this->template->load('dashboard');
+	}
+	
+	public function aluno_cadastrar(){
+		$this->template->load('aluno/cadastro');
 	}
 	
 	public function cadastrar() {

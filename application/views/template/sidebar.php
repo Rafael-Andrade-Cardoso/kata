@@ -7,20 +7,36 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-              	  <p class="centered"><a href="profile.html"><img src="<?php echo base_url('assets/img/ui-sam.jpg');?>" class="img-circle" width="60"></a></p>
-              	  <h5 class="centered">Escola Legal</h5>
-              	  	
-                  <li class="mt">
-                  	<?= anchor("#",' <i class="fa fa-dashboard"></i><span>Início</span>')?>
-                  </li>
-
-                  <li class="sub-menu">
-                  	<?= anchor("#",' <i class="fa fa-desktop""></i><span>Aluno</span>')?>
-                      <ul class="sub">
-                      	<li><?= anchor("#",'Cadastrar')?></li>	
-                      </ul>
-                  </li>
-
+              	  <p class="centered"><a href="<?php echo base_url();?>"><img src="<?php echo base_url('assets/img/logoasatoacademy.png');?>" class="img-circle" width="80" height="60"></a></p>
+              	  <h5 class="centered">Asato Academy</h5>
+                    <?php
+              	   foreach ($menu as $row){
+                          // Verifica se o a página atual
+                          if (strpos(site_url(), $row->url)){
+                              echo "<li class='dcjq-parent active'>";
+                          }   
+                          // Verifica se o menu tem submenus
+                          if (!empty($row->submenu)) {
+                              echo "<li class='sub-menu dcjq-parent-li'>";
+                              echo anchor($row->url, "<i class='" . $row->icone . "'></i> " . $row->nome);                                    
+                              echo "<ul class='sub'>";
+                              foreach ($row->submenu as $menu_filho){
+                                  echo "<li>";
+                                  echo anchor($menu_filho->url, "<i class='" . $menu_filho->icone . "'></i> " . $menu_filho->nome);
+                                  echo "</li>";    
+                              }    
+                              echo "</ul>";
+                              echo "</li>";                                    
+                          } else { // Caso não tenha submenu
+                              echo "<li class='mt'>" . anchor($row->url, "<i class='" . $row->icone . "'></i> " . $row->nome) . "</a></li>";
+                          }   
+                          // Verifica se o a página atual
+                          if (strpos(site_url(), $row->nome)){
+                              echo "</li>";
+                          }
+                     } 
+                    ?> 
+                          
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -30,6 +46,7 @@
      <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
+
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">

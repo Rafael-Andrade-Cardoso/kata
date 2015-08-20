@@ -17,8 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-//$config['base_url'] = 'http://127.0.0.1/kata/';
-$config['base_url'] = 'http://93.188.162.132/kata/beta';
+$config['base_url'] = 'http://127.0.0.1/kata/';
+//$config['base_url'] = 'http://93.188.162.132/kata/beta';
 
 
 /*
@@ -73,7 +73,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'portuguese-br';
 
 /*
 |--------------------------------------------------------------------------

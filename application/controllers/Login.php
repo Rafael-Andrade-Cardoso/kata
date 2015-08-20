@@ -5,7 +5,6 @@ class Login extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model("usuario");
-		$this->load->library('form_validation');
 	}
 	 
 	/*
@@ -18,9 +17,55 @@ class Login extends CI_Controller {
 	/*
 	*  Autentica usuário e senha informados na tela de login
 	*/
-	public function autenticar() {
+	public function autenticar() {		
+		$regras = array(
+		        array(
+		                'field' => 'user',
+		                'label' => '<b>Usuário</b>',
+		                'rules' => 'required'
+		        ),
+		        array(
+		                'field' => 'pass',
+		                'label' => '<b>Senha</b>',
+		                'rules' => 'required'		                
+		        ),				
+		);
+		/*
+		array(
+		                'field' => 'userfile',
+		                'label' => 'Anexar Imagem',
+		                'rules' => 'callback_verifica_tamanho_anexo'		                
+		        ),
+		*/
+		
+		
+		$this->form_validation->set_rules($regras);
+		$this->form_validation->set_error_delimiters('<p class="alert alert-danger">', '</p>');
+		
+		if ($this->form_validation->run() == FALSE) {
+			$dados['erro'] = "Usuário/Senha incorretos";
+			//$this->load->view("login", $dados);
+			$this->load->view('login', $dados);
+			//$this->form_validation->set_message('verifica_tamanho_anexo', $this->upload->display_errors());		
+			
+		} else {
+			// Chama a função de validadção do model usuario
+			$usuario = $this->usuario->validate();
+			
+			if ($usuario) {
+				$this->session->set_userdata("logado", 1);
+				$this->session->set_userdata("usuario", $usuario);
+				redirect(base_url(inicio));
+			} else {
+				//caso a senha/usuário estejam incorretos, então mando o usuário novamente para a tela de login com uma mensagem de erro.
+				$dados['erro'] = "Usuário/Senha incorretos";
+				$this->load->view("login", $dados);
+			}
+        }
+		
+		/*
 		$this->form_validation->set_rules('user', 'Username', 'required');
-		$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+		$this->form_validation->set_error_delimiters('<p class="alert alert-danger">', '</p>');
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('login');
 		} else {
@@ -38,6 +83,7 @@ class Login extends CI_Controller {
 			$dados['erro'] = "Usuário/Senha incorretos";
 			$this->load->view("login", $dados);
 		}
+		*/
 	}
 	
 	/*
