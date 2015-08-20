@@ -44,6 +44,7 @@
               if (isset($erro)){
                   echo "<div class='alert alert-danger'>" . $erro . "</div>";
               }
+              echo "aqui";
               echo form_error('user');
               echo form_input(array(
                       "name" => "user",

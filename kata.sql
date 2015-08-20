@@ -126,6 +126,7 @@ CREATE TABLE menu (
  url VARCHAR(255),
  ordem INT,
  desc_menu VARCHAR(100),
+ icone VARCHAR(50),
  primary key(id_menu)
 )engine=InnoDB;
 
@@ -540,11 +541,5 @@ INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
 	VALUES (2, 'Cadastro', 'aluno/form_aluno', 1, 'Cadastro de alunos');  	
 
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
-	VALUES (5, 'País', 'sistema/form_pais', 1, 'Cadastro de alunos');  
-
-
-
-
-
-
+	VALUES (4, 'País', 'sistema/form_pais', 1, 'Cadastro de alunos');  
 
