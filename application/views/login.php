@@ -35,7 +35,7 @@
 
 	  <div id="login-page">
 	  	<div class="container">
-	  	    <?php 
+	  	    <?php
           //Criação de formulario
             echo form_open("login/autenticar", array('action' => base_url() . 'login/autenticar', 'class' => 'form-login'));
               echo "<h2 class='form-login-heading'>Entrar agora</h2>";
