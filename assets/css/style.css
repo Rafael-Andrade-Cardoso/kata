@@ -297,7 +297,7 @@ ul.sidebar-menu {
 }
 
 ul.sidebar-menu li ul.sub li{
-    background: #424a5d;
+    background: #333;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
@@ -337,10 +337,8 @@ ul.sidebar-menu li ul.sub li.active a {
 }
 
 ul.sidebar-menu li{
-    /*line-height: 20px !important;*/
-    margin-bottom: 5px;
-    margin-left:10px;
-    margin-right:10px;
+    line-height: 10px !important;
+    margin: 0 0 5px 0;
 }
 
 ul.sidebar-menu li.sub-menu{

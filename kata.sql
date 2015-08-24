@@ -539,6 +539,9 @@ INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
 	
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
 	VALUES (2, 'Cadastro', 'aluno/form_aluno', 1, 'Cadastro de alunos');  	
+	
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
+	VALUES (2, 'Listar', 'aluno/lista', 1, 'Listagem de alunos'); 
 
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
 	VALUES (4, 'País', 'sistema/form_pais', 1, 'Cadastro de alunos');  

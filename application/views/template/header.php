@@ -13,7 +13,8 @@
     <link href="<?php echo base_url('assets/css/bootstrap.css');?>" rel="stylesheet">
     <!--external css-->
     <link href="<?php echo base_url('assets/font-awesome/css/font-awesome.css');?>" rel="stylesheet">
-        
+    <!-- Morris - Gráficos -->
+    <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"> 
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url('assets/css/style.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/style-responsive.css');?>" rel="stylesheet">
