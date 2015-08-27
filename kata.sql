@@ -1,10 +1,16 @@
+/*=== Criando banco de dados ===*/
+CREATE DATABASE IF NOT EXISTS kata DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+/*=== Seleciona o banco ===*/
+USE kata;
+	
 /*=== Tabela para alunos ===*/
 CREATE TABLE aluno (
  id_aluno INT NOT NULL AUTO_INCREMENT,
  observacao VARCHAR(255),
  id_pessoa_fisica INT NOT NULL,
  primary key(id_aluno)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de artes marciais ===*/
 CREATE TABLE arte_marcial (
@@ -12,7 +18,7 @@ CREATE TABLE arte_marcial (
  nm_arte_marcial VARCHAR(50),
  descricao VARCHAR(255),
  primary key(id_arte_marcial)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de aulas ===*/
 CREATE TABLE aula (
@@ -22,7 +28,7 @@ CREATE TABLE aula (
  observacao VARCHAR(255),
  id_horario INT NOT NULL,
  primary key(id_aula)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para comunicados===*/
 CREATE TABLE comunicado (
@@ -33,7 +39,7 @@ CREATE TABLE comunicado (
  dt_criacao DATETIME NOT NULL,
  descricao TEXT NOT NULL,
  primary key(id_comunicado)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de endereços de pessoa ===*/
 CREATE TABLE endereco (
@@ -45,7 +51,7 @@ CREATE TABLE endereco (
  complemento VARCHAR(255) NOT NULL,
  CEP CHAR(8),
  primary key(id_endereco)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de exames marcados ===*/
 CREATE TABLE exame (
@@ -58,7 +64,7 @@ CREATE TABLE exame (
  descricao VARCHAR(255) NOT NULL,
  id_matricula INT NOT NULL,
  primary key(id_exame)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de horários da academia ===*/
 CREATE TABLE horario (
@@ -68,14 +74,14 @@ CREATE TABLE horario (
  dia_semana CHAR(1) NOT NULL,
  id_instrutor INT NOT NULL,
  primary key(id_horario)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para instrutores===*/
 CREATE TABLE instrutor (
  id_instrutor INT NOT NULL AUTO_INCREMENT,
  id_pessoa_fisica INT NOT NULL,
  primary key(id_instrutor)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de ligação de instrutor à artes marciais e graduacao ===*/
 CREATE TABLE instrutor_arte_marcial (
@@ -85,7 +91,7 @@ CREATE TABLE instrutor_arte_marcial (
  observacao VARCHAR(255),
  id_instrutor INT NOT NULL,
  primary key(id_instrutor_arte_marcial)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de matrícula de alunos ===*/
 CREATE TABLE matricula (
@@ -98,7 +104,7 @@ CREATE TABLE matricula (
  id_pessoa_fisica INT,
  id_aluno INT NOT NULL,
  primary key(id_matricula)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela ligação de matrícula à graduacao===*/
 CREATE TABLE matricula_graduacao (
@@ -107,7 +113,7 @@ CREATE TABLE matricula_graduacao (
  id_ta_graduacao INT NOT NULL,
  observacao VARCHAR(100),
  primary key(id_matricula_graducao)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de mensalidades dos alunos ===*/
 CREATE TABLE mensalidade (
@@ -116,7 +122,7 @@ CREATE TABLE mensalidade (
  dt_pagamento DATETIME NOT NULL,
  vl_pago DECIMAL(10,2),
  primary key(id_matricula)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de menus ===*/
 CREATE TABLE menu (
@@ -128,7 +134,7 @@ CREATE TABLE menu (
  desc_menu VARCHAR(100),
  icone VARCHAR(50),
  primary key(id_menu)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para pessoa ===*/
 CREATE TABLE pessoa (
@@ -138,7 +144,7 @@ CREATE TABLE pessoa (
  dt_nascimento DATE NOT NULL,
  email VARCHAR(150),
  primary key(id_pessoa)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de comunicados x pessoas ===*/
 CREATE TABLE pessoa_comunicado (
@@ -146,7 +152,7 @@ CREATE TABLE pessoa_comunicado (
  id_pessoa INT NOT NULL,
  id_comunicado INT NOT NULL,
  primary key(id_pessoa_comunicado)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de dados dos alunos ===*/
 CREATE TABLE pessoa_dados (
@@ -156,7 +162,7 @@ CREATE TABLE pessoa_dados (
  dt_dados DATE NOT NULL,
  id_pessoa_fisica INT NOT NULL,
  primary key(id_pessoa_dados)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de documentos de pessoa ===*/
 CREATE TABLE pessoa_documento (
@@ -165,7 +171,7 @@ CREATE TABLE pessoa_documento (
  valor_documento VARCHAR(100),
  id_pessoa_fisica INT NOT NULL,
  primary key(id_pessoa_documento)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para pessoa física ====*/
 CREATE TABLE pessoa_fisica (
@@ -174,7 +180,7 @@ CREATE TABLE pessoa_fisica (
  tipo_sanguineo VARCHAR(3),
  sexo CHAR(1),
  primary key(id_pessoa_fisica)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para telefones da tabela pessoa ===*/
 CREATE TABLE pessoa_telefone (
@@ -184,7 +190,7 @@ CREATE TABLE pessoa_telefone (
  ddd CHAR(2) NOT NULL,
  telefone CHAR(20) NOT NULL,
  primary key(id_pessoa_telefone)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de planos de aulas===*/
 CREATE TABLE plano_aula (
@@ -192,7 +198,7 @@ CREATE TABLE plano_aula (
  id_ta_atividade INT NOT NULL,
  id_aula INT NOT NULL,
  primary key(id_plano_aula)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de presenças ===*/
 CREATE TABLE presenca (
@@ -201,7 +207,7 @@ CREATE TABLE presenca (
  id_matricula INT NOT NULL,
  id_aula INT NOT NULL,
  primary key(id_presenca)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabelas de atividades para planejamento de aulas ===*/
 CREATE TABLE ta_atividade (
@@ -209,7 +215,7 @@ CREATE TABLE ta_atividade (
  nm_atividade VARCHAR(50) NOT NULL,
  desc_atividade VARCHAR(255) NOT NULL,
  primary key(id_ta_atividade)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de cidades ===*/
 CREATE TABLE ta_cidade (
@@ -217,7 +223,7 @@ CREATE TABLE ta_cidade (
  id_estado INT NOT NULL,
  nm_cidade VARCHAR(50) NOT NULL,
  primary key(id_ta_cidade)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela auxiliar para tipos de documentos ===*/
 CREATE TABLE ta_documento (
@@ -225,7 +231,7 @@ CREATE TABLE ta_documento (
  nm_documento VARCHAR(100),
  descricao VARCHAR(255),
  primary key(id_ta_documento)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para estados ===*/
 CREATE TABLE ta_estado (
@@ -234,21 +240,21 @@ CREATE TABLE ta_estado (
  nm_estado VARCHAR(255) NOT NULL,
  sigla VARCHAR(5),
  primary key(id_estado)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para graduações (faixa branca, faixa amarela, etc) ===*/
 CREATE TABLE ta_graduacao (
  id_ta_graduacao INT NOT NULL AUTO_INCREMENT,
  graduacao VARCHAR(50),
  primary key(id_ta_graduacao)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela auxiliar para país ===*/
 CREATE TABLE ta_pais (
  id_ta_pais INT NOT NULL AUTO_INCREMENT,
  nm_pais VARCHAR(255) NOT NULL,
  primary key(id_ta_pais)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela auxiliar para situação do aluno ou da matrícula (ativo, suspenso, etc) ===*/
 CREATE TABLE ta_situacao (
@@ -256,21 +262,21 @@ CREATE TABLE ta_situacao (
  nm_situacao VARCHAR(100),
  descricao_situacao VARCHAR(255),
  primary key(id_ta_situacao)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela auxiliar para tipo de telefone (residencial, celular, tabalho, etc) ===*/
 CREATE TABLE ta_tipo_telefone (
  id_ta_tipo_telefone INT NOT NULL AUTO_INCREMENT,
  desc_tipo_telefone VARCHAR(20) NOT NULL,
  primary key(id_ta_tipo_telefone)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela auxiliar para tipo de usuário (comum, admin, etc)===*/
 CREATE TABLE ta_tipo_usuario (
  id_ta_tipo_usuario INT NOT NULL AUTO_INCREMENT,
  ds_tipo_usuario VARCHAR(255) NOT NULL,
  primary key(id_ta_tipo_usuario)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela de turmas ===*/
 CREATE TABLE turma (
@@ -281,7 +287,7 @@ CREATE TABLE turma (
  dt_final DATE NOT NULL,
  id_horario INT NOT NULL,
  primary key(id_turma)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para usuários do sistema ===*/
 CREATE TABLE usuario (
@@ -292,14 +298,14 @@ CREATE TABLE usuario (
  login VARCHAR(100) NOT NULL,
  senha VARCHAR(255) NOT NULL,
  primary key(id_usuario)
-)engine=InnoDB;
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 
 
 /*========== FOREIGN KEY ==========*/
 ALTER TABLE menu ADD CONSTRAINT FK_menu_0 FOREIGN KEY (id_menu_pai) REFERENCES menu (id_menu);
 
-ALTER TABLE pessoa_fisica ADD CONSTRAINT FK_pessoa_fisica_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa);
+ALTER TABLE pessoa_fisica ADD CONSTRAINT FK_pessoa_fisica FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa);
 
 ALTER TABLE pessoa ADD CONSTRAINT FK_pessoa_responsavel FOREIGN KEY (id_responsavel) REFERENCES pessoa (id_pessoa);
 
@@ -364,26 +370,26 @@ ALTER TABLE pessoa_comunicado ADD CONSTRAINT FK_pessoa_comunicado_1 FOREIGN KEY 
 
 /*========== Trigger valida pessoa ==========*/
 DELIMITER $$
-CREATE TRIGGER tgr_insert_pessoa
+CREATE TRIGGER trg_insert_pessoa
 BEFORE INSERT ON pessoa
 FOR EACH ROW BEGIN
-	-- Declando variável 
+	/* Declando variável */
 	DECLARE responsavel INT;
-	-- Verifica se o e-mail é válido
+	/* Verifica se o e-mail é válido */
 	IF NEW.email NOT LIKE '%_@%_.__%' THEN
 		SIGNAL SQLSTATE VALUE '45000'
 			SET MESSAGE_TEXT = '[tabela:pessoa] - E-mail inválido.';
 	END IF;
-	-- Verifica se o responsável existe
+	/* Verifica se o responsável existe */
 	SET @responsavel = (SELECT IF((SELECT COUNT(*) from pessoa where id_pessoa = NEW.id_responsavel), 'true', 'false'));
-	-- Se o responsável existir, compara as datas de nascimento
+	/* Se o responsável existir, compara as datas de nascimento */
 	IF @responsavel = 'true' THEN
 		IF ((SELECT dt_nascimento FROM pessoa where id_pessoa = NEW.id_responsavel) > (NEW.dt_nascimento)) THEN
 			SIGNAL SQLSTATE VALUE '45000'
 			SET MESSAGE_TEXT = '[tabela:pessoa] - O responsável não pode ser mais novo que o aluno.';
 		END IF;
 	END IF;
-	-- Verifica se a data de nascimento é maior que a data atual
+	/* Verifica se a data de nascimento é maior que a data atual */
 	IF NEW.dt_nascimento > NOW() THEN
 		SIGNAL SQLSTATE VALUE '45000'
 			SET MESSAGE_TEXT = '[tabela:pessoa] - A data de nascimento não pode ser posterior a data atual.';
@@ -393,10 +399,10 @@ DELIMITER ;
 
 /*========== Trigger valida pessoa_fisica ==========*/
 DELIMITER $$
-CREATE TRIGGER tgr_insert_pessoa_fisica
+CREATE TRIGGER trg_insert_pessoa_fisica
 BEFORE INSERT ON pessoa_fisica
 FOR EACH ROW BEGIN
-	-- Verifica se o campo sexo é diferente de M e F
+	/* Verifica se o campo sexo é diferente de M e F */
 	IF NEW.sexo != 'F' AND NEW.sexo != 'M' THEN
 		SIGNAL SQLSTATE VALUE '45000'
 			SET MESSAGE_TEXT = '[tabela:pessoa_fisica] - sexo inválido. Utilize (F - feminino && M - Masculino)';
@@ -407,7 +413,7 @@ DELIMITER ;
 
 /*========== Trigger valida comunicado ==========*/
 DELIMITER $$
-CREATE TRIGGER tgr_insert_comunicado
+CREATE TRIGGER trg_insert_comunicado
 BEFORE INSERT ON comunicado
 FOR EACH ROW BEGIN
 	/* Declando variável e seta valores para as variáveis */
@@ -437,16 +443,16 @@ DELIMITER ;
 
 /*========== Trigger valida matricula ==========*/
 DELIMITER $$
-CREATE TRIGGER tgr_insert_matricula
+CREATE TRIGGER trg_insert_matricula
 BEFORE INSERT ON matricula
 FOR EACH ROW BEGIN
-	-- Declando variável e seta valores para as variáveis
+	/* Declando variável e seta valores para as variáveis */
 	DECLARE dtMatricula DATE;
 	DECLARE diaVencimento INT;
 	DECLARE ultimoDiaMes INT;
 	SET @dtMatricula = NOW();
 	SET @diaVencimento = NEW.dia_vencimento;
-	-- Verifica se a data de vencimento é menor que 31
+	/* Verifica se a data de vencimento é menor que 31 */
 	IF @diaVencimento > 31 THEN
 		SIGNAL SQLSTATE VALUE '45000'
 		SET MESSAGE_TEXT = '[tabela:matricula] - O dia para vencimento não pode ser maior que 31.';
@@ -456,17 +462,17 @@ DELIMITER ;
 
 /*========== Trigger valida pessoa_dados ==========*/
 DELIMITER $$
-CREATE TRIGGER tgr_pessoa_dados
+CREATE TRIGGER trg_pessoa_dados
 BEFORE INSERT ON pessoa_dados
 FOR EACH ROW BEGIN
-	-- Declando variável e seta valores para as variáveis
+	/* Declando variável e seta valores para as variáveis */
 	DECLARE altura FLOAT;
 	DECLARE peso FLOAT;
 	DECLARE dtDados DATE;
 	SET @dtDados = NEW.dt_dados;
 	SET @altura = NEW.altura;
 	SET @peso = NEW.peso;
-	-- Verifica se a data de vencimento é menor que 31
+	/* Verifica se a data de vencimento é menor que 31 */
 	IF @altura > 3.00 THEN
 		SIGNAL SQLSTATE VALUE '45000'
 		SET MESSAGE_TEXT = '[tabela:comunicado] - Reveja o campo altura da pessoa. (altura < 3)';
@@ -484,13 +490,13 @@ DELIMITER ;
 
 /*========== Trigger valida mensalidade ==========*/
 DELIMITER $$
-CREATE TRIGGER tgr_mensalidade
+CREATE TRIGGER trg_mensalidade
 BEFORE INSERT ON mensalidade
 FOR EACH ROW BEGIN
-	-- Declando variável e seta valores para as variáveis
+	/* Declando variável e seta valores para as variáveis */
 	DECLARE dtPagamento DATE;
 	SET @dtPagamento = NEW.dt_pagamento;
-	-- Verifica se a data de vencimento é menor que 31
+	/* Verifica se a data de vencimento é menor que 31 */
 	IF @dtPagamento > NOW() THEN
 		SIGNAL SQLSTATE VALUE '45000'
 		SET MESSAGE_TEXT = '[tabela:comunicado] - Cadastre o pagamento apenas após ter eftuado-o';
@@ -499,32 +505,50 @@ END$$
 DELIMITER ;
 
 
-/*========================================= INSERTS TESTS ========================================================*/
-INSERT INTO pessoa (nome, dt_nascimento, email) VALUES ('Bruno Asato', '1993-06-18', 'asato@gmail.com');
-INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email) VALUES (1, 'Teste 2', '1993-06-18', 'teste@gmail.com');
+/*========================================= INSERTS TESTS =====================================================*/
 
-INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email) VALUES (1, 'teste3', '1994-06-18', 'teste@gmail.com');
+/* Inserir pessoa */
+INSERT INTO pessoa (nome, dt_nascimento, email)
+	VALUES ('Bruno Asato', '1993-06-18', 'asato@gmail.com');
+INSERT INTO pessoa (nome, dt_nascimento, email)
+	VALUES ('Rafael', '1994-01-1', 'rafael@gmail.com');
+INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email)
+	VALUES (1, 'Teste 2', '1993-06-18', 'teste@gmail.com');
+INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email)
+	VALUES (1, 'teste3', '1994-06-18', 'teste@gmail.com');
 
-INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo) VALUES (1, 'Asato', 'O+', 'M');
-INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo) VALUES (5, 'Asato', 'O+', 'M');
+/* Inserir pessoa física */
+INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo) 
+	VALUES (1, 'Asato', 'O+', 'M');
+INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo) 
+	VALUES (2, 'Andrade Cardoso', 'A', 'M');
+INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo) 
+	VALUES (3, 'User1', 'O+', 'M');
 
-INSERT INTO ta_tipo_usuario (ds_tipo_usuario) VALUES ('Administrador');
+/* Inserir tipo de usuário */
+INSERT INTO ta_tipo_usuario (ds_tipo_usuario) 
+	VALUES ('Administrador');
 
-INSERT INTO ta_situacao (nm_situacao, descricao_situacao) VALUES ('Ativo', 'Usuário ativo no sistema');
+/* Inserir situação (também utilizada em usuário) */
+INSERT INTO ta_situacao (nm_situacao, descricao_situacao) 
+	VALUES ('Ativo', 'Usuário ativo no sistema');
 
-INSERT INTO usuario (id_ta_tipo_usuario, id_ta_situacao, id_pessoa, login, senha) VALUES (1, 1, 1, 'admin', 'admin');
+/* Inserindo usuário */
+INSERT INTO usuario (id_ta_tipo_usuario, id_ta_situacao, id_pessoa, login, senha) 
+	VALUES (1, 1, 1, 'asato', 'asato');
+INSERT INTO usuario (id_ta_tipo_usuario, id_ta_situacao, id_pessoa, login, senha) 
+	VALUES (1, 1, 2, 'rafael', 'rafael');
 
-
+/* Inserir comunicado */
 INSERT INTO comunicado (titulo, dt_vencimento, dt_publicacao, dt_criacao, descricao) 
 	VALUES ('TESTE', '2015-11-01', '2015-10-30', '','Corpo do comunicado'); 
 
-
+/* Inserir dados de pessoa */
 INSERT INTO pessoa_dados (id_pessoa_fisica, peso, altura, dt_dados) 
 	VALUES (1, 200.00, 2.5, '2015-07-10'); 
 
 
 /* Inserindo menus */
-
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
 	VALUES (null, 'Início', '/dashboard', 1, 'Início', 'fa fa-dashboard'); 
 	
@@ -538,11 +562,17 @@ INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
 	VALUES (null, 'Sistema', '#', 4, 'Cadastro de dados estáticos'); 
 	
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
-	VALUES (2, 'Cadastro', 'aluno/form_aluno', 1, 'Cadastro de alunos');  	
+	VALUES (null, 'Usuário', '#', 5, 'Gerenciamento de Usuários'); 
+	
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
+	VALUES (2, 'Cadastro', 'aluno/form_cadastro', 1, 'Cadastro de alunos');  	
 	
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
 	VALUES (2, 'Listar', 'aluno/lista', 1, 'Listagem de alunos'); 
 
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
-	VALUES (4, 'País', 'sistema/form_pais', 1, 'Cadastro de alunos');  
+	VALUES (4, 'País', 'sistema/form_cadastro', 1, 'Cadastro de alunos');  
+
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
+	VALUES (5, 'Cadastro', 'usuario/form_cadastro', 1, 'Cadastro de usuario');  
 
