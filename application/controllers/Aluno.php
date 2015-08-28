@@ -6,8 +6,8 @@ class Aluno extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function form_aluno(){
-		$this->template->load('aluno/form_aluno');
+	public function form_cadastro(){
+		$this->template->load('aluno/form_cadastro');
 	}
 	
 	

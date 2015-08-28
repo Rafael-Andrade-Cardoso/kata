@@ -550,7 +550,7 @@ INSERT INTO pessoa_dados (id_pessoa_fisica, peso, altura, dt_dados)
 
 /* Inserindo menus */
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
-	VALUES (null, 'Início', '/dashboard', 1, 'Início', 'fa fa-dashboard'); 
+	VALUES (null, 'Início', 'dashboard', 1, 'Início', 'fa fa-dashboard'); 
 	
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
 	VALUES (null, 'Aluno', '#', 2, 'Aluno', 'fa fa-user');
@@ -561,8 +561,8 @@ INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone)
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
 	VALUES (null, 'Sistema', '#', 4, 'Cadastro de dados estáticos'); 
 	
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
-	VALUES (null, 'Usuário', '#', 5, 'Gerenciamento de Usuários'); 
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
+	VALUES (null, 'Usuário', '#', 5, 'Gerenciamento de Usuários',  'fa fa-users'); 
 	
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
 	VALUES (2, 'Cadastro', 'aluno/form_cadastro', 1, 'Cadastro de alunos');  	

@@ -12,7 +12,7 @@
                     <?php
               	   foreach ($menu as $row){
                           // Verifica se o a página atual
-                          if (strpos(site_url(), $row->url)){
+                          if (strpos(base_url(), $row->url)){
                               echo "<li class='dcjq-parent active'>";
                           }   
                           // Verifica se o menu tem submenus
@@ -31,7 +31,7 @@
                               echo "<li class='mt'>" . anchor($row->url, "<i class='" . $row->icone . "'></i> " . $row->nome) . "</a></li>";
                           }   
                           // Verifica se o a página atual
-                          if (strpos(site_url(), $row->nome)){
+                          if (strpos(base_url(), $row->nome)){
                               echo "</li>";
                           }
                      } 

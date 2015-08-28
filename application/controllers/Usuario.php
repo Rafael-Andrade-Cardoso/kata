@@ -30,7 +30,6 @@
 				'senha' => hash('sha256', $senha)
 			);
 			$result = $this->usuario_model->insert($data);
-			//die('not yet ready');
 			print_r($result);
 		}
 		

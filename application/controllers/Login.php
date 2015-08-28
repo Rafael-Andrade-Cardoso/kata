@@ -4,7 +4,7 @@ class Login extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model("usuario");
+		$this->load->model("usuario_model");
 	}
 	 
 	/*
@@ -41,7 +41,7 @@ class Login extends CI_Controller {
 		
 		$this->form_validation->set_rules($regras);
 		$this->form_validation->set_error_delimiters('<p class="alert alert-danger">', '</p>');
-		
+		$dados['erro'] = null;
 		if ($this->form_validation->run() == FALSE) {
 			$dados['erro'] = "Usuário/Senha incorretos";
 			//$this->load->view("login", $dados);
@@ -50,7 +50,7 @@ class Login extends CI_Controller {
 			
 		} else {
 			// Chama a função de validadção do model usuario
-			$usuario = $this->usuario->validate();
+			$usuario = $this->usuario_model->validate();
 			
 			if ($usuario) {
 				$this->session->set_userdata("logado", 1);

@@ -51,7 +51,8 @@
                       "class" => "form-control",
                       "maxlenth" => "150",
                       "placeholder" => "Usuário",
-                      "value" => ""
+                      "value" => "",
+                      "required" => ""
                   ));
               echo "<br />";          
               echo form_error('pass');  
@@ -60,7 +61,8 @@
                       "id" => "pass",
                       "class" => "form-control",
                       "maxlenth" => "255",
-                      "placeholder" => "Senha"
+                      "placeholder" => "Senha",
+                      "required" => ""
                   )); 
               echo form_label("<span class='pull-right'>" . anchor('login.html#myModal', 'Esqueceu sua senha?', array('data-toggle' => 'modal')) . "</span>", "recuperasenha", array('class' => 'checkbox'));
               echo form_button(array(
