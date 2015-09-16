@@ -23,4 +23,9 @@ class Inicio extends MY_Controller {
 		//$this->template->load('inicio');		
 	}
 	
+	public function info() {
+    	phpinfo();
+    	exit();
+	}
+	
 }

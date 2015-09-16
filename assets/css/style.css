@@ -286,6 +286,7 @@ ul.sidebar-menu , ul.sidebar-menu li ul.sub{
 
 ul.sidebar-menu {
     margin-top: 75px;
+    font-weight: 600;
 }
 
 #sidebar > ul > li > ul.sub {
@@ -322,7 +323,8 @@ ul.sidebar-menu li ul.sub li a {
 }
 
 ul.sidebar-menu li ul.sub li a:hover {
-	color: white;
+	/* color: white; */
+	color: #dd4814;
 	background: transparent;
 }
 

@@ -220,7 +220,7 @@ CREATE TABLE ta_atividade (
 /*=== Tabela de cidades ===*/
 CREATE TABLE ta_cidade (
  id_ta_cidade INT NOT NULL AUTO_INCREMENT,
- id_estado INT NOT NULL,
+ id_ta_estado INT NOT NULL,
  nm_cidade VARCHAR(50) NOT NULL,
  primary key(id_ta_cidade)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
@@ -235,11 +235,11 @@ CREATE TABLE ta_documento (
 
 /*=== Tabela para estados ===*/
 CREATE TABLE ta_estado (
- id_estado INT NOT NULL AUTO_INCREMENT,
+ id_ta_estado INT NOT NULL AUTO_INCREMENT,
  id_ta_pais INT NOT NULL,
  nm_estado VARCHAR(255) NOT NULL,
  sigla VARCHAR(5),
- primary key(id_estado)
+ primary key(id_ta_estado)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para graduações (faixa branca, faixa amarela, etc) ===*/
@@ -278,6 +278,14 @@ CREATE TABLE ta_tipo_usuario (
  primary key(id_ta_tipo_usuario)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
+/*=== Tabela de menus permitidos por tipo de usuário ===*/
+CREATE TABLE menu_tipo_usuario (
+	id_menu_tipo_usuario INT NOT NULL AUTO_INCREMENT,
+	id_menu INT,
+	id_ta_tipo_usuario INT,
+	primary key(id_menu_tipo_usuario)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
+
 /*=== Tabela de turmas ===*/
 CREATE TABLE turma (
  id_turma INT NOT NULL AUTO_INCREMENT,
@@ -303,6 +311,9 @@ CREATE TABLE usuario (
 
 
 /*========== FOREIGN KEY ==========*/
+ALTER TABLE menu_tipo_usuario ADD CONSTRAINT FK_menu_tipo_usuario_0 FOREIGN KEY (id_menu) REFERENCES menu (id_menu);
+ALTER TABLE menu_tipo_usuario ADD CONSTRAINT FK_menu_tipo_usuario_1 FOREIGN KEY (id_ta_tipo_usuario) REFERENCES ta_tipo_usuario (id_ta_tipo_usuario);
+
 ALTER TABLE menu ADD CONSTRAINT FK_menu_0 FOREIGN KEY (id_menu_pai) REFERENCES menu (id_menu);
 
 ALTER TABLE pessoa_fisica ADD CONSTRAINT FK_pessoa_fisica FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa);
@@ -334,7 +345,7 @@ ALTER TABLE pessoa_dados ADD CONSTRAINT FK_pessoa_dados_0 FOREIGN KEY (id_pessoa
 ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_0 FOREIGN KEY (id_ta_documento) REFERENCES ta_documento (id_ta_documento);
 ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica);
 
-ALTER TABLE ta_cidade ADD CONSTRAINT FK_ta_cidade_0 FOREIGN KEY (id_estado) REFERENCES ta_estado (id_estado);
+ALTER TABLE ta_cidade ADD CONSTRAINT FK_ta_cidade_0 FOREIGN KEY (id_ta_estado) REFERENCES ta_estado (id_ta_estado);
 
 ALTER TABLE endereco ADD CONSTRAINT FK_endereco_0 FOREIGN KEY (id_ta_cidade) REFERENCES ta_cidade (id_ta_cidade);
 ALTER TABLE endereco ADD CONSTRAINT FK_endereco_1 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa);
@@ -558,8 +569,8 @@ INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone)
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
 	VALUES (null, 'Relatório', '/relatorio', 3, 'Relatório', 'fa fa-file-text');  	
 
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
-	VALUES (null, 'Sistema', '#', 4, 'Cadastro de dados estáticos'); 
+INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
+	VALUES (null, 'Sistema', '#', 4, 'Cadastro de dados estáticos', 'fa fa-file-text'); 
 	
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone) 
 	VALUES (null, 'Usuário', '#', 5, 'Gerenciamento de Usuários',  'fa fa-users'); 
@@ -575,4 +586,134 @@ INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
 
 INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu) 
 	VALUES (5, 'Cadastro', 'usuario/form_cadastro', 1, 'Cadastro de usuario');  
+
+/* Inserindo associação de menu com usuários */
+
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (1,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (2,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (3,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (4,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (5,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (6,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (7,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (8,1);
+	
+INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
+	VALUES (9,1);
+	
+	
+
+1 pessoa
+- id_pessoa
+- id_responsavel
+- nome
+- dt_nascimento
+- email
+
+2 pessoa_dados
+- id_pessoa_dados
+- id_pessoa
+- peso
+- altura
+- dt_dados
+
+3 endereco
+- id_endereco
+- id_ta_cidade
+- id_pessoa
+- logradouro 
+- numeo
+- complemento
+- cep
+
+4 pessoa_telefone
+- id_pessoa_telefone
+- id_pessoa
+- id_ta_tipo_telefone
+- ddd
+- telefone
+
+5 pessoa_fisica
+- id_pessoa_fisica
+- sobrenome
+- tipo_sanguineo
+- sexo
+
+6 pessoa_documento
+- id_pessoa_documento
+- id_ta_documento
+- valor_documento
+- id_pessoa_fisica
+
+7 matricula
+- id_matricula
+- id_ta_situacao
+- dia_vencimento
+- dt_matricula
+- desconto
+- valor_mensalidade
+- id_pessoa_fisica
+- id_aluno
+
+8 aluno
+- id_aluno
+- observacao
+- id_pessoa_fisica
+
+
+
+
+aluno
+	pessoa
+	pessoa_dados
+	endereco
+	pessoa_telefone
+	pessoa_fisica
+	pessoa_documento
+	matricula
+	aluno
+	
+instrutor
+	pessoa
+	pessoa_dados
+	endereco
+	pessoa_telefone
+	pessoa_fisica
+	pessoa_documento
+	instrutor
+
+
+responsável(pessoa)
+	pessoa
+	pessoa_documento
+	pessoa_fisica
+	pessoa_telefone
+	usuario
+	endereco
+
+
+
+
+
+
+
+
+
+
+
 

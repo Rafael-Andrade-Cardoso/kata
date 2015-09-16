@@ -1,5 +1,5 @@
 <?php
-class Menu extends CI_Model {
+class Menu_model extends CI_Model {
 
     var $title   = '';
     var $content = '';
@@ -45,9 +45,13 @@ class Menu extends CI_Model {
     * Retorna itens de menu de primeiro nível, ou seja, onde id_menu_pai = null.
     */
     function get_menu(){
-        $this->db->from('menu');
-        $this->db->where('id_menu_pai', null);
-        $this->db->order_by("ordem", "desc");
+        $this->db->select('m.*', false);
+        $this->db->from('menu m');
+        $this->db->join("menu_tipo_usuario mtu", "m.id_menu = mtu.id_menu");
+        $this->db->join("ta_tipo_usuario ttu","ttu.id_ta_tipo_usuario = mtu.id_ta_tipo_usuario");
+        $this->db->where('m.id_menu_pai', null);
+        $this->db->where("mtu.id_ta_tipo_usuario", $_SESSION['usuario']->id_ta_tipo_usuario);
+        $this->db->order_by("m.ordem", "desc");
         return $this->db->get();
     }
     

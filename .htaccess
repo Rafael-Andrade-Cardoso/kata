@@ -1,19 +1,36 @@
 <IfModule mod_rewrite.c>
-  RewriteEngine On
+    RewriteEngine On
+    RewriteBase /kata
+    
+    RewriteCond %{REQUEST_URI} ^system.*
+    RewriteRule ^(.*)$ /index.php?$1 [L]
+    
+    RewriteCond %{REQUEST_URI} ^application.*
+    RewriteRule ^(.*)$ /index.php?$1 [L]
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?/$1 [L] 
+    
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    # Caso o módulo de reescrita (mod_rewrite) não estiver instalado, erro 404!!
+    
+    ErrorDocument 404 /index.php    
+</IfModule>
+
+
+#<IfModule mod_rewrite.c>
+  #RewriteEngine On
   # Configuração de reescrita de url
   # Retirando o index.php
   # Exemplo de configuração, se a url base for
   #  http://www.example.com/mypage/test1
   # utilize
   # RewriteBase /mypage/test1/
-  RewriteBase /kata/
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)$ index.php?/$1 [L]
-</IfModule>
-
-<IfModule !mod_rewrite.c>
-  # Caso o módulo de reescrita (mod_rewrite) não estiver instalado, erro 404!!
-  
-  ErrorDocument 404 /index.php
-</IfModule>
+  #RewriteBase /kata/
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteRule ^(.*)$ index.php?/$1 [L]
+#</IfModule>
