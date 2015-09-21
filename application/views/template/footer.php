@@ -31,7 +31,9 @@
     <script src="<?php echo base_url('assets/js/common-scripts.js');?>"></script>
 
     <!-- script Morris - Gráficos -->
-    <script src="assets/js/morris-conf.js"></script>
+    <script src="<?php echo base_url('assets/js/morris-conf.js'); ?>"></script>
+    <script src="<?php echo base_url('assets/js/jquery.mask.min.js'); ?>"></script>
+    <script src="<?php echo base_url('assets/js/index.js'); ?>"></script>
 
     <script>
       //custom select box
@@ -42,5 +44,5 @@
 
   </script>
 
-  </body>  
+  </body>
 </html>

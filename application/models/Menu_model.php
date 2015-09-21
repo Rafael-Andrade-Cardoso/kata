@@ -10,41 +10,73 @@ class Menu_model extends CI_Model {
         // Call the Model constructor
         parent::__construct();
     }
-    
-    function get_last_ten_entries()
-    {
+
+    function get_last_ten_entries() {
         $query = $this->db->get('entries', 10);
         return $query->result();
     }
 
-    function insert_entry()
-    {
-        $this->title   = $_POST['title']; // please read the below note
-        $this->content = $_POST['content'];
-        $this->date    = time();
-
-        $this->db->insert('entries', $this);
+    public function get_byid($id=''){
+        if ($id != NULL){
+            $this->db->where('id_menu', $id);
+            return $this->db->get('menu');
+        } else {
+            return false;
+        }
     }
 
-    function update_entry()
-    {
-        $this->title   = $_POST['title'];
-        $this->content = $_POST['content'];
-        $this->date    = time();
-
-        $this->db->update('entries', $this, array('id' => $_POST['id']));
+    public function get_tipo_menu_byid($idmenu=''){
+        if ($idmenu != NULL){
+            $this->db->select('*');
+            $this->db->from('menu m');
+            $this->db->join('menu_tipo_usuario mtu', 'mtu.id_menu = m.id_menu');
+            $this->db->join('ta_tipo_usuario ttu', 'ttu.id_ta_tipo_usuario = mtu.id_ta_tipo_usuario', 'left');
+            $this->db->where('m.id_menu', $idmenu);
+            //$this->output->enable_profiler(TRUE);
+            return $this->db->get();
+        } else {
+            return false;
+        }
     }
-    
+
+    function insert($data) {
+        $resultado = $this->db->insert('menu', $data);
+        if ($resultado){
+            return $this->db->insert_id();
+        } else {
+            return 0;
+        }
+    }
+
+    function update($data=NULL, $id_menu=NULL) {
+        if($data != NULL && $id_menu != NULL){
+            $result = $this->db->update('menu', $data, array('id_menu' => $id_menu));
+            if ($result){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     function get_category(){
         $this->db->from('usuario_menu');
         $this->db->where('id_tipo_usuario', 1);
         $menu_list = $this->db->get();
     }
-    
+
     /*
     * Retorna itens de menu de primeiro nível, ou seja, onde id_menu_pai = null.
     */
     function get_menu(){
+        /* SEM PERMISSÃO */
+            //$this->db->select(*);
+            $this->db->select('*');
+            $this->db->from('menu');
+            $this->db->order_by("ordem", "asc");
+            //$this->output->enable_profiler(TRUE);
+            return $this->db->get();
+        /*  FORMA CORRETA COM PERMISSÃO
         $this->db->select('m.*', false);
         $this->db->from('menu m');
         $this->db->join("menu_tipo_usuario mtu", "m.id_menu = mtu.id_menu");
@@ -53,8 +85,24 @@ class Menu_model extends CI_Model {
         $this->db->where("mtu.id_ta_tipo_usuario", $_SESSION['usuario']->id_ta_tipo_usuario);
         $this->db->order_by("m.ordem", "desc");
         return $this->db->get();
+        */
     }
-    
+
+    function lista($qtd = 0, $inicio = 0){
+            $this->db->select('*');
+            $this->db->from('menu');
+            $this->db->order_by("ordem", "asc");
+            if ($qtd > 0){
+                $this->db->limit($qtd, $inicio);
+            }
+            //$this->output->enable_profiler(TRUE);
+            return $this->db->get();
+    }
+
+    function get_all(){
+        return $this->db->get('menu');
+    }
+
     /*
     * Retorna os submenus a partir de um id_menu.
     */
@@ -65,4 +113,12 @@ class Menu_model extends CI_Model {
         return $this->db->get();
     }
 
+        /*
+        *   @usage
+        *   $this->user_model->delete(6)
+        */
+        public function delete($id_menu){
+            $this->db->delete('menu', ['id_menu' => $id_menu]);
+            return $this->db->affected_rows();
+        }
 }

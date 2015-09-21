@@ -1,23 +1,27 @@
 <?php
-	
+
 	class Usuario extends MY_Controller{
-		
+
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('usuario_model');
 		}
-		
+
 		public function form_cadastro(){
 			$this->template->load('usuario/form_cadastro');
 		}
-		
+
 		public function get(){
 			$data = $this->usuario_model->get(1);
 			print_r($data);
-			
+
 			//$this->output->enable_profiler(true);
 		}
-		
+
+		public function get_tipo_usuario() {
+			$this->load->model("usuario_model");
+		}
+
 		public function cadastro(){
 			$login = $this->input->post('login');
 			$senha = $this->input->post('senha');
@@ -32,17 +36,17 @@
 			$result = $this->usuario_model->insert($data);
 			print_r($result);
 		}
-		
+
 		public function update(){
 			$result = $this->usuario_model->update([
 				'login' => 'Peggy'
 			], 1);
 			print_r($result);
 		}
-		
+
 		public function delete($id_usuario){
 			$result = $this->usuario_model->delete($id_usuario);
 			print_r($result);
 		}
-		
+
 	}
