@@ -29,3 +29,49 @@ class Template {
 		$this->ci->load->view($template.'/footer');
 	}
 }
+
+/*
+public class
+
+
+public void run() {
+	buffid.repaint();
+}
+
+public void paint (Graphics g) {
+	updte(g);
+}
+
+
+public void update (Graphics g) {
+	int i;
+	g2d = (Graphics2D) g;
+	g2d.drawImage(bi,0,0,null);
+}
+
+
+public static void main(String[] argv) {
+	int width = 800;
+	int heigh = 500;
+	int delay = 30;
+
+	BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB;)
+	BufferedImageDraw bid = new BufferedImage
+}
+
+
+
+public BufferedImageDrawer(BufferedImage buffIm, int width, int height) {
+	bi = buffIm;
+	g2dbi = bi.createGraphics();
+	addKeyListener(new Key)
+	addWindowListener(new FecharJanela);
+}
+
+}
+
+
+public clsss Animacao extends TimerTask {
+	private BufferedImage
+}
+*/

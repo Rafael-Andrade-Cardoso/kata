@@ -1,5 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar Menu</h3>
-<?php echo form_open('menu/inserir', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
+<?php echo form_open('cadastro/insert_menu', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
 
 
 
@@ -58,7 +58,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Descrição de funcionalidade</label>
                     <div class="col-sm-6">
-                        <textarea rows="5" class="form-control" name="desc_menu" value="<?php echo set_value('desc_menu'); ?>" > </textarea>
+                        <textarea rows="5" class="form-control" name="desc_menu" > <?php echo set_value('desc_menu'); ?></textarea>
                         <div class="error"><?php echo form_error('desc_menu'); ?></div>
                     </div>
                 </div>
@@ -75,11 +75,17 @@
                     <label class="col-sm-2 col-sm-2 control-label">Grupo com permissão</label>
                     <div class="col-sm-5">
                         <?php
-                            foreach ($tipos_usuario as $value) {
+                            foreach ($tipo_usuario_menu as $value) {
                         ?>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="<?php echo $value->id_ta_tipo_usuario; ?>">
+                                    <input name="id_ta_tipo_usuario[]" type="checkbox" value="<?php echo $value->id_ta_tipo_usuario; ?>"
+                                    <?php
+                                        if (set_value('id_ta_tipo_usuario')){
+                                            echo (in_array($value->id_ta_tipo_usuario, set_value('id_ta_tipo_usuario')))?" checked ":"";
+                                        }
+                                    ?>
+                                    />
                                     <?php echo $value->ds_tipo_usuario; ?>
                                 </label>
                             </div>
@@ -88,7 +94,6 @@
                         ?>
                     </div>
                 </div>
-
                 <button class="btn btn-lg btn-primary" >Cadastrar</button>
 
             </div>

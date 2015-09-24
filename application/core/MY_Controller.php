@@ -2,16 +2,16 @@
 class MY_Controller extends CI_Controller
 {
 	protected $protegido = true;
-	
+
 	public function __construct() {
 		parent::__construct();
 		$this->proteger();
 	}
-	
+
 	protected function getPost() {
 		$obj = new stdClass();
 		foreach($_POST as $post => $valor) {
-	
+
 			$campo = explode('ed_', $post);
 			if (count($campo) == 2) {
 				$obj->$campo[1] = $valor;
@@ -20,11 +20,11 @@ class MY_Controller extends CI_Controller
 
 		return $obj;
 	}
-	
+
 	protected function proteger() {
 		if ($this->protegido) {
 			$this->getUsuario();
-			
+
 			if (!$this->user->logado) {
 				redirect('login');
 			}
@@ -36,25 +36,25 @@ class MY_Controller extends CI_Controller
 			*/
 		}
 	}
-	
+
 	private function getUsuario() {
-		$usuario = $this->session->userdata('usuario');	
-		if (is_object($usuario) && $usuario->id_usuario > 0) {	
+		$usuario = $this->session->userdata('usuario');
+		if (is_object($usuario) && $usuario->id_usuario > 0) {
 			$this->user = $usuario;
 			$this->user->logado = true;
-			
+
 		} else {
 			$this->user->logado = false;
 		}
 	}
-	
+
 	/**
 	 * Validações (callbacks)
 	 */
 	public function formatar_numero($str) {
 		return str_replace(',', '.', $str);
 	}
-	
+
 	/**
 	 * Callback para checkbox ativo
 	 * Seta ativo=0 caso venha vazio

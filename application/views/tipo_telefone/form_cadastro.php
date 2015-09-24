@@ -1,5 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar Menu</h3>
-<?php echo form_open('cadastro/insert_pais', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
+<?php echo form_open('cadastro/insert_tipo_telefone', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
 
     <!-- Área de dados do menu -->
     <div class="row mt">
@@ -15,8 +15,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_pais" class="form-control" name="nm_pais" value="<?php echo set_value('nm_pais'); ?>" />
-                        <div class="error"><?php echo form_error('nm_pais'); ?></div>
+                        <input type="text" id="desc_tipo_telefone" class="form-control" name="desc_tipo_telefone" value="<?php echo set_value('desc_tipo_telefone'); ?>" />
+                        <div class="error"><?php echo form_error('desc_tipo_telefone'); ?></div>
                     </div>
                 </div>
 
@@ -27,3 +27,6 @@
     </div>
 
 <?php echo form_close(); ?>
+
+
+

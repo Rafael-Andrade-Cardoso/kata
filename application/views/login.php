@@ -15,7 +15,7 @@
     <link href="<?=base_url();?>assets/css/bootstrap.css" rel="stylesheet">
     <!--external css-->
     <link href="<?=base_url();?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-        
+
     <!-- Custom styles for this template -->
     <link href="<?=base_url();?>assets/css/style.css" rel="stylesheet">
     <link href="<?=base_url();?>assets/css/style-responsive.css" rel="stylesheet">
@@ -54,8 +54,8 @@
                       "value" => "",
                       "required" => ""
                   ));
-              echo "<br />";          
-              echo form_error('pass');  
+              echo "<br />";
+              echo form_error('pass');
               echo form_password(array(
                       "name" => "pass",
                       "id" => "pass",
@@ -63,13 +63,14 @@
                       "maxlenth" => "255",
                       "placeholder" => "Senha",
                       "required" => ""
-                  )); 
+                  ));
               echo form_label("<span class='pull-right'>" . anchor('login.html#myModal', 'Esqueceu sua senha?', array('data-toggle' => 'modal')) . "</span>", "recuperasenha", array('class' => 'checkbox'));
               echo form_button(array(
                   "class" => "btn btn-theme btn-block",
                   "content" => "<i class='fa fa-lock'></i> ENTRAR",
                   "type" => "submit"
-              )); 
+              ));
+              /*
               echo "<hr />";
               echo "<div class='login-social-link centered'>";
               echo "<p>ou você pode logar com sua rede social</p>";
@@ -80,6 +81,7 @@
               ));
               echo "</div>";
               echo "<div class='registration'>Ainda não posui uma conta?<br />" . anchor('#', 'Criar conta', array('class' => '')) . "</div>";
+              */
               echo "</div>";
               /* Modal */
   		          echo "<div aria-hidden='true' aria-labelledby='myModalLabel' role='dialog' tabindex='-1' id='myModal' class='modal fade'>";
@@ -91,7 +93,7 @@
                         "class" => "close",
                         "data-dismiss" => "modal",
                         "aria-hidden" => "true",
-                        "content" => "&times;"  
+                        "content" => "&times;"
                 ));
                 echo "<h4 class='modal-title'>Esqueceu a senha?</h4>";
   		          echo "</div>";
@@ -112,12 +114,12 @@
                         "class" => "btn btn-default",
                         "data-dismiss" => "modal",
                         "aria-hidden" => "true",
-                        "content" => "Cancelar"  
+                        "content" => "Cancelar"
                 ));
                 echo form_button(array(
                         "type" => "button",
                         "class" => "btn btn-theme",
-                        "content" => "Enviar"  
+                        "content" => "Enviar"
                 ));
                 echo "</div>";
                 echo "</div>";
@@ -128,11 +130,11 @@
             echo "</div>";
             echo "</div>";
         ?>
-		
-		          
-		
-		      </form>	  	
-	  	
+
+
+
+		      </form>
+
 	  	</div>
 	  </div>
 

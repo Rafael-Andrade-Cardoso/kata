@@ -81,6 +81,7 @@
 
         public function get_tipo_usuario() {
             return $this->db->get('ta_tipo_usuario');
+
         }
 
 	}

@@ -1,5 +1,7 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar Menu</h3>
-<?php echo form_open('cadastro/insert_pais', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
+<?php echo form_open('cadastro/insert_situacao', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
+
+
 
     <!-- Área de dados do menu -->
     <div class="row mt">
@@ -15,11 +17,18 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_pais" class="form-control" name="nm_pais" value="<?php echo set_value('nm_pais'); ?>" />
-                        <div class="error"><?php echo form_error('nm_pais'); ?></div>
+                        <input type="text" id="nm_situacao" class="form-control" name="nm_situacao" value="<?php echo set_value('nm_situacao'); ?>" />
+                        <div class="error"><?php echo form_error('nm_situacao'); ?></div>
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Descrição de funcionalidade</label>
+                    <div class="col-sm-6">
+                        <textarea rows="5" class="form-control" name="descricao_situacao" > <?php echo set_value('descricao_situacao'); ?></textarea>
+                        <div class="error"><?php echo form_error('descricao_situacao'); ?></div>
+                    </div>
+                </div>
                 <button class="btn btn-lg btn-primary" >Cadastrar</button>
 
             </div>

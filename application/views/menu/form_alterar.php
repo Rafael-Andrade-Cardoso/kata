@@ -83,15 +83,14 @@
                     <div class="col-sm-5">
                         <?php
                             foreach ($tipo_usuario_menu as $value) {
-                            //echo "<pre>";
-                            //print_r($tipo_usuario_menu);
                         ?>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="<?php echo $value->id_ta_tipo_usuario; ?>"
-                                    <?php if ($value->checked){
+                                    <input name="id_ta_tipo_usuario" type="checkbox" value="<?php echo $value->id_ta_tipo_usuario; ?>"
+                                    <?php if (in_array($value->id_ta_tipo_usuario, $tipo_usuario_selecionado)){
                                         echo " checked ";
                                     }
+                                    ?>
                                     >
                                     <?php echo $value->ds_tipo_usuario; ?>
                                 </label>

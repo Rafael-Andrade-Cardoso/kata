@@ -10,28 +10,32 @@ class Menu extends MY_Controller {
         $this->load->model('usuario_model', 'usuario');
     }
 
-    public function form_cadastro(){
+    public function form_cadastro() {
         $data = array();
+        $data['tipo_usuario_menu'] = $this->usuario->get_tipo_usuario()->result();
         $data['menus'] = $this->get_menu()->result();
         $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
         $this->template->load('menu/form_cadastro', $data);
     }
 
-    public function form_alterar(){
+    public function form_alterar() {
         $data = array();
         $idmenu = $this->uri->segment(3);
         if($idmenu == NULL){
             redirect('menu/lista');
         }
-        $query = $this->menu->get_byid($idmenu);
-        $data['tipo_usuario_menu'] = $this->menu->get_tipo_menu_byid($idmenu)->result();
-        $data['query'] = $query->row();
+        $tipo_usuario_selecionado = $this->menu->get_tipo_usuario_byidmenu($idmenu)->result();
+        foreach ($tipo_usuario_selecionado as $key => $value) {
+            $data['tipo_usuario_selecionado'][] = $value->id_ta_tipo_usuario;
+        }
+        $data['tipo_usuario_menu'] = $this->usuario->get_tipo_usuario()->result();
+        $data['query'] = $this->menu->get_byid($idmenu)->row();
         $data['menus'] = $this->get_menu()->result();
         $this->template->load('menu/form_alterar', $data);
     }
 
 
-    public function alterar(){
+    public function alterar() {
         foreach ($this->input->post() as $key => $value){
             if (!is_null($value) && $value != ""){
                 $data[$key] = $value;
@@ -78,7 +82,7 @@ class Menu extends MY_Controller {
         }
     }
 
-    public function lista($qtd = 'null', $inicio = 'null'){
+    public function lista($qtd = 'null', $inicio = 'null') {
         //die($this->menu->get_all()->num_rows());
         $this->load->library('pagination');
         $config['base_url'] = base_url('menu/lista');
@@ -113,7 +117,7 @@ class Menu extends MY_Controller {
         $this->template->load('menu/menu_list', $data);
     }
 
-    public function excluir(){
+    public function excluir() {
         $id = $this->input->post('id');
         //redirect(base_url().'news-and-events');
         $status = $this->menu->delete($id);
@@ -127,7 +131,6 @@ class Menu extends MY_Controller {
                 $data[$key] = $value;
             }
         }
-
         $validacoes = array(
             array(
                 'field' => 'id_menu_pai',
@@ -157,8 +160,15 @@ class Menu extends MY_Controller {
             $this->form_cadastro();
         /* Senão, caso sucesso: */
         } else {
+            $id_ta_tipo_usuario = $data['id_ta_tipo_usuario'];
+            unset($data['id_ta_tipo_usuario']);
             $id_menu = $this->menu->insert($data);
             if ($id_menu != 0){
+                $dados['id_menu'] = $id_menu;
+                foreach ($id_ta_tipo_usuario as $value) {
+                    $dados['id_ta_tipo_usuario'] = $value;
+                    $menuusuario = $this->menu->insert_tipo_usuario($dados);
+                }
                 $this->sucesso();
             } else {
                 $this->erro();
@@ -168,7 +178,7 @@ class Menu extends MY_Controller {
 
     }
 
-    public function sucesso($msg = null){
+    public function sucesso($msg = null) {
         if ($msg != null){
             $this->template->load("mensagem/sucesso", $msg);
         } else {
@@ -176,7 +186,7 @@ class Menu extends MY_Controller {
         }
     }
 
-    public function erro($msg = null){
+    public function erro($msg = null) {
         if ($msg != null){
             $this->template->load("mensagem/erro", $msg);
         } else {
@@ -184,7 +194,7 @@ class Menu extends MY_Controller {
         }
     }
 
-    public function alerta($msg = null){
+    public function alerta($msg = null) {
         if ($msg != null){
             $this->template->load("mensagem/alerta", $msg);
         } else {
@@ -192,11 +202,50 @@ class Menu extends MY_Controller {
         }
     }
 
-    public function get_menu(){
+    public function get_menu() {
         $menus = $this->menu->get_menu();
         return $menus;
     }
 
 }
+/*
+SELECT m.*, ttu.id_ta_tipo_usuario, ttu.ds_tipo_usuario, mtu.id_ta_tipo_usuario AS mtuid_ta_tipo_usuario
+FROM ta_tipo_usuario ttu
+left outer JOIN menu_tipo_usuario mtu ON mtu.id_ta_tipo_usuario = ttu.id_ta_tipo_usuario
+left outer JOIN menu m ON m.id_menu = mtu.id_menu
+WHERE m.id_menu = 61;
 
+select * from
+    (select * from ta_tipo_usuario t1
+    left join menu_tipo_usuario mtu on mtu.id_ta_tipo_usuario = t1.id_ta_tipo_usuario
+    where t1.id_ta_tipo_usuario not in(
+        select t2.id_ta_tipo_usuario from ta_tipo_usuario t2
+            join menu_tipo_usuario mtu on mtu.id_ta_tipo_usuario = t2.id_ta_tipo_usuario
+            WHERE mtu.id_menu = 61
+    ))+(select t3.* from ta_tipo_usuario t3
+            join menu_tipo_usuario mtu on mtu.id_ta_tipo_usuario = t3.id_ta_tipo_usuario
+            WHERE mtu.id_menu = 61);
+
+select distinct id_ta_tipo_usuario, ds_tipo_usuario from ta_tipo_usuario ttu
+    left join menu_tipo_usuario mtu on mtu.id_ta_tipo_usuario = ttu.id_ta_tipo_usuario;
+
+
+select * from ta_tipo_usuario t2
+            join menu_tipo_usuario mtu on mtu.id_ta_tipo_usuario = t2.id_ta_tipo_usuario
+            WHERE mtu.id_menu = 61
+
+
+select distinct ds_tipo_usuario , * from ta_tipo_usuario ttu
+
+
+
+    join menu m on m.id_menu = mtu.id_menu;
+
+SELECT ttu.id_ta_tipo_usuario, ttu.ds_tipo_usuario, mtu.id_ta_tipo_usuario AS mtuid_ta_tipo_usuario
+    FROM ta_tipo_usuario ttu
+    left JOIN menu_tipo_usuario mtu ON mtu.id_ta_tipo_usuario = ttu.id_ta_tipo_usuario
+    WHERE mtu.id_menu = 61;
+
+
+    */
 ?>

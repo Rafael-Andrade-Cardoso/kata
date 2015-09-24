@@ -1,4 +1,4 @@
-<h3><i class="fa fa-angle-right"></i> Cadastrar Menu</h3>
+<h3><i class="fa fa-angle-right"></i> Cadastro</h3>
 <div class="row">
     <div class="col-lg-offset-1 col-lg-10">
         <div class="alert alert-success">
@@ -15,7 +15,10 @@
     <div class="col-lg-offset-4 col-md-offset-4 col-lg-4 col-md-4 col-sm-4 mb">
         <div class="mensagem">
             <a href="" onclick="javascript:window.history.go(-1)">Cadastrar novo </a>
-            <a href="<?php echo site_url(''); ?>">Listar registros </a>
+            <?php
+                $nova_url = $bodytag = str_replace("cadastro/insert_", "listar/", $this->uri->uri_string());
+            ?>
+            <a href="<?php echo $nova_url; ?>">Listar registros </a>
             <a href="<?php echo base_url('dashboard'); ?>">Concluído </a>
         </div>
     </div>

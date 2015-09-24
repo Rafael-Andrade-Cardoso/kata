@@ -4,6 +4,7 @@ class Crud_model extends CI_Model {
 
     function __construct() {
         parent::__construct();
+        $this->db->trans_strict(FALSE);
     }
 
     function insert($table, $data) {
@@ -31,4 +32,25 @@ class Crud_model extends CI_Model {
         $this->db->where('id_aluno', $id);
         return $this->db->delete('aluno');
     }
+
+    function full_menu_list(){
+        return $this->db->get('menu');
+    }
+
+    function get_all($table) {
+        return $this->db->get($table);
+    }
+
+    function get_pagination($table, $qtd = 0, $inicio = 0){
+            $this->db->select('*');
+            $this->db->from($table);
+            $this->db->order_by("ordem", "asc");
+            if ($qtd > 0){
+                $this->db->limit($qtd, $inicio);
+            }
+            //$this->output->enable_profiler(TRUE);
+            return $this->db->get();
+    }
+
+
 }

@@ -1,5 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar Aluno</h3>
-<?php echo form_open('aluno/inserir', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
+<?php echo form_open('cadastro/insert_aluno', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
     <input type="hidden" name="dt_matricula" value="<?php echo date("Y-m-d");  ?>" />
     <!-- Área de dados do aluno -->
     <div class="row mt">
@@ -27,15 +27,6 @@
                     <div class="col-sm-5">
                         <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo set_value('cpf'); ?>" />
                         <div class="error"><?php echo form_error('cpf'); ?></div>
-                        <span class="help-block">Informe apenas os números.</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">RG</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="rg" value="<?php echo set_value('rg'); ?>" />
-                        <div class="error"><?php echo form_error('rg'); ?></div>
                         <span class="help-block">Informe apenas os números.</span>
                     </div>
                 </div>
@@ -74,8 +65,12 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Sexo</label>
                     <div class="col-sm-10">
-                        <input type="radio" name="sexo" value="0" checked="true"> Masculino<br />
-                        <input type="radio" name="sexo" value="1"> Feminino
+                        <label>
+                            <input type="radio" name="sexo" value="0" checked="true"> Masculino
+                        </label><br />
+                        <label>
+                            <input type="radio" name="sexo" value="1"> Feminino
+                        </label>
                         <div class="error"><?php echo form_error('sexo'); ?></div>
                     </div>
                 </div>
@@ -94,33 +89,7 @@
     <div class="row mt">
         <div class="col-lg-12">
             <div class="form-panel">
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados de documento</h4>
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Tipo de documento</label>
-                    <div class="col-sm-10">
-                        <select name="id_ta_tipo_documento" class="form-control">
-                          <option value="<?php echo set_value('id_ta_tipo_documento'); ?>">Escolha o tipo</option>
-                        </select>
-                        <div class="error"><?php echo form_error('id_ta_tipo_documento'); ?></div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Número do documento</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="valor_documento" value="<?php echo set_value('valor_documento'); ?>" />
-                        <div class="error"><?php echo form_error('valor_documento'); ?></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Área de dados do responsável -->
-    <div class="row mt">
-        <div class="col-lg-12">
-            <div class="form-panel">
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados dos responsáveis</h4>
+                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados do responsável</h4>
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Nome</label>
                     <div class="col-sm-10">
@@ -156,8 +125,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Sexo</label>
                     <div class="col-sm-10">
-                        <input type="radio" name="sexo" value="0" checked="true"> Masculino<br />
-                        <input type="radio" name="sexo" value="1"> Feminino
+                        <input type="radio" name="sexo_responsavel" value="0" checked="true"> Masculino<br />
+                        <input type="radio" name="sexo_responsavel" value="1"> Feminino
                         <div class="error"><?php echo form_error('sexo_responsavel'); ?></div>
                     </div>
                 </div>
@@ -174,28 +143,43 @@
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">País</label>
                       <div class="col-sm-10">
-                          <select name="id_pais" class="form-control">
-                            <option value="<?php echo set_value('id_pais'); ?>">Escolha uma pessoal</option>
+                          <select name="id_ta_pais" class="form-control">
+                              <option value="<?php echo set_value('id_ta_pais'); ?>">Escolha uma pessoal</option>
+                              <?php
+                                  foreach ($paises as $value) {
+                                    echo "<option value='" . $value->id_ta_pais . "'>" . $value->nm_pais . "</option>";
+                                  }
+                              ?>
                           </select>
-                          <div class="error"><?php echo form_error('id_pais'); ?></div>
+                          <div class="error"><?php echo form_error('id_ta_pais'); ?></div>
                       </div>
                   </div>
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Estado</label>
                       <div class="col-sm-10">
-                          <select name="id_estado" class="form-control">
-                            <option value="<?php echo set_value('id_estado'); ?>">Escolha uma pessoal</option>
+                          <select name="id_ta_estado" class="form-control">
+                            <option value="<?php echo set_value('id_ta_estado'); ?>">Escolha uma pessoal</option>
+                            <?php
+                                  foreach ($estados as $value) {
+                                    echo "<option value='" . $value->id_estado . "'>" . $value->nm_estado . "</option>";
+                                  }
+                                ?>
                           </select>
-                          <div class="error"><?php echo form_error('id_estado'); ?></div>
+                          <div class="error"><?php echo form_error('id_ta_estado'); ?></div>
                       </div>
                   </div>
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Cidade</label>
                       <div class="col-sm-10">
-                          <select name="id_cidade" class="form-control">
-                            <option value="<?php echo set_value('id_cidade'); ?>">Escolha uma pessoal</option>
+                          <select name="id_ta_cidade" class="form-control">
+                            <option value="<?php echo set_value('id_ta_cidade'); ?>">Escolha uma pessoal</option>
+                                <?php
+                                  foreach ($cidades as $value) {
+                                    echo "<option value='" . $value->id_ta_cidade . "'>" . $value->nm_cidade . "</option>";
+                                  }
+                                ?>
                           </select>
-                          <div class="error"><?php echo form_error('id_cidade'); ?></div>
+                          <div class="error"><?php echo form_error('id_ta_cidade'); ?></div>
                       </div>
                   </div>
                   <div class="form-group">
@@ -240,7 +224,12 @@
                       <label class="col-sm-2 col-sm-2 control-label">Tipo</label>
                       <div class="col-sm-10">
                           <select name="id_ta_tipo_telefone" class="form-control">
-                            <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
+                              <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
+                              <?php
+                                  foreach ($tipos_telefone as $value) {
+                                    echo "<option value='" . $value->id_ta_tipo_telefone . "'>" . $value->desc_tipo_telefone . "</option>";
+                                  }
+                              ?>
                           </select>
                           <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
                       </div>
@@ -261,14 +250,6 @@
                           <div class="error"><?php echo form_error('email'); ?></div>
                       </div>
                   </div>
-
-                  <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Melhor data para pagamento</label>
-                      <div class="col-sm-10">
-                          <input type="text" class="form-control" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" />
-                          <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
-                      </div>
-                  </div>
               </div>
           </div>
       </div>
@@ -279,17 +260,90 @@
               <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para pagamento</h4>
                   <div class="form-group">
+                      <label class="col-sm-2 col-sm-2 control-label">Melhor data para pagamento</label>
+                      <div class="col-sm-10">
+                          <input type="text" class="form-control" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" />
+                          <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
+                      </div>
+                  </div>
+                  <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade</label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="valor_mensalidade" value="<?php echo set_value('valor_mensalidade'); ?>" />
                           <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
                       </div>
                   </div>
-
-                  <button class="btn btn-lg btn-primary" >Cadastrar</button>
+                  <div class="form-group">
+                      <label class="col-sm-2 col-sm-2 control-label">Desconto</label>
+                      <div class="col-sm-10">
+                          <input type="text" class="form-control" name="desconto" value="<?php echo set_value('desconto'); ?>" />
+                          <div class="error"><?php echo form_error('desconto'); ?></div>
+                      </div>
+                  </div>
     			    </div><!-- /form-panel -->
     		  </div><!-- /col-lg-12 -->
     	</div><!-- /row -->
+
+      <!-- Área de pagamento -->
+      <div class="row mt">
+          <div class="col-lg-12">
+              <div class="form-panel">
+                  <h4 class="mb"><i class="fa fa-angle-right"></i> Dados de usuário</h4>
+                  <div class="form-group">
+                      <label class="col-sm-2 col-sm-2 control-label">Usuário</label>
+                      <div class="col-sm-10">
+                          <input type="text" class="form-control" name="login" value="<?php echo set_value('login'); ?>" />
+                          <div class="error"><?php echo form_error('login'); ?></div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-sm-2 col-sm-2 control-label">Senha</label>
+                      <div class="col-sm-10">
+                          <input type="password" class="form-control" name="senha" value="<?php echo set_value('senha'); ?>" />
+                          <div class="error"><?php echo form_error('senha'); ?></div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-sm-2 col-sm-2 control-label">Situação</label>
+                      <div class="col-sm-10">
+                          <select name="id_ta_situacao" class="form-control">
+                            <option value="<?php echo set_value('id_ta_situacao'); ?>">Escolha uma pessoal</option>
+                                <?php
+                                  foreach ($situacoes as $value) {
+                                    echo "<option value='" . $value->id_ta_situacao . "'>" . $value->nm_situacao . "</option>";
+                                  }
+                                ?>
+                          </select>
+                          <div class="error"><?php echo form_error('id_ta_situacao'); ?></div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Grupo de permissão</label>
+                    <div class="col-sm-5">
+                        <?php
+                            foreach ($tipos_usuario as $value) {
+                        ?>
+                            <div class="radio">
+                                <label>
+                                    <input name="id_ta_tipo_usuario" type="radio" value="<?php echo $value->id_ta_tipo_usuario; ?>"
+                                    <?php
+                                        if (set_value('id_ta_tipo_usuario')){
+                                            echo (in_array($value->id_ta_tipo_usuario, set_value('id_ta_tipo_usuario')))?" checked ":"";
+                                        }
+                                    ?>
+                                    />
+                                    <?php echo $value->ds_tipo_usuario; ?>
+                                </label>
+                            </div>
+                        <?php
+                            }
+                        ?>
+                    </div>
+                </div>
+                  <button class="btn btn-lg btn-primary" >Cadastrar</button>
+              </div><!-- /form-panel -->
+          </div><!-- /col-lg-12 -->
+      </div><!-- /row -->
 <?php echo form_close(); ?>
 
 
