@@ -27,13 +27,14 @@ var Script = function () {
       Morris.Donut({
         element: 'hero-donut',
         data: [
-          {label: 'Jam', value: 25 },
-          {label: 'Frosted', value: 40 },
-          {label: 'Custard', value: 25 },
-          {label: 'Sugar', value: 10 }
+          {label: 'Branca', value: 5 },
+          {label: 'Amarela', value: 4 },
+          {label: 'Laranja', value: 3 },
+          {label: 'Verde', value: 2 },
+          {label: 'Azul claro', value: 3 }
         ],
           colors: ['#3498db', '#2980b9', '#34495e'],
-        formatter: function (y) { return y + "%" }
+        formatter: function (y) { return (y * 100 / 17) + "%" }
       });
 
       Morris.Area({
@@ -65,12 +66,11 @@ var Script = function () {
       Morris.Bar({
         element: 'hero-bar',
         data: [
-          {device: 'iPhone', geekbench: 136},
-          {device: 'iPhone 3G', geekbench: 137},
-          {device: 'iPhone 3GS', geekbench: 275},
-          {device: 'iPhone 4', geekbench: 380},
-          {device: 'iPhone 4S', geekbench: 655},
-          {device: 'iPhone 5', geekbench: 1571}
+          {device: 'Branca', geekbench: 5},
+          {device: 'Amarela', geekbench: 4},
+          {device: 'Laranja', geekbench: 3},
+          {device: 'Verde', geekbench: 2},
+          {device: 'Azul Claro', geekbench: 3},
         ],
         xkey: 'device',
         ykeys: ['geekbench'],

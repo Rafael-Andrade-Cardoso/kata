@@ -139,7 +139,6 @@ CREATE TABLE menu (
 /*=== Tabela para pessoa ===*/
 CREATE TABLE pessoa (
  id_pessoa INT NOT NULL AUTO_INCREMENT,
- id_responsavel INT,
  nome VARCHAR(50) NOT NULL,
  dt_nascimento DATE NOT NULL,
  email VARCHAR(150),
@@ -308,6 +307,22 @@ CREATE TABLE usuario (
  primary key(id_usuario)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
+/*=== Tabela para responsáveis por alunos ===*/
+CREATE TABLE aluno_responsavel (
+ id_aluno_responsavel INT NOT NULL AUTO_INCREMENT,
+ id_responsavel INT NOT NULL,
+ id_aluno INT NOT NULL,
+ observacao VARCHAR(255),
+ primary key(id_aluno_responsavel)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
+
+/*=== Tabela para relacionar matricula com turma ===*/
+CREATE TABLE matricula_turma (
+ id_matricula_turma INT NOT NULL AUTO_INCREMENT,
+ id_matricula INT NOT NULL,
+ id_turma INT NOT NULL,
+ primary key(id_matricula_turma)
+) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 
 /*========== FOREIGN KEY ==========*/
@@ -318,7 +333,12 @@ ALTER TABLE menu ADD CONSTRAINT FK_menu_0 FOREIGN KEY (id_menu_pai) REFERENCES m
 
 ALTER TABLE pessoa_fisica ADD CONSTRAINT FK_pessoa_fisica FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa) ON DELETE CACADE ON UPDATE CASCADE;
 
-ALTER TABLE pessoa ADD CONSTRAINT FK_pessoa_responsavel FOREIGN KEY (id_responsavel) REFERENCES pessoa (id_pessoa);
+/*ALTER TABLE pessoa ADD CONSTRAINT FK_pessoa_responsavel FOREIGN KEY (id_responsavel) REFERENCES pessoa (id_pessoa);*/
+ALTER TABLE aluno_responsavel ADD CONSTRAINT FK_aluno_responsavel_0 FOREIGN KEY (id_responsavel) REFERENCES pessoa (id_pessoa);
+ALTER TABLE aluno_responsavel ADD CONSTRAINT FK_aluno_responsavel_1 FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno);
+
+ALTER TABLE matricula_turma ADD CONSTRAINT FK_matricula_turma_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula);
+ALTER TABLE matricula_turma ADD CONSTRAINT FK_matricula_turma_1 FOREIGN KEY (id_turma) REFERENCES turma (id_turma);
 
 ALTER TABLE pessoa_telefone ADD CONSTRAINT FK_pessoa_telefone_0 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa);
 ALTER TABLE pessoa_telefone ADD CONSTRAINT FK_pessoa_telefone_1 FOREIGN KEY (id_ta_tipo_telefone) REFERENCES ta_tipo_telefone (id_ta_tipo_telefone);
@@ -898,3 +918,6 @@ WHERE m.id_menu = 47;
 
 
 
+
+
+select * from pessoa_dados where id_pessoa_fisica in (select id_pessoa_fisica from pessoa_fisica)

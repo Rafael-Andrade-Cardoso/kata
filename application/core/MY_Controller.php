@@ -1,6 +1,6 @@
 <?php
-class MY_Controller extends CI_Controller
-{
+class MY_Controller extends CI_Controller {
+
 	protected $protegido = true;
 
 	public function __construct() {
@@ -28,6 +28,7 @@ class MY_Controller extends CI_Controller
 			if (!$this->user->logado) {
 				redirect('login');
 			}
+			$this->get_mensagens_usuario();
 			/*
 			$permitidos = array('pedido', 'arquivo', 'cliente');
 			if ($this->user->administrador == 0 && !in_array($this->router->fetch_class(), $permitidos)) {
@@ -66,5 +67,13 @@ class MY_Controller extends CI_Controller
 		} else {
 			return '1';
 		}
+	}
+
+	public function get_mensagens_usuario() {
+		$this->load->model('crud_model', 'crud');
+		//debug($this->session);
+		$id_pessoa = $this->session->userdata['usuario']->id_pessoa;
+		$comunicados = $this->crud->get_mensagens_usuario($id_pessoa);
+		return $comunicados;
 	}
 }

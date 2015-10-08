@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Template {
+class Template{
 
 	var $ci;
 
@@ -28,6 +28,8 @@ class Template {
 		$this->ci->load->view($view);
 		$this->ci->load->view($template.'/footer');
 	}
+
+
 }
 
 /*

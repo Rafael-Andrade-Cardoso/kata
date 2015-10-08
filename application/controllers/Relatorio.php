@@ -9,26 +9,217 @@ class Relatorio extends MY_Controller {
     }
 
     public function menu($qtd = 'null', $inicio = 'null') {
-        $config = $this->config_pagination();
+        $consulta = $this->crud->get_menus();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/menu', $num_rows);
 
         /* Define $qtd */
         $qtd = $config['per_page'];
         /* Define $inicio */
         ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
-
         $this->pagination->initialize($config);
         $data = array();
-        $table = "menu";
-        $data['menus'] = $this->crud->get_pagination($table, $qtd, $inicio)->result();
+        $data['menus'] = $this->crud->get_menus($qtd, $inicio)->result();
         $data['paginacao'] = $this->pagination->create_links();
         $this->template->load('menu/lista', $data);
     }
 
+    public function aluno($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_alunos();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/aluno', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['alunos'] = $this->crud->get_alunos($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('aluno/lista', $data);
+    }
+
+    public function instrutor($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_instrutores();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/instrutor', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['instrutores'] = $this->crud->get_instrutores($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('instrutor/lista', $data);
+    }
+
+    public function atividade($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_atividades();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/atividade', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['atividades'] = $this->crud->get_atividades($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('atividade/lista', $data);
+    }
+
+    public function graduacao($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_graduacao();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/graduacao', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['graduacoes'] = $this->crud->get_graduacao($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('graduacao/lista', $data);
+    }
+
+    public function turma($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_turma();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/turma', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['turmas'] = $this->crud->get_turma($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('turma/lista', $data);
+    }
+
+    public function horario($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_horario();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/horario', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['horarios'] = $this->crud->get_horario($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('horario/lista', $data);
+    }
+
+    public function situacao($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_situacao();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/situacao', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['situacoes'] = $this->crud->get_situacao($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('situacao/lista', $data);
+    }
+
+    public function comunicado($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_comunicado();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/comunicado', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['comunicados'] = $this->crud->get_comunicado($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('comunicado/lista', $data);
+    }
+
+    public function tipo_usuario($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_tipo_usuario();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/tipo_usuario', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['tipos_usuario'] = $this->crud->get_tipo_usuario($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('tipo_usuario/lista', $data);
+    }
+
+    public function tipo_telefone($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_tipo_telefone();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/tipo_telefone', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['tipos_telefone'] = $this->crud->get_tipo_telefone($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('tipo_telefone/lista', $data);
+    }
+
+    public function exame($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_exame();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/exame', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['exames'] = $this->crud->get_exame($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('exame/lista', $data);
+    }
+
+    public function arte_marcial($qtd = 'null', $inicio = 'null') {
+        $consulta = $this->crud->get_arte_marcial();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/arte_marcial', $num_rows);
+
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        $data['artes_marciais'] = $this->crud->get_arte_marcial($qtd, $inicio)->result();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('arte_marcial/lista', $data);
+    }
 
 
-    public function config_pagination() {
-        $config['base_url'] = base_url('relatorio/menu');
-        $config['total_rows'] = $this->crud->get_all('menu')->num_rows();
+    public function config_pagination($url, $num_rows ) {
+        $config['base_url'] = base_url($url);
+        $config['total_rows'] = $num_rows;
         $config['per_page'] = 20;
         /* Tag que envolve todo o controle de paginação */
         $config['full_tag_open'] = '<span class="pagination">';
@@ -49,5 +240,12 @@ class Relatorio extends MY_Controller {
         return $config;
 
     }
+
+    public function get_alunos_faixa() {
+        $lista = $this->crud->get_alunos_faixa();
+        debug($lista->result());
+    }
+
+
 
 }

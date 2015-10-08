@@ -77,7 +77,7 @@
                 <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Observações sobre o(a) aluno(a)</label>
                       <div class="col-sm-10">
-                          <textarea class="form-control" name="observacao" value="<?php echo set_value('observacao'); ?>" > </textarea>
+                          <textarea class="form-control" name="observacao" ><?php echo set_value('observacao'); ?> </textarea>
                           <div class="error"><?php echo form_error('observacao'); ?></div>
                       </div>
                   </div>
@@ -147,7 +147,11 @@
                               <option value="<?php echo set_value('id_ta_pais'); ?>">Escolha uma pessoal</option>
                               <?php
                                   foreach ($paises as $value) {
-                                    echo "<option value='" . $value->id_ta_pais . "'>" . $value->nm_pais . "</option>";
+                                    echo "<option value='" . $value->id_ta_pais . "'";
+                                    if (set_value('id_ta_pai')){
+                                      echo " checked ";
+                                    }
+                                    echo ">" . $value->nm_pais . "</option>";
                                   }
                               ?>
                           </select>
@@ -161,7 +165,11 @@
                             <option value="<?php echo set_value('id_ta_estado'); ?>">Escolha uma pessoal</option>
                             <?php
                                   foreach ($estados as $value) {
-                                    echo "<option value='" . $value->id_estado . "'>" . $value->nm_estado . "</option>";
+                                    echo "<option value='" . $value->id_estado . "'";
+                                    if (set_value('id_ta_estado')){
+                                      echo " checked ";
+                                    }
+                                    echo ">" . $value->nm_estado . "</option>";
                                   }
                                 ?>
                           </select>
@@ -175,7 +183,11 @@
                             <option value="<?php echo set_value('id_ta_cidade'); ?>">Escolha uma pessoal</option>
                                 <?php
                                   foreach ($cidades as $value) {
-                                    echo "<option value='" . $value->id_ta_cidade . "'>" . $value->nm_cidade . "</option>";
+                                    echo "<option value='" . $value->id_ta_cidade . "'";
+                                    if (set_value('id_ta_cidade')){
+                                      echo " checked ";
+                                    }
+                                    echo ">" . $value->nm_cidade . "</option>";
                                   }
                                 ?>
                           </select>
@@ -206,7 +218,7 @@
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Complemento</label>
                       <div class="col-sm-10">
-                          <textarea class="form-control" name="complemento" value="<?php echo set_value('complemento'); ?>" > </textarea>
+                          <textarea class="form-control" name="complemento" > <?php echo set_value('complemento'); ?> </textarea>
                           <div class="error"><?php echo form_error('complemento'); ?></div>
                       </div>
                   </div>
@@ -227,7 +239,11 @@
                               <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
                               <?php
                                   foreach ($tipos_telefone as $value) {
-                                    echo "<option value='" . $value->id_ta_tipo_telefone . "'>" . $value->desc_tipo_telefone . "</option>";
+                                    echo "<option value='" . $value->id_ta_tipo_telefone . "'";
+                                    if (set_value('id_ta_tipo_telefone')){
+                                      echo " checked ";
+                                    }
+                                    echo ">" . $value->desc_tipo_telefone . "</option>";
                                   }
                               ?>
                           </select>
@@ -310,7 +326,11 @@
                             <option value="<?php echo set_value('id_ta_situacao'); ?>">Escolha uma pessoal</option>
                                 <?php
                                   foreach ($situacoes as $value) {
-                                    echo "<option value='" . $value->id_ta_situacao . "'>" . $value->nm_situacao . "</option>";
+                                    echo "<option value='" . $value->id_ta_situacao . "'";
+                                    if (set_value('id_ta_situacao')){
+                                      echo " checked ";
+                                    }
+                                    echo ">" . $value->nm_situacao . "</option>";
                                   }
                                 ?>
                           </select>
@@ -328,7 +348,7 @@
                                     <input name="id_ta_tipo_usuario" type="radio" value="<?php echo $value->id_ta_tipo_usuario; ?>"
                                     <?php
                                         if (set_value('id_ta_tipo_usuario')){
-                                            echo (in_array($value->id_ta_tipo_usuario, set_value('id_ta_tipo_usuario')))?" checked ":"";
+                                            echo ($value->id_ta_tipo_usuario == set_value('id_ta_tipo_usuario'))?" checked ":"";
                                         }
                                     ?>
                                     />

@@ -7,6 +7,9 @@
         //$where = array('login' => $this->input->post('user'), 'senha' => $this->input->post('pass'));
         $this->db->where('login', $this->input->post('user'));
         $this->db->where('senha', hash('sha256', $this->input->post('pass')));
+        //print_r($this->input->post('user'));
+        //echo "<br />";
+        //print_r(hash('sha256', $this->input->post('pass')));
         //$this->db->where('status', 1); // Verifica o status do usuário
 
         $query = $this->db->get('usuario');

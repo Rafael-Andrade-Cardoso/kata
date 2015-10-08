@@ -1484,14 +1484,15 @@ PANELS CONFIGURATIONS
     text-align: center;
     background: #393D40;
     height: 65px;
-    line-height: 65px;
+    /*line-height: 65px;*/
+    line-height: 40px;
     width: 100%;
     display: block;
     border-bottom: 1px solid #44494e;
     color: #889199;
     text-transform: uppercase;
     font-weight: 900;
-    font-size: 11px;
+    font-size: 14px;
     letter-spacing: 1px;
     text-indent: 52px;
     cursor: pointer;

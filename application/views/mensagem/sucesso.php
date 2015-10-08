@@ -12,7 +12,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-offset-4 col-md-offset-4 col-lg-4 col-md-4 col-sm-4 mb">
+    <!-- <div class="col-lg-offset-4 col-md-offset-4 col-lg-4 col-md-4 col-sm-4 mb"> -->
+    <div class="col-lg-offset-1 col-lg-10">
         <div class="mensagem">
             <a href="" onclick="javascript:window.history.go(-1)">Cadastrar novo </a>
             <?php

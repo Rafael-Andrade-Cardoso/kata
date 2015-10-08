@@ -1,5 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar Menu</h3>
-<?php echo form_open('cadastro/insert_estado', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
+<?php echo form_open('cadastro/insert_exame', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
 
     <!-- Área de dados do menu -->
     <div class="row mt">
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_estado" class="form-control" name="nm_estado" value="<?php echo set_value('nm_estado'); ?>" />
+                        <input type="text" id="nm_exame" class="form-control" name="nm_estado" value="<?php echo set_value('nm_estado'); ?>" />
                         <div class="error"><?php echo form_error('nm_estado'); ?></div>
                     </div>
                 </div>

@@ -6,31 +6,24 @@
                               <thead>
                                   <tr>
                                       <th> Nome</th>
-                                      <th> Menu pai</th>
-                                      <th class="hidden-sm hidden-xs"> Descrição</th>
-                                      <th class="hidden-sm hidden-xs"> Acesso</th>
-                                      <th> Ícone</th>
+                                      <th> Descrição</th>
                                       <th></th>
                                   </tr>
                               </thead>
                               <tbody>
                                   <?php
-                                      //debug($menus);
                                       $qtd = $this->uri->segment(3);
                                       $inicio = $this->uri->segment(4);
 
-                                      foreach ($menus as $value) {
+                                      foreach ($artes_marciais as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_menu; ?>">
-                                          <td><a href="basic_table.htm#l"><?php echo $value->nome; ?></a></td>
-                                          <td><?php echo $value->nome_pai; ?></td>
-                                          <td class="hidden-sm hidden-xs"><?php echo data_from_db($value->desc_menu); ?></td>
-                                          <td class="hidden-sm hidden-xs"><?php echo $value->tipo_usuario; ?></td>
-                                          <td><span class="label label-info label-mini"><?php echo $value->icone; ?></span></td>
+                                      <tr id="line_menu<?php echo $value->id_arte_marcial; ?>">
+                                          <td><a href="basic_table.html#"><?php echo $value->nm_arte_marcial; ?></a></td>
+                                          <td><?php echo $value->descricao; ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_menu); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_menu;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_arte_marcial); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_arte_marcial;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

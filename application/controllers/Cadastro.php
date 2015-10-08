@@ -305,6 +305,7 @@ class Cadastro extends MY_Controller {
 
     function form_estado() {
         $data['paises'] = $this->get_all('ta_pais');
+        $data['estados'] = $this->get_all('ta_estado');
         $this->template->load('estado/form_cadastro', $data);
     }
 
@@ -441,7 +442,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'peso',
                 'label' => 'Peso',
-                'rules' => 'trim|required|max_length[3]'
+                'rules' => 'trim|required|max_length[5]'
             ),
             array(
                 'field' => 'altura',
@@ -461,7 +462,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'observacao',
                 'label' => 'Observação',
-                'rules' => 'trim|required|max_length[255]'
+                'rules' => 'trim|max_length[255]'
             ),
             array(
                 'field' => 'id_ta_cidade',
@@ -491,7 +492,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'id_ta_tipo_telefone',
                 'label' => 'Tipo de telefone',
-                'rules' => 'trim|required|max_length[111]'
+                'rules' => 'trim|required|max_length[11]'
             ),
             array(
                 'field' => 'telefone',
@@ -562,7 +563,7 @@ class Cadastro extends MY_Controller {
 
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === FALSE) {
-            $this->form_cadastro();
+            $this->form_aluno();
         /* Senão, caso sucesso: */
         } else {
 
@@ -597,7 +598,6 @@ class Cadastro extends MY_Controller {
             $pessoa->email = $data->email;
             $id_pessoa = $this->crud->insert('pessoa', $pessoa);
 
-//insert into pessoa_fisica(id_pessoa_fisica, sobrenome, sexo) values (4, 'Andrade Cardoso', 0);
             $endereco = new stdClass();
             $endereco->id_ta_cidade = $data->id_ta_cidade;
             $endereco->id_pessoa = $id_pessoa;
@@ -654,23 +654,17 @@ class Cadastro extends MY_Controller {
             $id_usuario = $this->crud->insert('usuario', $usuario);
 
             /* Fecha a transação */
-            //$this->db->trans_complete();
+            $this->db->trans_complete();
 
             if ($this->db->trans_status() === TRUE) {
                 $this->db->trans_commit();
                 $this->sucesso();
+
             } else {
                 $this->db->trans_rollback();
                 log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
                 $this->erro();
             }
-            /*
-            if ($this->crud->Insert($data)) {
-                redirect('aluno');
-            } else {
-                log_message('error', 'Erro ao inserir a aluno.');
-            }
-            */
         }
     }
 
@@ -808,7 +802,7 @@ class Cadastro extends MY_Controller {
             $this->crud->insert('instrutor', $instrutor);
 
             /* Fecha a transação */
-            //$this->db->trans_complete();
+            $this->db->trans_complete();
 
             if ($this->db->trans_status() === TRUE) {
                 $this->db->trans_commit();
@@ -824,9 +818,83 @@ class Cadastro extends MY_Controller {
         }
     }
 
+    function form_exame() {
+        $data['arte_marcial'] = $this->get_all('arte_marcial');
+        $data['graduacao'] = $this->get_all('ta_graduacao');
+        $data['aluno'] = $this->crud->get_alunos()->result();
+        $this->template->load('exame/form_cadastro', $data);
+    }
+
+    function insert_exame() {
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        $validacoes = array(
+            array(
+                'field' => 'id_ta_graduacao',
+                'label' => 'Graduação',
+                'rules' => 'trim|required|max_length[11]'
+            ),
+            array(
+                'field' => 'id_arte_marcial',
+                'label' => 'Arte marcial',
+                'rules' => 'trim|required|max_length[11]'
+            ),
+            array(
+                'field' => 'dt_exame',
+                'label' => 'Data do exame',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'valor',
+                'label' => 'Data do exame',
+                'rules' => 'trim|max_length[10]'
+            ),
+            array(
+                'field' => 'local',
+                'label' => 'Data do exame',
+                'rules' => 'trim|required|max_length[255]'
+            ),
+            array(
+                'field' => 'descricao',
+                'label' => 'Data do exame',
+                'rules' => 'trim|required|max_length[255]'
+            ),
+            array(
+                'field' => 'id_matricula',
+                'label' => 'Data do exame',
+                'rules' => 'trim|required|max_length[11]'
+            )
+        );
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->insert('exame', $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            if (is_numeric($id) && $id > 0){
+                $this->sucesso();
+            } else {
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_exame();
+        }
+    }
 
 
 
+    public function object_to_option($data, $value, $display) {
+        $option = "";
+        foreach ($data as $each) {
+            $option .= "<option value='" . $each->$value . "'>" . $each->$display . "</option>";
+        }
+        return $option;
+    }
 
 
 
@@ -862,8 +930,10 @@ class Cadastro extends MY_Controller {
         if(!isset($id_pais)){
             $id_pais = $this->input->post("id_ta_pais");
         }
-        //die(print_r($id_pais));
-        return $this->crud->get_estado_pais($id_pais)->result();
+        $id_ta_pais = "id_ta_pais = $id_pais";
+        $estados = $this->crud->get_where("ta_estado", $id_ta_pais)->result();
+        //die(print_r($this->object_to_option($estados, 'id_ta_estado', 'nm_estado')));
+        echo $this->object_to_option($estados, 'id_ta_estado', 'nm_estado');
     }
 
     public function get_all($table) {
@@ -874,9 +944,5 @@ class Cadastro extends MY_Controller {
     public function get_where($table, $field, $value){
         return $this->crud->get_all($table)->result();
     }
-
-
-
-
 
 }

@@ -6,31 +6,30 @@
                               <thead>
                                   <tr>
                                       <th> Nome</th>
-                                      <th> Menu pai</th>
-                                      <th class="hidden-sm hidden-xs"> Descrição</th>
-                                      <th class="hidden-sm hidden-xs"> Acesso</th>
-                                      <th> Ícone</th>
+                                      <th> sobrenome</th>
+                                      <th class="hidden-sm hidden-xs"> Data de nascimento</th>
+                                      <th> Situação</th>
                                       <th></th>
                                   </tr>
                               </thead>
                               <tbody>
                                   <?php
-                                      //debug($menus);
                                       $qtd = $this->uri->segment(3);
                                       $inicio = $this->uri->segment(4);
+                                      //echo "<pre>";
+                                      //die(print_r($alunos));
 
-                                      foreach ($menus as $value) {
+                                      foreach ($alunos as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_menu; ?>">
-                                          <td><a href="basic_table.htm#l"><?php echo $value->nome; ?></a></td>
-                                          <td><?php echo $value->nome_pai; ?></td>
-                                          <td class="hidden-sm hidden-xs"><?php echo data_from_db($value->desc_menu); ?></td>
-                                          <td class="hidden-sm hidden-xs"><?php echo $value->tipo_usuario; ?></td>
-                                          <td><span class="label label-info label-mini"><?php echo $value->icone; ?></span></td>
+                                      <tr id="line_menu<?php echo $value->id_aluno; ?>">
+                                          <td><a href="basic_table.html#"><?php echo $value->nome; ?></a></td>
+                                          <td><?php echo $value->sobrenome; ?></td>
+                                          <td class="hidden-sm hidden-xs"><?php echo data_from_db($value->dt_nascimento); ?></td>
+                                          <td><span class="label label-info label-mini"><?php echo $value->id_ta_situacao; ?></span></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_menu); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_menu;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_aluno); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_aluno;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

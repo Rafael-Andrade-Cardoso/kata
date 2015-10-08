@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">País</label>
                     <div class="col-sm-10">
-                        <select name="id_ta_pais" id="id_pais" onclick="javascript: getestado();" class="form-control">
+                        <select name="id_ta_pais" id="id_ta_pais" onclick="javascript: getestado();" class="form-control">
                           <option value="">Escolha o país</option>
                           <?php
                               foreach ($paises as $value) {
@@ -32,7 +32,12 @@
                     <label class="col-sm-2 col-sm-2 control-label">Estado</label>
                     <div class="col-sm-10">
                         <select name="id_ta_estado" id="id_estado" class="form-control">
-                          <option value="">Escolha o país primeiro</option>
+                          <option value="">Escolha o Estado</option>
+                          <?php
+                              foreach ($estados as $value) {
+                                echo "<option value='" . $value->id_ta_estado . "'>" . $value->nm_pais . "</option>";
+                              }
+                          ?>
                         </select>
                         <div class="error"><?php echo form_error('id_menu_pai'); ?></div>
                     </div>
@@ -57,12 +62,12 @@
 
 <script type="text/javascript">
     function getestado() {
-        $("#id_pais option:selected").each(function() {
-            var id_pais = $("#id_pais").val();
+        $("#id_ta_pais option:selected").each(function() {
+            var id_ta_pais = $("#id_ta_pais").val();
             str1 = "<?php echo base_url(); ?>cadastro/get_estado_pais/"
-            var res = str1.concat(id_pais);
+            var res = str1.concat(id_ta_pais);
             $.post(res, {
-                id_pais : id_pais
+                id_ta_pais : id_ta_pais
             }, function(data) {
                 $("#id_estado").html(data);
             });
