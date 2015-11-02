@@ -163,15 +163,6 @@ CREATE TABLE pessoa_dados (
  primary key(id_pessoa_dados)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
-/*=== Tabela de documentos de pessoa ===*/
-CREATE TABLE pessoa_documento (
- id_pessoa_documento INT NOT NULL AUTO_INCREMENT,
- id_ta_documento INT NOT NULL,
- valor_documento VARCHAR(100),
- id_pessoa_fisica INT NOT NULL,
- primary key(id_pessoa_documento)
-) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
-
 /*=== Tabela para pessoa física ====*/
 CREATE TABLE pessoa_fisica (
  id_pessoa_fisica INT NOT NULL,
@@ -223,14 +214,6 @@ CREATE TABLE ta_cidade (
  id_ta_estado INT NOT NULL,
  nm_cidade VARCHAR(50) NOT NULL,
  primary key(id_ta_cidade)
-) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
-
-/*=== Tabela auxiliar para tipos de documentos ===*/
-CREATE TABLE ta_documento (
- id_ta_documento INT NOT NULL AUTO_INCREMENT,
- nm_documento VARCHAR(100),
- descricao VARCHAR(255),
- primary key(id_ta_documento)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
 /*=== Tabela para estados ===*/
@@ -337,7 +320,7 @@ ALTER TABLE menu ADD CONSTRAINT FK_menu_0 FOREIGN KEY (id_menu_pai) REFERENCES m
 
 
 /*========== pessoa_fisica ==========*/
-ALTER TABLE pessoa_fisica ADD CONSTRAINT FK_pessoa_fisica FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa) ON DELETE CACADE ON UPDATE CASCADE;
+ALTER TABLE pessoa_fisica ADD CONSTRAINT FK_pessoa_fisica FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 /*========== aluno_responsavel ==========*/
@@ -378,10 +361,6 @@ ALTER TABLE mensalidade ADD CONSTRAINT FK_mensalidade_0 FOREIGN KEY (id_matricul
 
 /*========== pessoa_dados ==========*/
 ALTER TABLE pessoa_dados ADD CONSTRAINT FK_pessoa_dados_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
-
-/*========== pessoa_documento ==========*/
-ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_0 FOREIGN KEY (id_ta_documento) REFERENCES ta_documento (id_ta_documento) ON DELETE RESTRICT ON UPDATE CASCADE;
-ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*========== ta_cidade ==========*/
 ALTER TABLE ta_cidade ADD CONSTRAINT FK_ta_cidade_0 FOREIGN KEY (id_ta_estado) REFERENCES ta_estado (id_ta_estado) ON DELETE CASCADE ON UPDATE CASCADE;
