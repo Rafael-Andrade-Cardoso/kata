@@ -1,4 +1,4 @@
-<h3><i class="fa fa-angle-right"></i> Cadastrar Menu</h3>
+<h3><i class="fa fa-angle-right"></i> Cadastrar tipo de telefone</h3>
 <?php echo form_open('cadastro/insert_tipo_telefone', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
 
     <!-- Área de dados do menu -->

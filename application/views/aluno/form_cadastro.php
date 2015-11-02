@@ -1,4 +1,4 @@
-<h3><i class="fa fa-angle-right"></i> Cadastrar Aluno</h3>
+<h3><i class="fa fa-angle-right"></i> Cadastrar aluno</h3>
 <?php echo form_open('cadastro/insert_aluno', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
     <input type="hidden" name="dt_matricula" value="<?php echo date("Y-m-d");  ?>" />
     <!-- Área de dados do aluno -->

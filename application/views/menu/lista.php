@@ -1,6 +1,7 @@
-            <h3><i class="fa fa-angle-right"></i> Lista de Menus</h3>
+            <h3><i class="fa fa-angle-right"></i> Lista de menus</h3>
               <div class="row mt">
                   <div class="col-md-12">
+                      <a href="<?php echo base_url('cadastro/form_menu'); ?>" class="btn btn-primary">Cadastrar</a><br /><br />
                       <div class="content-panel">
                           <table class="table table-striped table-advance table-hover">
                               <thead>

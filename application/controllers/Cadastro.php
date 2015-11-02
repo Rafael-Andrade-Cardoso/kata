@@ -90,7 +90,7 @@ class Cadastro extends MY_Controller {
 
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === FALSE) {
-            $this->form_cadastro();
+            $this->form_menu();
         /* Senão, caso sucesso: */
         } else {
             $id_ta_tipo_usuario = $data['id_ta_tipo_usuario'];
@@ -571,28 +571,8 @@ class Cadastro extends MY_Controller {
             $this->db->trans_start();
 
 
-            if (!empty($data->nome_responsavel)) {
-                /* Dados para cadastro de pessoa */
-                $pessoa = new stdClass();
-                $pessoa->nome = $data->nome_responsavel;
-                $pessoa->dt_nascimento = $data->dt_nascimento_responsavel;
-                $pessoa->email = $data->email_responsavel;
-                $id_responsavel = $this->crud->insert('pessoa', $pessoa);
-
-                /* Dados para cadastro de pessoa */
-                $pessoa_fisica = new stdClass();
-                $pessoa_fisica->id_pessoa_fisica = $id_responsavel;
-                $pessoa_fisica->sobrenome = $data->sobrenome_responsavel;
-                $pessoa_fisica->sexo = $data->sexo_responsavel;
-                $id_pessoa_fisica = $this->crud->insert('pessoa_fisica', $pessoa_fisica);
-            }
-
-
             /* Dados para cadastro de pessoa */
             $pessoa = new stdClass();
-            if (!empty($data->nome_responsavel)) {
-               $pessoa->id_responsavel = $id_pessoa_fisica;
-            }
             $pessoa->nome = $data->nome;
             $pessoa->dt_nascimento = $data->dt_nascimento;
             $pessoa->email = $data->email;
@@ -634,6 +614,30 @@ class Cadastro extends MY_Controller {
             $aluno->observacao = $data->observacao;
             $aluno->id_pessoa_fisica = $id_pessoa;
             $id_aluno = $this->crud->insert('aluno', $aluno);
+
+
+            if (!empty($data->nome_responsavel)) {
+                /* Dados para cadastro de pessoa para responsável */
+                $pessoa = new stdClass();
+                $pessoa->nome = $data->nome_responsavel;
+                $pessoa->dt_nascimento = $data->dt_nascimento_responsavel;
+                $pessoa->email = $data->email_responsavel;
+                $id_responsavel = $this->crud->insert('pessoa', $pessoa);
+
+                /* Dados para cadastro de pessoa para responsável */
+                $pessoa_fisica = new stdClass();
+                $pessoa_fisica->id_pessoa_fisica = $id_responsavel;
+                $pessoa_fisica->sobrenome = $data->sobrenome_responsavel;
+                $pessoa_fisica->sexo = $data->sexo_responsavel;
+                $id_pessoa_fisica = $this->crud->insert('pessoa_fisica', $pessoa_fisica);
+
+                /* Dados para cadastro da tabela aluno_responsavel para responsável */
+                $aluno_responsavel = new stdClass();
+                $aluno_responsavel->id_responsavel = $id_pessoa_fisica;
+                $aluno_responsavel->id_aluno = $data->observacao;
+                $aluno_responsavel->observacao = $id_pessoa;
+                $aluno_responsavel = $this->crud->insert('aluno_responsavel', $aluno_responsavel);
+            }
 
             $matricula = new stdClass();
             $matricula->id_ta_situacao = $data->id_ta_situacao;

@@ -178,6 +178,7 @@ CREATE TABLE pessoa_fisica (
  sobrenome VARCHAR(100) NOT NULL,
  tipo_sanguineo VARCHAR(3),
  sexo CHAR(1),
+ cpf CHAR(11),
  primary key(id_pessoa_fisica)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
@@ -324,107 +325,150 @@ CREATE TABLE matricula_turma (
  primary key(id_matricula_turma)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB;
 
-
 /*========== FOREIGN KEY ==========*/
-ALTER TABLE menu_tipo_usuario ADD CONSTRAINT FK_menu_tipo_usuario_0 FOREIGN KEY (id_menu) REFERENCES menu (id_menu);
-ALTER TABLE menu_tipo_usuario ADD CONSTRAINT FK_menu_tipo_usuario_1 FOREIGN KEY (id_ta_tipo_usuario) REFERENCES ta_tipo_usuario (id_ta_tipo_usuario);
+/*========== menu_tipo_usuario ==========*/
+ALTER TABLE menu_tipo_usuario ADD CONSTRAINT FK_menu_tipo_usuario_0 FOREIGN KEY (id_menu) REFERENCES menu (id_menu) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE menu ADD CONSTRAINT FK_menu_0 FOREIGN KEY (id_menu_pai) REFERENCES menu (id_menu);
+ALTER TABLE menu_tipo_usuario ADD CONSTRAINT FK_menu_tipo_usuario_1 FOREIGN KEY (id_ta_tipo_usuario) REFERENCES ta_tipo_usuario (id_ta_tipo_usuario)  ON DELETE RESTRICT ON UPDATE CASCADE;
 
+
+/*========== menu ==========*/
+ALTER TABLE menu ADD CONSTRAINT FK_menu_0 FOREIGN KEY (id_menu_pai) REFERENCES menu (id_menu) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+/*========== pessoa_fisica ==========*/
 ALTER TABLE pessoa_fisica ADD CONSTRAINT FK_pessoa_fisica FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa) ON DELETE CACADE ON UPDATE CASCADE;
 
-/*ALTER TABLE pessoa ADD CONSTRAINT FK_pessoa_responsavel FOREIGN KEY (id_responsavel) REFERENCES pessoa (id_pessoa);*/
-ALTER TABLE aluno_responsavel ADD CONSTRAINT FK_aluno_responsavel_0 FOREIGN KEY (id_responsavel) REFERENCES pessoa (id_pessoa);
-ALTER TABLE aluno_responsavel ADD CONSTRAINT FK_aluno_responsavel_1 FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno);
 
-ALTER TABLE matricula_turma ADD CONSTRAINT FK_matricula_turma_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula);
-ALTER TABLE matricula_turma ADD CONSTRAINT FK_matricula_turma_1 FOREIGN KEY (id_turma) REFERENCES turma (id_turma);
+/*========== aluno_responsavel ==========*/
+ALTER TABLE aluno_responsavel ADD CONSTRAINT FK_aluno_responsavel_0 FOREIGN KEY (id_responsavel) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE pessoa_telefone ADD CONSTRAINT FK_pessoa_telefone_0 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa);
-ALTER TABLE pessoa_telefone ADD CONSTRAINT FK_pessoa_telefone_1 FOREIGN KEY (id_ta_tipo_telefone) REFERENCES ta_tipo_telefone (id_ta_tipo_telefone);
+ALTER TABLE aluno_responsavel ADD CONSTRAINT FK_aluno_responsavel_1 FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE ta_estado ADD CONSTRAINT FK_ta_estado_0 FOREIGN KEY (id_ta_pais) REFERENCES ta_pais (id_ta_pais);
+/*========== matricula_turma ==========*/
+ALTER TABLE matricula_turma ADD CONSTRAINT FK_matricula_turma_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE matricula_turma ADD CONSTRAINT FK_matricula_turma_1 FOREIGN KEY (id_turma) REFERENCES turma (id_turma) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE usuario ADD CONSTRAINT FK_usuario_0 FOREIGN KEY (id_ta_tipo_usuario) REFERENCES ta_tipo_usuario (id_ta_tipo_usuario);
-ALTER TABLE usuario ADD CONSTRAINT FK_usuario_1 FOREIGN KEY (id_ta_situacao) REFERENCES ta_situacao (id_ta_situacao);
-ALTER TABLE usuario ADD CONSTRAINT FK_usuario_2 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa);
+/*========== pessoa_telefone ==========*/
+ALTER TABLE pessoa_telefone ADD CONSTRAINT FK_pessoa_telefone_0 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE pessoa_telefone ADD CONSTRAINT FK_pessoa_telefone_1 FOREIGN KEY (id_ta_tipo_telefone) REFERENCES ta_tipo_telefone (id_ta_tipo_telefone) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE aluno ADD CONSTRAINT FK_aluno_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica);
+/*========== ta_estado ==========*/
+ALTER TABLE ta_estado ADD CONSTRAINT FK_ta_estado_0 FOREIGN KEY (id_ta_pais) REFERENCES ta_pais (id_ta_pais) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE instrutor ADD CONSTRAINT FK_instrutor_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa);
-ALTER TABLE instrutor ADD CONSTRAINT FK_instrutor_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica);
+/*========== usuario ==========*/
+ALTER TABLE usuario ADD CONSTRAINT FK_usuario_0 FOREIGN KEY (id_ta_tipo_usuario) REFERENCES ta_tipo_usuario (id_ta_tipo_usuario) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE usuario ADD CONSTRAINT FK_usuario_1 FOREIGN KEY (id_ta_situacao) REFERENCES ta_situacao (id_ta_situacao) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE usuario ADD CONSTRAINT FK_usuario_2 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE matricula ADD CONSTRAINT FK_matricula_0 FOREIGN KEY (id_ta_situacao) REFERENCES ta_situacao (id_ta_situacao);
-ALTER TABLE matricula ADD CONSTRAINT FK_matricula_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica);
-ALTER TABLE matricula ADD CONSTRAINT FK_matricula_2 FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno);
+/*========== aluno ==========*/
+ALTER TABLE aluno ADD CONSTRAINT FK_aluno_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE mensalidade ADD CONSTRAINT FK_mensalidade_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula);
+/*========== instrutor ==========*/
+ALTER TABLE instrutor ADD CONSTRAINT FK_instrutor_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE instrutor ADD CONSTRAINT FK_instrutor_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE pessoa_dados ADD CONSTRAINT FK_pessoa_dados_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica);
+/*========== matricula ==========*/
+ALTER TABLE matricula ADD CONSTRAINT FK_matricula_0 FOREIGN KEY (id_ta_situacao) REFERENCES ta_situacao (id_ta_situacao) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE matricula ADD CONSTRAINT FK_matricula_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE matricula ADD CONSTRAINT FK_matricula_2 FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_0 FOREIGN KEY (id_ta_documento) REFERENCES ta_documento (id_ta_documento);
-ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica);
+/*========== mensalidade ==========*/
+ALTER TABLE mensalidade ADD CONSTRAINT FK_mensalidade_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE ta_cidade ADD CONSTRAINT FK_ta_cidade_0 FOREIGN KEY (id_ta_estado) REFERENCES ta_estado (id_ta_estado);
+/*========== pessoa_dados ==========*/
+ALTER TABLE pessoa_dados ADD CONSTRAINT FK_pessoa_dados_0 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE endereco ADD CONSTRAINT FK_endereco_0 FOREIGN KEY (id_ta_cidade) REFERENCES ta_cidade (id_ta_cidade);
-ALTER TABLE endereco ADD CONSTRAINT FK_endereco_1 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa);
+/*========== pessoa_documento ==========*/
+ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_0 FOREIGN KEY (id_ta_documento) REFERENCES ta_documento (id_ta_documento) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE pessoa_documento ADD CONSTRAINT FK_pessoa_documento_1 FOREIGN KEY (id_pessoa_fisica) REFERENCES pessoa_fisica (id_pessoa_fisica) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE exame ADD CONSTRAINT FK_exame_0 FOREIGN KEY (id_ta_graduacao) REFERENCES ta_graduacao (id_ta_graduacao);
-ALTER TABLE exame ADD CONSTRAINT FK_exame_1 FOREIGN KEY (id_arte_marcial) REFERENCES arte_marcial (id_arte_marcial);
-ALTER TABLE exame ADD CONSTRAINT FK_exame_2 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula);
+/*========== ta_cidade ==========*/
+ALTER TABLE ta_cidade ADD CONSTRAINT FK_ta_cidade_0 FOREIGN KEY (id_ta_estado) REFERENCES ta_estado (id_ta_estado) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE horario ADD CONSTRAINT FK_horario_0 FOREIGN KEY (id_instrutor) REFERENCES instrutor (id_instrutor);
+/*========== endereco ==========*/
+ALTER TABLE endereco ADD CONSTRAINT FK_endereco_0 FOREIGN KEY (id_ta_cidade) REFERENCES ta_cidade (id_ta_cidade) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE endereco ADD CONSTRAINT FK_endereco_1 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE instrutor_arte_marcial ADD CONSTRAINT FK_instrutor_arte_marcial_0 FOREIGN KEY (id_arte_marcial) REFERENCES arte_marcial (id_arte_marcial);
-ALTER TABLE instrutor_arte_marcial ADD CONSTRAINT FK_instrutor_arte_marcial_1 FOREIGN KEY (id_ta_graduacao) REFERENCES ta_graduacao (id_ta_graduacao);
-ALTER TABLE instrutor_arte_marcial ADD CONSTRAINT FK_instrutor_arte_marcial_2 FOREIGN KEY (id_instrutor) REFERENCES instrutor (id_instrutor);
+/*========== exame ==========*/
+ALTER TABLE exame ADD CONSTRAINT FK_exame_0 FOREIGN KEY (id_ta_graduacao) REFERENCES ta_graduacao (id_ta_graduacao) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE exame ADD CONSTRAINT FK_exame_1 FOREIGN KEY (id_arte_marcial) REFERENCES arte_marcial (id_arte_marcial) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE exame ADD CONSTRAINT FK_exame_2 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE matricula_graduacao ADD CONSTRAINT FK_matricula_graduacao_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula);
-ALTER TABLE matricula_graduacao ADD CONSTRAINT FK_matricula_graduacao_1 FOREIGN KEY (id_ta_graduacao) REFERENCES ta_graduacao (id_ta_graduacao);
+/*========== horario ==========*/
+ALTER TABLE horario ADD CONSTRAINT FK_horario_0 FOREIGN KEY (id_instrutor) REFERENCES instrutor (id_instrutor) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE turma ADD CONSTRAINT FK_turma_0 FOREIGN KEY (id_horario) REFERENCES horario (id_horario);
+/*========== instrutor_arte_marcial ==========*/
+ALTER TABLE instrutor_arte_marcial ADD CONSTRAINT FK_instrutor_arte_marcial_0 FOREIGN KEY (id_arte_marcial) REFERENCES arte_marcial (id_arte_marcial) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE instrutor_arte_marcial ADD CONSTRAINT FK_instrutor_arte_marcial_1 FOREIGN KEY (id_ta_graduacao) REFERENCES ta_graduacao (id_ta_graduacao) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE instrutor_arte_marcial ADD CONSTRAINT FK_instrutor_arte_marcial_2 FOREIGN KEY (id_instrutor) REFERENCES instrutor (id_instrutor) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE aula ADD CONSTRAINT FK_aula_0 FOREIGN KEY (id_arte_marcial) REFERENCES arte_marcial (id_arte_marcial);
-ALTER TABLE aula ADD CONSTRAINT FK_aula_1 FOREIGN KEY (id_horario) REFERENCES horario (id_horario);
+/*========== matricula_graduacao ==========*/
+ALTER TABLE matricula_graduacao ADD CONSTRAINT FK_matricula_graduacao_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE matricula_graduacao ADD CONSTRAINT FK_matricula_graduacao_1 FOREIGN KEY (id_ta_graduacao) REFERENCES ta_graduacao (id_ta_graduacao) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE plano_aula ADD CONSTRAINT FK_plano_aula_0 FOREIGN KEY (id_ta_atividade) REFERENCES ta_atividade (id_ta_atividade);
-ALTER TABLE plano_aula ADD CONSTRAINT FK_plano_aula_1 FOREIGN KEY (id_aula) REFERENCES aula (id_aula);
+/*========== turma ==========*/
+ALTER TABLE turma ADD CONSTRAINT FK_turma_0 FOREIGN KEY (id_horario) REFERENCES horario (id_horario) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE presenca ADD CONSTRAINT FK_presenca_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula);
-ALTER TABLE presenca ADD CONSTRAINT FK_presenca_1 FOREIGN KEY (id_aula) REFERENCES aula (id_aula);
+/*========== aula ==========*/
+ALTER TABLE aula ADD CONSTRAINT FK_aula_0 FOREIGN KEY (id_arte_marcial) REFERENCES arte_marcial (id_arte_marcial) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE aula ADD CONSTRAINT FK_aula_1 FOREIGN KEY (id_horario) REFERENCES horario (id_horario) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE pessoa_comunicado ADD CONSTRAINT FK_pessoa_comunicado_0 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa);
-ALTER TABLE pessoa_comunicado ADD CONSTRAINT FK_pessoa_comunicado_1 FOREIGN KEY (id_comunicado) REFERENCES comunicado (id_comunicado);
+/*========== plano_aula ==========*/
+ALTER TABLE plano_aula ADD CONSTRAINT FK_plano_aula_0 FOREIGN KEY (id_ta_atividade) REFERENCES ta_atividade (id_ta_atividade) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE plano_aula ADD CONSTRAINT FK_plano_aula_1 FOREIGN KEY (id_aula) REFERENCES aula (id_aula) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*========== presenca ==========*/
+ALTER TABLE presenca ADD CONSTRAINT FK_presenca_0 FOREIGN KEY (id_matricula) REFERENCES matricula (id_matricula) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE presenca ADD CONSTRAINT FK_presenca_1 FOREIGN KEY (id_aula) REFERENCES aula (id_aula) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*========== pessoa_comunicado ==========*/
+ALTER TABLE pessoa_comunicado ADD CONSTRAINT FK_pessoa_comunicado_0 FOREIGN KEY (id_pessoa) REFERENCES pessoa (id_pessoa) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE pessoa_comunicado ADD CONSTRAINT FK_pessoa_comunicado_1 FOREIGN KEY (id_comunicado) REFERENCES comunicado (id_comunicado) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*=========================================TRIGGERS========================================================*/
+
+
 
 /*========== Trigger valida pessoa ==========*/
 DELIMITER $$
 CREATE TRIGGER trg_insert_pessoa
 BEFORE INSERT ON pessoa
 FOR EACH ROW BEGIN
-	/* Declando variável */
-	DECLARE responsavel INT;
 	/* Verifica se o e-mail é válido */
-	IF NEW.email NOT LIKE '%_@%_.__%' THEN
+	IF (NEW.email NOT LIKE '%_@%_.__%') THEN
 		SIGNAL SQLSTATE VALUE '45000'
 			SET MESSAGE_TEXT = '[tabela:pessoa] - E-mail inválido.';
 	END IF;
+	/* Verifica se a data de nascimento é maior que a data atual */
+	IF (NEW.dt_nascimento > NOW()) THEN
+		SIGNAL SQLSTATE VALUE '45000'
+			SET MESSAGE_TEXT = '[tabela:pessoa] - A data de nascimento não pode ser posterior a data atual.';
+	END IF;
+END$$
+DELIMITER ;
+
+
+/*========== Trigger valida aluno_responsavel ==========*/
+DELIMITER $$
+CREATE TRIGGER trg_insert_aluno_responsavel
+BEFORE INSERT ON aluno_responsavel
+FOR EACH ROW BEGIN
+	/* Declando variável */
+	DECLARE responsavel INT;
+	DECLARE dt_nascimento DATE;
+
+	SET @dt_nascimento = (SELECT dt_nascimento from pessoa where id_pessoa = NEW.id_responsavel);
 	/* Verifica se o responsável existe */
 	SET @responsavel = (SELECT IF((SELECT COUNT(*) from pessoa where id_pessoa = NEW.id_responsavel), 'true', 'false'));
 	/* Se o responsável existir, compara as datas de nascimento */
-	IF @responsavel = 'true' THEN
-		IF ((SELECT dt_nascimento FROM pessoa where id_pessoa = NEW.id_responsavel) > (NEW.dt_nascimento)) THEN
+	IF (@responsavel = 'true') THEN
+		IF ( (SELECT dt_nascimento FROM pessoa where id_pessoa = NEW.id_responsavel) > @dt_nascimento ) THEN
 			SIGNAL SQLSTATE VALUE '45000'
 			SET MESSAGE_TEXT = '[tabela:pessoa] - O responsável não pode ser mais novo que o aluno.';
 		END IF;
 	END IF;
-	/* Verifica se a data de nascimento é maior que a data atual */
-	IF NEW.dt_nascimento > NOW() THEN
-		SIGNAL SQLSTATE VALUE '45000'
-			SET MESSAGE_TEXT = '[tabela:pessoa] - A data de nascimento não pode ser posterior a data atual.';
-	END IF;
+	
 END$$
 DELIMITER ;
 
@@ -543,18 +587,12 @@ INSERT INTO pessoa (nome, dt_nascimento, email)
 	VALUES ('Bruno Asato', '1993-06-18', 'asato@gmail.com');
 INSERT INTO pessoa (nome, dt_nascimento, email)
 	VALUES ('Rafael', '1994-01-1', 'rafael@gmail.com');
-INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email)
-	VALUES (1, 'Teste 2', '1993-06-18', 'teste@gmail.com');
-INSERT INTO pessoa (id_responsavel, nome, dt_nascimento, email)
-	VALUES (1, 'teste3', '1994-06-18', 'teste@gmail.com');
 
 /* Inserir pessoa física */
 INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo)
 	VALUES (1, 'Asato', 'O+', 'M');
 INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo)
 	VALUES (2, 'Andrade Cardoso', 'A', 'M');
-INSERT INTO pessoa_fisica (id_pessoa_fisica, sobrenome, tipo_sanguineo, sexo)
-	VALUES (3, 'User1', 'O+', 'M');
 
 /* Inserir tipo de usuário */
 INSERT INTO ta_tipo_usuario (ds_tipo_usuario)
@@ -568,73 +606,128 @@ INSERT INTO ta_situacao (nm_situacao, descricao_situacao)
 INSERT INTO usuario (id_ta_tipo_usuario, id_ta_situacao, id_pessoa, login, senha)
 	VALUES (1, 1, 1, 'asato', '81f78c642441c7e9fb103d72db6fa4e10e1a6bd7e651bb4ebc659aedb91b4c11');
 INSERT INTO usuario (id_ta_tipo_usuario, id_ta_situacao, id_pessoa, login, senha)
-	VALUES (1, 1, 2, 'usuario', '9250e222c4c71f0c58d4c54b50a880a312e9f9fed55d5c3aa0b0e860ded99165');
+	VALUES (1, 1, 2, 'rafael', '9135d8523ad3da99d8a4eb83afac13d1');
 
 /* Inserir comunicado */
 INSERT INTO comunicado (titulo, dt_vencimento, dt_publicacao, dt_criacao, descricao)
-	VALUES ('TESTE', '2015-11-01', '2015-10-30', '','Corpo do comunicado');
+	VALUES ('Data para finalização do projeto', '2016-3-25', '2015-11-01', '','O projeto deve ser finalizado até dia 2 de Dezembro de 2015, pois dia 3 de Dezembro é a data para entrega do mesmo.');
 
 /* Inserir dados de pessoa */
 INSERT INTO pessoa_dados (id_pessoa_fisica, peso, altura, dt_dados)
-	VALUES (1, 200.00, 2.5, '2015-07-10');
+	VALUES (1, 80.00, 1.73, '2015-07-10');
 
 
 /* Inserindo menus */
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone)
-	VALUES (null, 'Início', 'dashboard', 1, 'Início', 'fa fa-dashboard');
+INSERT INTO menu('id_menu_pai', 'nome', 'url', 'ordem', 'desc_menu', 'icone') VALUES
+(NULL, 'Incio', 'dashboard', 1, 'Incio', 'fa fa-dashboard'),
+(NULL, 'Relatório', '#', 3, 'Relatrio', 'fa fa-file-text'),
+(NULL, 'Cadastro', '#', 2, 'Agrupar formulários de cadastro do sistema. ', 'fa fa-plus');
 
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone)
-	VALUES (null, 'Aluno', '#', 2, 'Aluno', 'fa fa-user');
+INSERT INTO menu('id_menu_pai', 'nome', 'url', 'ordem', 'desc_menu', 'icone') VALUES
+(3, 'menu', 'cadastro/form_menu', NULL, ' Cadastro de menus', 'fa fa-file-text-o'),
+(3, 'Arte Marcial', 'cadastro/form_arte_marcial', NULL, ' Cadastro de arte marcial', 'fa fa-bars'),
+(3, 'Exercícios/Atividade', 'cadastro/form_atividade', NULL, ' Cadastro de exercícios físicos/ atividades.', 'fa fa-bars'),
+(3, 'Graduação', 'cadastro/form_graduacao', NULL, 'Cadastro de graduações das artes marciais ', 'fa fa-bars'),
+(3, 'Situação', 'cadastro/form_situacao', NULL, 'Cadastro para situação de aluno, usuario, matricula, etc... ', 'fa fa-bars'),
+(3, 'Tipo de Telefone', 'cadastro/form_tipo_telefone', NULL, 'Cadastro de tipo de telefone. Exx: Residencial, trabalho, etc... ', 'fa fa-bars'),
+(3, 'País', 'cadastro/form_pais', NULL, 'Cadastro de países ', 'fa fa-bars'),
+(3, 'Estado', 'cadastro/form_estado', NULL, 'Cadastro de estados ', 'fa fa-bars'),
+(3, 'Cidade', 'cadastro/form_cidade', NULL, 'Cadastro de cidade ', 'fa fa-bars'),
+(3, 'Aluno', 'cadastro/form_aluno', NULL, 'Cadastro de aluno ', 'fa fa-user'),
+(3, 'Instrutor', 'cadastro/form_instrutor', NULL, 'Cadastro de instrutor ', 'fa fa-user'),
+(2, 'menu', 'relatorio/menu', NULL, 'listagem de menus. ', 'fa fa-bars'),
+(2, 'Aluno', 'relatorio/aluno', NULL, 'Listagem de aluno ', 'fa fa-bars'),
+(2, 'Instrutor', 'relatorio/instrutor', NULL, 'Listagem de instrutor. ', 'fa fa-bars'),
+(2, 'Atividades', 'relatorio/atividade', NULL, ' ', 'fa fa-bars'),
+(2, 'Artes Marciais', 'relatorio/arte_marcial', NULL, ' ', 'fa fa-bars'),
+(2, 'Graduações', 'relatorio/graduacao', NULL, ' ', 'fa fa-bars'),
+(2, 'Turma', 'relatorio/turma', NULL, ' ', 'fa fa-bars'),
+(2, 'Horário', 'relatorio/horario', NULL, ' ', 'fa fa-bars'),
+(2, 'Situação', 'relatorio/situacao', NULL, ' ', 'fa fa-bars'),
+(2, 'Comunicados', 'relatorio/comunicado', NULL, ' ', 'fa fa-bars'),
+(2, 'Tipo de Usuário', 'relatorio/tipo_usuario', NULL, ' ', 'fa fa-bars'),
+(2, 'Tipo de telefone', 'relatorio/tipo_telefone', NULL, ' ', 'fa fa-bars'),
+(3, 'Exames', 'relatorio/exame', NULL, ' ', 'fa fa-bars'),
+(3, 'Exame', 'cadastro/form_exame', NULL, ' ', 'fa fa-bars');
 
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone)
-	VALUES (null, 'Relatório', '/relatorio', 3, 'Relatório', 'fa fa-file-text');
-
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone)
-	VALUES (null, 'Sistema', '#', 4, 'Cadastro de dados estáticos', 'fa fa-file-text');
-
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu, icone)
-	VALUES (null, 'Usuário', '#', 5, 'Gerenciamento de Usuários',  'fa fa-users');
-
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
-	VALUES (2, 'Cadastro', 'aluno/form_cadastro', 1, 'Cadastro de alunos');
-
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
-	VALUES (2, 'Listar', 'aluno/lista', 1, 'Listagem de alunos');
-
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
-	VALUES (4, 'País', 'sistema/form_cadastro', 1, 'Cadastro de alunos');
-
-INSERT INTO menu (id_menu_pai, nome, url, ordem, desc_menu)
-	VALUES (5, 'Cadastro', 'usuario/form_cadastro', 1, 'Cadastro de usuario');
 
 /* Inserindo associação de menu com usuários */
+INSERT INTO menu_tipo_usuario('id_menu_tipo_usuario', 'id_menu', 'id_ta_tipo_usuario') VALUES
+(1, 1, 1),
+(3, 3, 1),
+(10, 10, 1),
+(11, 11, 1),
+(12, 12, 1),
+(13, 13, 1),
+(14, 14, 1),
+(15, 16, 1),
+(16, 17, 1),
+(17, 18, 1),
+(18, 19, 1),
+(19, 20, 1),
+(20, 21, 1),
+(21, 22, 1),
+(22, 23, 1),
+(23, 24, 1),
+(24, 25, 1),
+(25, 26, 1),
+(26, 27, 1),
+(27, 28, 1),
+(28, 29, 1),
+(29, 30, 1),
+(30, 31, 1),
+(31, 32, 1),
+(32, 33, 1),
+(33, 34, 1),
+(34, 35, 1),
+(35, 36, 1);
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (1,1);
+/* Inserindo associação de pessoa com comunicados */
+INSERT INTO 'pessoa_comunicado' ('id_pessoa', 'id_comunicado') VALUES
+(1, 1),
+(1, 2);
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (2,1);
+/* Inserindo dados físicos da pessoa */
+INSERT INTO 'pessoa_dados' ('peso', 'altura', 'dt_dados', 'id_pessoa_fisica') VALUES
+(9.99, 0.99, '2015-10-03', 2),
+(9.99, 0.99, '2015-10-06', 17);
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (3,1);
+/* Inserindo pessoa física */
+INSERT INTO 'pessoa_fisica' ('sobrenome', 'tipo_sanguineo', 'sexo', 'cpf') VALUES
+('Asato', 'O+', 'M', NULL),
+('Andrade Cardoso', 'A', 'M', NULL);
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (4,1);
+/* Inserindo associação de pessoa com tipo de telefone */
+INSERT INTO 'pessoa_telefone' ('id_pessoa', 'id_ta_tipo_telefone', 'ddd', 'telefone') VALUES
+(13, 2, '42', '99341204'),
+(17, 2, '42', '99999999');
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (5,1);
+/* Inserindo atividades de aulas */
+INSERT INTO 'ta_atividade' ('nm_atividade', 'desc_atividade') VALUES
+('Abdominal', 'Concentração no abdomem'),
+('Flexão', 'Concentração no braço');
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (6,1);
+/* Inserindo graduações */
+INSERT INTO 'ta_graduacao' ('graduacao', 'ordem') VALUES
+('Faixa branca', 1),
+('Faixa amarela', 2),
+('Faixa laranja', 3),
+('Faixa verde', 4),
+('Faixa cinza', 5),
+('Faixa roxa', 6),
+('Faixa azul claro', 7),
+('Faixa azul escuro', 8),
+('Faixa marrom', 9),
+('Faixa vermelha', 10),
+('Faixa preta', 11);
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (7,1);
+INSERT INTO 'ta_tipo_telefone' ('desc_tipo_telefone') VALUES
+('Residencial'),
+('Celular');
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (8,1);
+INSERT INTO 'turma' ('max_aluno', 'valor_mensalidade', 'dt_inicio', 'dt_final', 'id_horario') VALUES
+(30, 65.00, '2014-11-01', '0000-00-00', 1);
 
-INSERT INTO menu_tipo_usuario (id_menu, id_ta_tipo_usuario)
-	VALUES (9,1);
 
 /* Inserindo países */
 INSERT INTO ta_pais(nm_pais) VALUES
@@ -674,6 +767,8 @@ INSERT INTO ta_estado(nm_estado, sigla, id_ta_pais) VALUES
 
 
 /* Inserindo Cidades */
+INSERT INTO ta_cidade('id_ta_estado', 'nm_cidade') VALUES
+(18, 'Ponta Grossa');
 
 INSERT INTO ta_cidade(nm_cidade, id_estado) VALUES
 	('Afonso Cláudio',8),

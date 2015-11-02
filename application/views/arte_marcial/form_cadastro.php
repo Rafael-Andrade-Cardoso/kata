@@ -1,4 +1,4 @@
-<h3><i class="fa fa-angle-right"></i> Cadastrar Menu</h3>
+<h3><i class="fa fa-angle-right"></i> Cadastrar arte marcial</h3>
 <?php echo form_open('cadastro/insert_arte_marcial', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
 
 
