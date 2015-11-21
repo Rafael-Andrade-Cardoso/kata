@@ -42,29 +42,44 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Peso</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" name="peso" value="<?php echo set_value('peso'); ?>" />
+                    <div class="input-group">                    
+                        <input type="text" class="form-control" name="peso" value="<?php echo set_value('peso'); ?>" alt="Em kilogramas"/>
+                        <span class="input-group-addon">kg</span>
                         <div class="error"><?php echo form_error('peso'); ?></div>
                     </div>
-                </div>
-
-                <div class="form-group">
+                    </div>
+                    
                     <label class="col-sm-2 col-sm-2 control-label">Altura</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" name="altura" value="<?php echo set_value('altura'); ?>" />
+                    <div class="col-sm-3">                        
+                    <div class="input-group"> 
+                        <input type="text" class="form-control" name="altura" value="<?php echo set_value('altura'); ?>" title="Em metros"/>
+                        <span class="input-group-addon">mts</span>
                         <div class="error"><?php echo form_error('altura'); ?></div>
                     </div>
+                    </div>
                 </div>
+                
+              <!--  <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Altura</label>
+                    <div class="col-sm-3">                        
+                    <div class="input-group"> 
+                        <input type="text" class="form-control" name="altura" value="<?php echo set_value('altura'); ?>" title="Em metros"/>
+                        <span class="input-group-addon">mts</span>
+                        <div class="error"><?php echo form_error('altura'); ?></div>
+                    </div>
+                    </div>
+                </div>-->
 
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Tipo sanguíneo</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-3">
                         <input type="text" class="form-control" name="tipo_sanguineo" value="<?php echo set_value('tipo_sanguineo'); ?>" />
                         <div class="error"><?php echo form_error('tipo_sanguineo'); ?></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Sexo</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-8">
                         <label>
                             <input type="radio" name="sexo" value="0" checked="true"> Masculino
                         </label><br />
@@ -90,6 +105,7 @@
         <div class="col-lg-12">
             <div class="form-panel">
                 <h4 class="mb"><i class="fa fa-angle-right"></i> Dados do responsável</h4>
+               
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Nome</label>
                     <div class="col-sm-10">
@@ -140,6 +156,7 @@
         <div class="col-lg-12">
             <div class="form-panel">
             	  <h4 class="mb"><i class="fa fa-angle-right"></i> Endereço</h4>
+                  
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">País</label>
                       <div class="col-sm-10">
@@ -158,6 +175,7 @@
                           <div class="error"><?php echo form_error('id_ta_pais'); ?></div>
                       </div>
                   </div>
+                  
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Estado</label>
                       <div class="col-sm-10">
@@ -176,6 +194,7 @@
                           <div class="error"><?php echo form_error('id_ta_estado'); ?></div>
                       </div>
                   </div>
+                 
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Cidade</label>
                       <div class="col-sm-10">
@@ -194,6 +213,7 @@
                           <div class="error"><?php echo form_error('id_ta_cidade'); ?></div>
                       </div>
                   </div>
+                 
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Logradouro</label>
                       <div class="col-sm-10">
@@ -201,20 +221,28 @@
                           <div class="error"><?php echo form_error('logradouro'); ?></div>
                       </div>
                   </div>
+                 
                   <div class="form-group">
+                      
                       <label class="col-sm-2 col-sm-2 control-label">Número</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-4">
                           <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" />
                           <div class="error"><?php echo form_error('numero'); ?></div>
                       </div>
+                      
+                      <label class="col-sm-2 col-sm-2 control-label">CEP</label>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" />
+                          <div class="error"><?php echo form_error('cep'); ?></div>
+                      </div>
                   </div>
-                  <div class="form-group">
+                  <!--<div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">CEP</label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" />
                           <div class="error"><?php echo form_error('cep'); ?></div>
                       </div>
-                  </div>
+                  </div>-->
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Complemento</label>
                       <div class="col-sm-10">
@@ -232,9 +260,10 @@
           <div class="col-lg-12">
               <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato</h4>
+                 
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Tipo</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-3">
                           <select name="id_ta_tipo_telefone" class="form-control">
                               <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
                               <?php
@@ -249,15 +278,21 @@
                           </select>
                           <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
                       </div>
+                     
+                      <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
+                      <div class="col-sm-5">
+                          <input type="text" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" />
+                          <div class="error"><?php echo form_error('telefone'); ?></div>
+                      </div>
                   </div>
 
-                  <div class="form-group">
+                  <!--<div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" />
                           <div class="error"><?php echo form_error('telefone'); ?></div>
                       </div>
-                  </div>
+                  </div>-->
 
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">E-mail</label>
@@ -273,27 +308,41 @@
       <!-- Área de pagamento -->
       <div class="row mt">
           <div class="col-lg-12">
+              
               <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para pagamento</h4>
-                  <div class="form-group">
+                  
+                  <div class="form-group">                      
                       <label class="col-sm-2 col-sm-2 control-label">Melhor data para pagamento</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-4">                    
                           <input type="text" class="form-control" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" />
                           <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
                       </div>
+                      
+                      <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade</label>
+                      <div class="col-sm-4">
+                      <div class="input-group">                      
+                          <input type="text" class="form-control" name="valor_mensalidade" value="<?php echo set_value('valor_mensalidade'); ?>" />
+                          <span class="input-group-addon">R$</span>
+                          <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
+                      </div>
+                      </div>                      
                   </div>
-                  <div class="form-group">
+                  <!--<div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade</label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="valor_mensalidade" value="<?php echo set_value('valor_mensalidade'); ?>" />
                           <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
                       </div>
-                  </div>
+                  </div>-->
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Desconto</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-4">
+                      <div class="input-group">  
                           <input type="text" class="form-control" name="desconto" value="<?php echo set_value('desconto'); ?>" />
+                          <span class="input-group-addon">R$</span>
                           <div class="error"><?php echo form_error('desconto'); ?></div>
+                      </div>
                       </div>
                   </div>
     			    </div><!-- /form-panel -->
@@ -303,22 +352,32 @@
       <!-- Área de pagamento -->
       <div class="row mt">
           <div class="col-lg-12">
+              
               <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Dados de usuário</h4>
+                 
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Usuário</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-4">
                           <input type="text" class="form-control" name="login" value="<?php echo set_value('login'); ?>" />
                           <div class="error"><?php echo form_error('login'); ?></div>
                       </div>
+                     
+                      <label class="col-sm-2 col-sm-2 control-label">Senha</label>
+                      <div class="col-sm-4">
+                          <input type="password" class="form-control" name="senha" value="<?php echo set_value('senha'); ?>" />
+                          <div class="error"><?php echo form_error('senha'); ?></div>
+                      </div>
                   </div>
-                  <div class="form-group">
+                
+                  <!--<div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Senha</label>
                       <div class="col-sm-10">
                           <input type="password" class="form-control" name="senha" value="<?php echo set_value('senha'); ?>" />
                           <div class="error"><?php echo form_error('senha'); ?></div>
                       </div>
-                  </div>
+                  </div>-->
+                  
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Situação</label>
                       <div class="col-sm-10">
@@ -337,6 +396,7 @@
                           <div class="error"><?php echo form_error('id_ta_situacao'); ?></div>
                       </div>
                   </div>
+                  
                   <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Grupo de permissão</label>
                     <div class="col-sm-5">
