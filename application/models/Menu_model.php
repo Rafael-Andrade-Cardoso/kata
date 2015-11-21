@@ -113,7 +113,7 @@ class Menu_model extends CI_Model {
     */
     function get_submenu($id_menu) {
         $this->db->from('menu');
-        $this->db->order_by("ordem", "asc");
+        $this->db->order_by("nome", "asc");
         $this->db->where('id_menu_pai', $id_menu);
         return $this->db->get();
     }
