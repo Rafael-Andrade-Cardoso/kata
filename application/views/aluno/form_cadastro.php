@@ -1,4 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar aluno</h3>
+
 <?php echo form_open('cadastro/insert_aluno', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
     <input type="hidden" name="dt_matricula" value="<?php echo date("Y-m-d");  ?>" />
     <!-- Área de dados do aluno -->
@@ -112,11 +113,13 @@
     </div>
 
     <!-- Área de dados do responsável -->
+    
+   
     <div class="row mt">
         <div class="col-lg-12">
             <div class="form-panel">
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados do responsável</h4>
-               
+                <h4 class="mb" id="toogle"><i class="fa fa-angle-right"></i> Dados do responsável</h4>
+                <div id="cad_responsavel">
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Nome</label>
                     <div class="col-sm-10">
@@ -157,7 +160,7 @@
                         <div class="error"><?php echo form_error('sexo_responsavel'); ?></div>
                     </div>
                 </div>
-
+               </div>
             </div>
         </div>
     </div>
@@ -439,9 +442,8 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $("#nome").mask("999.999.999-99");
-      });
-        alert('teste');
+        $( "#toogle" ).click(function() {
+            $( "#cad_responsavel" ).fadeToggle( "slow", "linear" );
+        });
 
 </script>
