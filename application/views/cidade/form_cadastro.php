@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_cidade" class="form-control" name="nm_cidade" value="<?php echo set_value('nm_cidade'); ?>" />
+                        <input type="text" id="nm_cidade" class="form-control" name="nm_cidade" value="<?php echo set_value('nm_cidade'); ?>" title="Digite o nome da nova cidade"/>
                         <div class="error"><?php echo form_error('nm_cidade'); ?></div>
                     </div>
                 </div>
