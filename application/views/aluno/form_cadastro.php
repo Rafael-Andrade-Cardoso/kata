@@ -118,7 +118,7 @@
     <div class="row mt">
         <div class="col-lg-12">
             <div class="form-panel">
-                <h4 class="mb" id="toogle"><i class="fa fa-angle-right"></i> Dados do responsável</h4>
+                <h4 class="mb" id="toggle"><i class="fa fa-angle-right"></i> Dados do responsável</h4>
                 <div id="cad_responsavel">
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Nome</label>
@@ -442,8 +442,17 @@
 
 
 <script type="text/javascript">
+        $( "#toggle" ).on({
+            "mouseover": function() {
+                $( this ).css("cursor", "pointer");
+            }
+        });
         
-        $( "#toogle" ).click(function() {
+        $('document').ready(function(){
+           $( "#cad_responsavel" ).fadeOut( "fast" ); 
+        });
+        
+        $( "#toggle" ).click(function() {
             $( "#cad_responsavel" ).fadeToggle( "slow", "linear" );
         });
 
