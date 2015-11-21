@@ -129,18 +129,26 @@
                   </div>
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Número</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-3">
                           <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" />
                           <div class="error"><?php echo form_error('numero'); ?></div>
                       </div>
+                      
+                      <label class="col-sm-2 col-sm-2 control-label">CEP</label>
+                      <div class="col-sm-5">
+                          <input type="text" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" />
+                          <div class="error"><?php echo form_error('cep'); ?></div>
+                      </div>
                   </div>
-                  <div class="form-group">
+                  
+                  <!--<div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">CEP</label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" />
                           <div class="error"><?php echo form_error('cep'); ?></div>
                       </div>
-                  </div>
+                  </div>-->
+                  
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Complemento</label>
                       <div class="col-sm-10">
@@ -160,7 +168,7 @@
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato</h4>
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Tipo de telefone</label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-3">
                           <select name="id_ta_tipo_telefone" class="form-control">
                               <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
                               <?php
@@ -171,15 +179,21 @@
                           </select>
                           <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
                       </div>
+                      
+                      <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
+                      <div class="col-sm-5">
+                          <input type="text" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" />
+                          <div class="error"><?php echo form_error('telefone'); ?></div>
+                      </div>
                   </div>
 
-                  <div class="form-group">
+                  <!--<div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" />
                           <div class="error"><?php echo form_error('telefone'); ?></div>
                       </div>
-                  </div>
+                  </div>-->
 
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">E-mail</label>
