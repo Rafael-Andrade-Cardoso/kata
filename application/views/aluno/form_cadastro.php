@@ -125,7 +125,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Data de nascimento</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="dt_nascimento_responsavel" value="<?php echo set_value('dt_nascimento_responsavel'); ?>" />
+                        <input type="date" class="form-control" name="dt_nascimento_responsavel" value="<?php echo set_value('dt_nascimento_responsavel'); ?>" />
                         <div class="error"><?php echo form_error('dt_nascimento_responsavel'); ?></div>
                     </div>
                 </div>
