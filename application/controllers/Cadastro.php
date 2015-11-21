@@ -711,7 +711,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'tipo_sanguineo',
                 'label' => 'Tipo sanguineo',
-                'rules' => 'trim|required|max_length[2]'
+                'rules' => 'trim|required|max_length[3]'
             ),
             array(
                 'field' => 'sexo',
