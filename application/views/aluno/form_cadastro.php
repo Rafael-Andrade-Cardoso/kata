@@ -45,7 +45,7 @@
                     <div class="col-sm-3">
                     <div class="input-group">                    
                         <input type="text" class="form-control" name="peso" value="<?php echo set_value('peso'); ?>" title="Digite seu peso em kilogramas"/>
-                        <span class="input-group-addon">kg</span>
+                        <span class="input-group-addon">Kg</span>
                         <div class="error"><?php echo form_error('peso'); ?></div>
                     </div>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="col-sm-3">                        
                     <div class="input-group"> 
                         <input type="text" class="form-control" name="altura" value="<?php echo set_value('altura'); ?>" title="Digite sua altura em metros"/>
-                        <span class="input-group-addon">mts</span>
+                        <span class="input-group-addon">Mts</span>
                         <div class="error"><?php echo form_error('altura'); ?></div>
                     </div>
                     </div>
@@ -442,6 +442,7 @@
 
 
 <script type="text/javascript">
+        
         $( "#toogle" ).click(function() {
             $( "#cad_responsavel" ).fadeToggle( "slow", "linear" );
         });
