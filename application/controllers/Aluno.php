@@ -26,7 +26,12 @@ class Aluno extends MY_Controller {
 	            'field' => 'email',
 	            'label' => 'E-mail',
 	            'rules' => 'trim|required|valid_email|max_length[45]'
-	        )
+	        ),
+			array(
+				'fields' => 'tipo_sanguineo',
+				'label' => 'Tipo sanguineo',
+				'rules' => 'required'
+			)
 	    );
     	$this->form_validation->set_rules($validacoes);
 
