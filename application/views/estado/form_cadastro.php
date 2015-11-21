@@ -31,14 +31,14 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_exame" class="form-control" name="nm_estado" value="<?php echo set_value('nm_estado'); ?>" />
+                        <input type="text" id="nm_exame" class="form-control" name="nm_estado" value="<?php echo set_value('nm_estado'); ?>" title="Digite o nome do novo estado"/>
                         <div class="error"><?php echo form_error('nm_estado'); ?></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Sigla</label>
                     <div class="col-sm-10">
-                        <input type="text" id="sigla" class="form-control" name="sigla" value="<?php echo set_value('sigla'); ?>" />
+                        <input type="text" id="sigla" class="form-control" name="sigla" value="<?php echo set_value('sigla'); ?>" title="Digite a sigla do novo estado"/>
                         <div class="error"><?php echo form_error('sigla'); ?></div>
                     </div>
                 </div>
