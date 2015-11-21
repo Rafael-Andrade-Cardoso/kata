@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_arte_marcial" class="form-control" name="nm_arte_marcial" value="<?php echo set_value('nm_arte_marcial'); ?>" />
+                        <input type="text" id="nm_arte_marcial" class="form-control" name="nm_arte_marcial" value="<?php echo set_value('nm_arte_marcial'); ?>" title="Nome da arte marcial que deseja inserir no sistema"/>
                         <div class="error"><?php echo form_error('nm_arte_marcial'); ?></div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Descrição da arte marcial</label>
                     <div class="col-sm-6">
-                        <textarea rows="5" class="form-control" name="descricao" ><?php echo set_value('descricao'); ?> </textarea>
+                        <textarea rows="5" class="form-control" name="descricao" title="Descrição da nova arte marcial"><?php echo set_value('descricao'); ?> </textarea>
                         <div class="error"><?php echo form_error('descricao'); ?></div>
                     </div>
                 </div>

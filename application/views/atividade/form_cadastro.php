@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_atividade" class="form-control" name="nm_atividade" value="<?php echo set_value('nm_atividade'); ?>" />
+                        <input type="text" id="nm_atividade" class="form-control" name="nm_atividade" value="<?php echo set_value('nm_atividade'); ?>" title="Nome da atividade que será cadastrada"/>
                         <div class="error"><?php echo form_error('nm_atividade'); ?></div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Descrição da atividade</label>
                     <div class="col-sm-6">
-                        <textarea rows="5" class="form-control" name="desc_atividade"><?php echo set_value('desc_atividade'); ?> </textarea>
+                        <textarea rows="5" class="form-control" name="desc_atividade" title="descrição da nova atividade"><?php echo set_value('desc_atividade'); ?> </textarea>
                         <div class="error"><?php echo form_error('desc_atividade'); ?></div>
                     </div>
                 </div>

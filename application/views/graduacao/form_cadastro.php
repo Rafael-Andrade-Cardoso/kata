@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="graduacao" class="form-control" name="graduacao" value="<?php echo set_value('graduacao'); ?>" />
+                        <input type="text" id="graduacao" class="form-control" name="graduacao" value="<?php echo set_value('graduacao'); ?>" title="Digite o nome da nova graduação"/>
                         <div class="error"><?php echo form_error('graduacao'); ?></div>
                     </div>
                 </div>

@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="nm_situacao" class="form-control" name="nm_situacao" value="<?php echo set_value('nm_situacao'); ?>" />
+                        <input type="text" id="nm_situacao" class="form-control" name="nm_situacao" value="<?php echo set_value('nm_situacao'); ?>" title="Digite o nome da nova situação"/>
                         <div class="error"><?php echo form_error('nm_situacao'); ?></div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Descrição de funcionalidade</label>
                     <div class="col-sm-6">
-                        <textarea rows="5" class="form-control" name="descricao_situacao" > <?php echo set_value('descricao_situacao'); ?></textarea>
+                        <textarea rows="5" class="form-control" name="descricao_situacao" title="digite a descrição da nova funcionalidade"> <?php echo set_value('descricao_situacao'); ?></textarea>
                         <div class="error"><?php echo form_error('descricao_situacao'); ?></div>
                     </div>
                 </div>

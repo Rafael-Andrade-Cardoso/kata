@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" id="desc_tipo_telefone" class="form-control" name="desc_tipo_telefone" value="<?php echo set_value('desc_tipo_telefone'); ?>" />
+                        <input type="text" id="desc_tipo_telefone" class="form-control" name="desc_tipo_telefone" value="<?php echo set_value('desc_tipo_telefone'); ?>" title="Digite o nome do novo tipo de telefone" />
                         <div class="error"><?php echo form_error('desc_tipo_telefone'); ?></div>
                     </div>
                 </div>
