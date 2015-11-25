@@ -84,7 +84,7 @@
 				$y = $y+8; 		
 			}
 		}
-		
+				
 		function gerar_pdf($dados = NULL) {
 			
 			$tp_report = $this->input->post('relatorio');
