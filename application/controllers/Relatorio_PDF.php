@@ -162,10 +162,6 @@
 			$this->pdf->Output("arquivo.pdf","D");
 		}
 		
-		/*public function index() {
-			$this->template->load('relatorio/form_relatorio');
-		}*/
-		
 		
 		
 		/*public function get(){
