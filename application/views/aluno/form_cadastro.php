@@ -138,7 +138,7 @@
 
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Data de nascimento</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-3">
                         <input type="date" class="form-control" name="dt_nascimento_responsavel" value="<?php echo set_value('dt_nascimento_responsavel'); ?>" title="Selecione ou digite a data de nascimento do responsável"/>
                         <div class="error"><?php echo form_error('dt_nascimento_responsavel'); ?></div>
                     </div>

@@ -5,7 +5,7 @@
                     <div class="form-panel">
                         <h4 class="mb"><i class="fa fa-angle-right"></i> Selecione o relatório que deseja imprimir!</h4>
                         <form action=" <?=base_url('index.php/relatorio_pdf/gerar_pdf'); ?>"   class="form-horizontal style-form" method="post">
-                            <div class="col-sm-10">
+                            <div class="col-sm-12">
                                 <label>
                                     <input type="radio" name="relatorio" value="Relatório de alunos matriculados."> Relatório de alunos matriculados.
                                 </label><br />
