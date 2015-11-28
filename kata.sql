@@ -596,6 +596,23 @@ INSERT INTO comunicado (titulo, dt_vencimento, dt_publicacao, dt_criacao, descri
 INSERT INTO pessoa_dados (id_pessoa_fisica, peso, altura, dt_dados)
 	VALUES (1, 80.00, 1.73, '2015-07-10');
 
+/*Inserir horario*/
+INSERT INTO horario (hr_inicio, hr_termino, dia_semana, id_instrutor)
+	VALUES('14:00', '15:00', 'Domingo', '1');
+	
+	/*Inserindo Turma*/
+INSERT INTO turma (max_aluno, valor_mensalidade, dt_inicio, dt_final, id_horario)
+	VALUES ('20', '150,00', '12/01/2015', '12/10/2015', 1);
+
+/*Inserindo matricula_turma*/
+INSERT INTO matricula_turma (id_turma, id_matricula)
+	VALUES ('1', '1');
+INSERT INTO matricula_turma (id_turma, id_matricula)
+	VALUES ('1', '2');
+	
+/*Inserindo aulas*/
+INSERT INTO aula (id_arte_marcial, dt_aula, observacao, id_horario)
+VALUES (1, '2015/11/11', 'teste de inserção da tabela', 1);
 
 /* Inserindo menus */
 INSERT INTO menu(id_menu_pai, nome, url, ordem, desc_menu, icone) VALUES
