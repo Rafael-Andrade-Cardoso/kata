@@ -10,14 +10,21 @@
                                     <input type="radio" name="relatorio" value="Relatório de alunos matriculados."> Relatório de alunos matriculados.
                                 </label><br />
                                 <label>
-                                    <input type="radio" name="relatorio" value="Relatório de alunos por faixa."> Relatório de alunos por faixa.
+                                    <input type="radio" name="relatorio" value="Relatório de alunos por instrutor."> Relatório de alunos por instrutor.
                                 </label><br />
                                 <label>
                                     <input type="radio" name="relatorio" value="Relatório de instrutores."> Relatório de instrutores.
                                 </label><br />
                                 <label>
                                     <input type="radio" name="relatorio" value="Relatório de valores recebidos."> Relatório de valores recebidos.
-                                </label><br />                                
+                                </label><br />     
+                                <label>
+                                    <input type="radio" name="relatorio" value="Relatório de turmas."> Relatório de turmas.
+                                </label><br />      
+                                <label>
+                                    <input type="radio" name="relatorio" value="Aulas por instrutor."> Aulas por instrutor.
+                                </label><br />       
+                                                      
                              </div>
                              <div class="form-group">
                                 <label class="col-sm-2 col-sm-2 control-label">Data inicio</label>
@@ -29,7 +36,8 @@
                                         <input type="date" class="form-control" name="dt_fim">
                                     </div>
                              </div>
+                        <button type="submit" class="btn btn-theme">Gerar pdf</button>   
                     </div> <!-- form-panel -->
-                    <button type="submit" class="btn btn-theme">Gerar pdf</button>                    
+                                     
           		</div><!-- col-lg-8-->      	
           	</div><!-- /row -->
