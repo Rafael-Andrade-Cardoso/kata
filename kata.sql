@@ -614,6 +614,10 @@ INSERT INTO matricula_turma (id_turma, id_matricula)
 INSERT INTO aula (id_arte_marcial, dt_aula, observacao, id_horario)
 VALUES (1, '2015/11/11', 'teste de inserção da tabela', 1);
 
+/*Inserindo matricula_graduacao */
+INSERT INTO matricula_graduacao(id_matricula, id_ta_graduacao, observacao)
+VALUES (1, 1, 'teste de obs');
+
 /* Inserindo menus */
 INSERT INTO menu(id_menu_pai, nome, url, ordem, desc_menu, icone) VALUES
 (NULL, 'Incio', 'dashboard', 1, 'Incio', 'fa fa-dashboard'),

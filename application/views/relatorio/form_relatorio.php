@@ -14,15 +14,15 @@
                                 </label><br />
                                 <label>
                                     <input type="radio" name="relatorio" value="Relatório de instrutores."> Relatório de instrutores.
-                                </label><br />
-                                <label>
-                                    <input type="radio" name="relatorio" value="Relatório de valores recebidos."> Relatório de valores recebidos.
-                                </label><br />     
+                                </label><br />                                
                                 <label>
                                     <input type="radio" name="relatorio" value="Relatório de turmas."> Relatório de turmas.
                                 </label><br />      
                                 <label>
-                                    <input type="radio" name="relatorio" value="Aulas por instrutor."> Aulas por instrutor.
+                                    <input type="radio" name="relatorio" value="Relatório de aulas por instrutor."> Relatório de aulas por instrutor.
+                                </label><br /> 
+                                <label>
+                                    <input type="radio" name="relatorio" value="Relatório de alunos por graduação."> Relatório de alunos por graduação.
                                 </label><br />       
                                                       
                              </div>

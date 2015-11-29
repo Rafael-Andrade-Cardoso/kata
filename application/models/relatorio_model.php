@@ -117,6 +117,28 @@
 			return $query;
 		}
 		
+		public function get_aluno_grad(){
+			$query=$this->db->query('Select * from  
+									( 
+									SELECT * from 
+										pessoa as p 
+											inner join pessoa_fisica as pf 
+												ON(p.id_pessoa = pf.id_pessoa_fisica) 			
+									) as ppf  
+										inner join pessoa_dados as pd 
+											ON (ppf.id_pessoa_fisica = pd.id_pessoa_fisica) 
+										inner join aluno as a 
+											ON (a.id_pessoa_fisica = ppf.id_pessoa_fisica)
+										inner join matricula as m
+											ON (m.id_aluno = a.id_aluno)
+										inner join matricula_graduacao as mg
+											ON (m.id_matricula = mg.id_matricula)
+										inner join ta_graduacao g
+											ON (mg.id_ta_graduacao = g.id_ta_graduacao)
+									order by ppf.nome, g.ordem;
+									');
+			return $query;
+		}
 		
 		public function recebe(){
 			$query=$this->db->query('SELECT * FROM pessoa');
