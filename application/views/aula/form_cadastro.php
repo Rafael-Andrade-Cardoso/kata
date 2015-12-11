@@ -74,8 +74,7 @@
                           </select>
                           <div class="error"><?php echo form_error('id_horario'); ?></div>
                       </div>                     
-                   </div>
-    	       
+                   </div>    	       
                
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Observações</label>
