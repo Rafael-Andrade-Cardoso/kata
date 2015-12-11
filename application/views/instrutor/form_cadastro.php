@@ -1,4 +1,6 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar Instrutor</h3>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.maskedinput.js" type="text/javascript"></script>
 <?php echo form_open('cadastro/insert_instrutor', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
     <input type="hidden" name="dt_matricula" value="<?php echo date("Y-m-d");  ?>" />
     <!-- Área de dados do aluno -->
@@ -11,9 +13,14 @@
                     }
                 ?>
             <div class="form-panel">
-                  <h4 class="mb"><i class="fa fa-angle-right"></i> Dados Pessoais</h4>
+                  <h4 class="mb"><i class="fa fa-angle-right"></i> Dados Pessoais&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#FF0202" size="2">Dados obrigatórios*</font></h4>
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
+                    <label class="col-sm-2 col-sm-2 control-label"> Nome<font color="#FF0202">*</font></label>
                     <div class="col-sm-10">
                         <input type="text" id="nome" class="form-control" name="nome" value="<?php echo set_value('nome'); ?>" title="Digite o nome do Instrutor"/>
                         <div class="error"><?php echo form_error('nome'); ?></div>
@@ -21,7 +28,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Sobrenome</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Sobrenome<font color="#FF0202">*</font></label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="sobrenome" value="<?php echo set_value('sobrenome'); ?>" title="Digite o sobrenome do Instrutor"/>
                         <div class="error"><?php echo form_error('sobrenome'); ?></div>
@@ -29,9 +36,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">CPF</label>
+                    <label class="col-sm-2 col-sm-2 control-label">CPF<font color="#FF0202">*</font></label>
                     <div class="col-sm-5">
-                        <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo set_value('cpf'); ?>" title="Digite o sobrenome do Instrutor"/>
+                        <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo set_value('cpf'); ?>" title="Digite o cpf do Instrutor"/>
                         <div class="error"><?php echo form_error('cpf'); ?></div>
                         <span class="help-block">Informe apenas os números.</span>
                     </div>
@@ -39,7 +46,7 @@
 
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Data de nascimento</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Data de nascimento<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">
                         <input type="date" class="form-control" name="dt_nascimento" value="<?php echo set_value('dt_nascimento'); ?>" title="Digite ou selecione a data de nascimento do Instrutor"/>
                         <div class="error"><?php echo form_error('dt_nascimento'); ?></div>
@@ -47,7 +54,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Tipo sanguíneo</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Tipo sanguíneo<font color="#FF0202">*</font></label>
                     <div class="col-sm-10">
                         <select name="tipo_sanguineo" class="form-control" title="Selecione um tipo sanguíneo">
                             <option value="">Escolha um tipo</option>
@@ -63,13 +70,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Sexo</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Sexo<font color="#FF0202">*</font></label>
                     <div class="col-sm-10">
                         <label>
-                            <input type="radio" name="sexo" value="0" checked="true"> Masculino
+                            <input type="radio" name="sexo" value="M" checked="true"> Masculino
                         </label><br />
                         <label>
-                            <input type="radio" name="sexo" value="1"> Feminino
+                            <input type="radio" name="sexo" value="F"> Feminino
                         </label>
                         <div class="error"><?php echo form_error('sexo'); ?></div>
                     </div>
@@ -91,8 +98,8 @@
             <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Endereço</h4>
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">País</label>
-                      <div class="col-sm-10">
+                      <label class="col-sm-2 col-sm-2 control-label">País<font color="#FF0202">*</font></label>
+                      <div class="col-sm-4">
                           <select name="id_ta_pais" class="form-control" title="Selecione um país">
                             <?php
                                 foreach ($paises as $value) {
@@ -102,10 +109,10 @@
                         </select>
                         <div class="error"><?php echo form_error('id_menu_pai'); ?></div>
                       </div>
-                  </div>
-                  <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Estado</label>
-                      <div class="col-sm-10">
+                 <!-- </div>
+                  <div class="form-group">-->
+                      <label class="col-sm-2 col-sm-2 control-label">Estado<font color="#FF0202">*</font></label>
+                      <div class="col-sm-4">
                           <select name="id_ta_estado" class="form-control" title="Selecione um estado">
                                 <?php
                                   foreach ($estados as $value) {
@@ -117,7 +124,7 @@
                       </div>
                   </div>
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Cidade</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Cidade<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">
                           <select name="id_ta_cidade" class="form-control" title="Selecione uma cidade">
                                 <?php
@@ -130,33 +137,25 @@
                       </div>
                   </div>
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Logradouro</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Logradouro<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="logradouro" value="<?php echo set_value('logradouro'); ?>" title="Digite a rua em que o Instrutor reside"/>
                           <div class="error"><?php echo form_error('logradouro'); ?></div>
                       </div>
                   </div>
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Número</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Número<font color="#FF0202">*</font></label>
                       <div class="col-sm-3">
                           <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" title="Digite o número"/>
                           <div class="error"><?php echo form_error('numero'); ?></div>
                       </div>
                       
-                      <label class="col-sm-2 col-sm-2 control-label">CEP</label>
+                      <label class="col-sm-2 col-sm-2 control-label">CEP<font color="#FF0202">*</font></label>
                       <div class="col-sm-5">
-                          <input type="text" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" title="Digite o CEP"/>
+                          <input type="text" id="cep" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" title="Digite o CEP"/>
                           <div class="error"><?php echo form_error('cep'); ?></div>
                       </div>
                   </div>
-                  
-                  <!--<div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">CEP</label>
-                      <div class="col-sm-10">
-                          <input type="text" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" />
-                          <div class="error"><?php echo form_error('cep'); ?></div>
-                      </div>
-                  </div>-->
                   
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Complemento</label>
@@ -176,7 +175,7 @@
               <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato</h4>
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Tipo de telefone</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Tipo de telefone<font color="#FF0202">*</font></label>
                       <div class="col-sm-3">
                           <select name="id_ta_tipo_telefone" class="form-control" title="Selecione o tipo de telefone">
                               <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
@@ -189,9 +188,9 @@
                           <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
                       </div>
                       
-                      <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
+                      <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
                       <div class="col-sm-5">
-                          <input type="text" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" title="Digite o telefone do Instrutor"/>
+                          <input type="text" id="telefone" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" title="Digite o telefone do Instrutor"/>
                           <div class="error"><?php echo form_error('telefone'); ?></div>
                       </div>
                   </div>
@@ -205,7 +204,7 @@
                   </div>-->
 
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">E-mail</label>
+                      <label class="col-sm-2 col-sm-2 control-label">E-mail<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="email" value="<?php echo set_value('email'); ?>" title="Digite o e-mail do Instrutor"/>
                           <div class="error"><?php echo form_error('email'); ?></div>
@@ -221,7 +220,10 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $("#cpf").mask("999.999.999-99");
-      });
-        alert('teste');
+        $("#cep").mask("99999-999"); 
+        $("#telefone").mask("(99) 9999-9999");       
+      });      
+        
+       // alert('teste');
 
 </script>

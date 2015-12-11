@@ -406,6 +406,7 @@ class Cadastro extends MY_Controller {
         $data['tipos_telefone'] = $this->get_all('ta_tipo_telefone');
         $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
         $data['situacoes'] = $this->crud->get_all('ta_situacao')->result();
+        $data['horario'] = $this->crud->get_horario_somente();
         $this->template->load('aluno/form_cadastro', $data);
     }
 
@@ -417,6 +418,7 @@ class Cadastro extends MY_Controller {
             foreach ($this->input->post() as $key => $value){
                 $data->$key = $value;
             }
+        $id_horario = $this->input->post('id_horario');
         /* Define as regras para validação */
         $validacoes = array(
             array(
@@ -432,7 +434,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'cpf',
                 'label' => 'CPF',
-                'rules' => 'trim|required|max_length[11]'
+                'rules' => 'trim|required|max_length[14]'
             ),
             array(
                 'field' => 'dt_nascimento',
@@ -615,7 +617,6 @@ class Cadastro extends MY_Controller {
             $aluno->id_pessoa_fisica = $id_pessoa;
             $id_aluno = $this->crud->insert('aluno', $aluno);
 
-
             if (!empty($data->nome_responsavel)) {
                 /* Dados para cadastro de pessoa para responsável */
                 $pessoa = new stdClass();
@@ -647,7 +648,9 @@ class Cadastro extends MY_Controller {
             $matricula->valor_mensalidade = $data->valor_mensalidade;
             $matricula->id_pessoa_fisica = $id_pessoa;
             $matricula->id_aluno = $id_aluno;
-            $this->crud->insert('matricula', $matricula);
+            $id_matricula=$this->crud->insert('matricula', $matricula);
+            
+            
 
             $usuario = new stdClass();
             $usuario->login = $data->login;
@@ -659,10 +662,23 @@ class Cadastro extends MY_Controller {
 
             /* Fecha a transação */
             $this->db->trans_complete();
+            
+            
 
             if ($this->db->trans_status() === TRUE) {
                 $this->db->trans_commit();
                 $this->sucesso();
+                                
+                $matricula_turma = new stdClass();
+                $matricula_turma->id_matricula = $id_matricula;
+                $matricula_turma->id_turma = 1;//$this->crud->get_turma_somente($id_horario);
+                $id_usuario = $this->crud->insert('matricula_turma', $matricula_turma);
+                
+                $matricula_graduacao = new stdClass();
+                $matricula_graduacao->id_matricula = $id_matricula;
+                $matricula_graduacao->id_ta_graduacao = 1;
+                $matricula_graduacao->observacao = "recem matriculado";
+                $this->crud->insert('matricula_graduacao', $matricula_graduacao);
 
             } else {
                 $this->db->trans_rollback();
@@ -701,7 +717,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'cpf',
                 'label' => 'CPF',
-                'rules' => 'trim|required|max_length[11]'
+                'rules' => 'trim|required|max_length[14]'
             ),
             array(
                 'field' => 'dt_nascimento',
@@ -835,6 +851,8 @@ class Cadastro extends MY_Controller {
                 $data[$key] = $value;
             }
         }
+       // die(print_r($data));
+        $result = $this->crud->get_matricula_alu($data['id_aluno']);
         $validacoes = array(
             array(
                 'field' => 'id_ta_graduacao',
@@ -853,25 +871,33 @@ class Cadastro extends MY_Controller {
             ),
             array(
                 'field' => 'valor',
-                'label' => 'Data do exame',
+                'label' => 'Valor',
                 'rules' => 'trim|max_length[10]'
             ),
             array(
                 'field' => 'local',
-                'label' => 'Data do exame',
+                'label' => 'Local',
                 'rules' => 'trim|required|max_length[255]'
             ),
             array(
                 'field' => 'descricao',
-                'label' => 'Data do exame',
+                'label' => 'Descrição',
                 'rules' => 'trim|required|max_length[255]'
-            ),
+            )/*,
             array(
                 'field' => 'id_matricula',
-                'label' => 'Data do exame',
+                'label' => '1',
                 'rules' => 'trim|required|max_length[11]'
-            )
+            )*/
         );
+        foreach($result->result_array() as $row){            
+            if($row['id_matricula']){
+                $data['id_matricula']=$row['id_matricula'];                
+            }
+        }
+        unset($data['id_aluno']);
+        //$this->removeFromArray($data, $data['id_aluno']);
+       //die(print_r($data));
         /* Configura as validações */
         $this->form_validation->set_rules($validacoes);
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
@@ -888,8 +914,149 @@ class Cadastro extends MY_Controller {
         } else {
             $this->form_exame();
         }
-    }
+    }   
 
+    public function form_horario(){
+        $data['arte_marcial'] = $this->get_all('arte_marcial');
+        $data['instrutor'] = $this->crud->get_instrutores();
+        $this->template->load('horario/form_cadastro', $data);
+    }
+    
+    public function insert_horario(){
+        
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        //die(print_r($data));
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        $validacoes = array(
+            array(
+                'field' => 'hr_inicio',
+                'label' => 'Hora Início',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'hr_termino',
+                'label' => 'Hora de Início',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'id_arte_marcial',
+                'label' => 'Arte Marcial',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'id_instrutor',
+                'label' => 'Instrutor',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'dia_semana',
+                'label' => 'Dia da semana',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'max_aluno',
+                'label' => 'Máximo de alunos',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'dt_inicio',
+                'label' => 'Data de início',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'valor_mensalidade',
+                'label' => 'Valor mensalidade',
+                'rules' => 'trim|required|max_length[5]'
+            )
+        );
+        $this->form_validation->set_rules($validacoes);
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+         
+        //die(print_r($data));      
+        if ($this->form_validation->run() === TRUE) {
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            unset($data['id_arte_marcial']);
+            $dt_inicio = $data['dt_inicio'];
+            $valor_mensalidade = $data['valor_mensalidade'];
+            $max_aluno = $data['max_aluno'];
+            unset($data['dt_inicio']);
+            unset($data['valor_mensalidade']);
+            unset($data['max_aluno']);
+            $id = $this->crud->insert('horario', $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            if (is_numeric($id) && $id > 0){
+                $this->sucesso();
+            } else {
+                $this->erro();
+            }
+            $data['id_horario'] = $id;
+            $data['dt_inicio'] = $dt_inicio;
+            $data['valor_mensalidade'] = $valor_mensalidade;
+            $data['max_aluno'] = $max_aluno;
+            unset($data['hr_inicio']);
+            unset($data['hr_termino']);
+            unset($data['id_instrutor']);
+            unset($data['dia_semana']);
+           // die(print_r($data));
+            $this->crud->insert('turma', $data);
+        /* Em caso de falha: */
+        } else 
+            $this->form_horario();
+    }
+    
+    public function form_aula(){
+        $data['arte_marcial'] = $this->get_all('arte_marcial');
+        //$data['instrutor'] = $this->crud->get_instrutores();
+        $data['horario'] = $this->crud->get_horario_somente();        
+        $this->template->load('aula/form_cadastro', $data);
+    }
+    
+    public function insert_aula(){
+
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        //die(print_r($data));
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        $validacoes = array(
+            array(
+                'field' => 'id_arte_marcial',
+                'label' => 'Arte Marcial',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'dt_aula',
+                'label' => 'Data Aula',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'id_horario',
+                'label' => 'Horário',
+                'rules' => 'required'
+            )
+        );
+        $this->form_validation->set_rules($validacoes);
+        
+        if ($this->form_validation->run() === TRUE) {
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->insert('aula', $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            if (is_numeric($id) && $id > 0){
+                $this->sucesso();
+            } else {
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_aula();
+        }
+    }
 
 
     public function object_to_option($data, $value, $display) {

@@ -23,7 +23,7 @@
                                       foreach ($menus as $value) {
                                   ?>
                                       <tr id="line_menu<?php echo $value->id_menu; ?>">
-                                          <td><a href="basic_table.htm#l"><?php echo $value->nome; ?></a></td>
+                                          <td><a href=""><?php echo $value->nome; ?></a></td>
                                           <td><?php echo $value->nome_pai; ?></td>
                                           <td class="hidden-sm hidden-xs"><?php echo data_from_db($value->desc_menu); ?></td>
                                           <td class="hidden-sm hidden-xs"><?php echo $value->tipo_usuario; ?></td>

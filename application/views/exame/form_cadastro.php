@@ -22,11 +22,11 @@
                             <option value="">Escolha o estilo</option>
                             <?php
                                 foreach ($arte_marcial as $value) {
-                                    echo "<option value='" . $value->id_arte_marcial . "'";
-                                    if (set_value('id_arte_marcial') == $value->id_arte_marcial){
+                                    echo "<option value='" . $value->id_arte_marcial . "'>" . $value->nm_arte_marcial. "</option>";
+                                    /*if (set_value('id_arte_marcial') == $value->id_arte_marcial){
                                           echo " checked ";
                                     }
-                                    echo ">" . $value->nm_arte_marcial . "</option>";
+                                    echo ">" . $value->nm_arte_marcial . "</option>";*/
                                 }
                             ?>
                         </select>
@@ -57,14 +57,15 @@
                     <label class="col-sm-2 col-sm-2 control-label">Aluno</label>
                     <div class="col-sm-10">
                         <select name="id_aluno" class="form-control">
-                          <option value="">Escolha o estilo</option>
+                          <option value="">Escolha o aluno</option>
                             <?php
                                 foreach ($aluno as $value) {
-                                    echo "<option value='" . $value->id_matricula . "'";
+                                    echo "<option value='" . $value->id_aluno . "'>" .  $value->nome . " " . $value->sobrenome . "</option>";
+                                   /*echo "<option value='" . $value->id_matricula . "'";
                                     if (set_value('id_aluno')){
                                       echo " checked ";
                                     }
-                                    echo ">" . $value->nome . " " . $value->sobrenome . "</option>";
+                                    echo ">" . $value->nome . " " . $value->sobrenome . "</option>";*/
                                 }
                             ?>
                         </select>

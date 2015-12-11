@@ -24,6 +24,8 @@ class Menu_model extends CI_Model {
 
     function update($data=NULL, $id_menu=NULL) {
         if($data != NULL && $id_menu != NULL){
+            unset($data['id_menu']);
+            unset($data['id_ta_tipo_usuario']);
             $result = $this->db->update('menu', $data, array('id_menu' => $id_menu));
             if ($result){
                 return true;

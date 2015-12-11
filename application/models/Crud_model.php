@@ -83,13 +83,24 @@ class Crud_model extends CI_Model {
     }
 
     function get_instrutores($qtd = 0, $inicio = 0) {
-        $this->db->select('*');
+        $query=$this->db->query('Select * from  
+                                ( 
+                                SELECT * from 
+                                    pessoa as p 
+                                        inner join pessoa_fisica as pf 
+                                            ON(p.id_pessoa = pf.id_pessoa_fisica) 			
+                                ) as ppf
+                                    inner join instrutor as i 
+                                        ON (i.id_pessoa_fisica = ppf.id_pessoa_fisica)
+                                order by ppf.nome;
+                                ');
+        /*$this->db->select('*');
         $this->db->from('instrutor i');
         $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = i.id_pessoa_fisica', 'left');
         $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica', 'left');
         $this->db->join('pessoa_dados pd', 'pd.id_pessoa_fisica = pf.id_pessoa_fisica', 'left');
         $this->db->order_by('p.nome','asc');
-        $query = $this->db->get();
+        $query = $this->db->get();      */  
         if($query->num_rows() > 0) {
             return $query;
         }
@@ -152,6 +163,14 @@ class Crud_model extends CI_Model {
             return false;
         }
     }
+    
+    function get_turma_somente($id_horario){
+        $query = $this->db->query('Select id_turma from turma
+                                    Where turma.id_horario = '.$id_horario.'; 
+                                  ');
+                                  //die(print_r($query->result()));
+        return $query->result();
+    }
 
     function get_turma($qtd = 0, $inicio = 0) {
         $this->db->select('t.*, h.*, p.nome, pf.sobrenome');
@@ -168,6 +187,28 @@ class Crud_model extends CI_Model {
         else {
             return false;
         }
+    }
+    
+    function get_horario_somente(){
+        $query=$this->db->query('Select * from  
+									( 
+									SELECT * from 
+										pessoa as p 
+											inner join pessoa_fisica as pf 
+												ON(p.id_pessoa = pf.id_pessoa_fisica) 			
+									) as ppf 
+										inner join instrutor as i 
+											ON (i.id_pessoa_fisica = ppf.id_pessoa_fisica)
+										inner join horario as h
+											ON (h.id_instrutor = i.id_instrutor)
+                            order by h.dia_semana;
+                           ');
+         if($query->num_rows() > 0) {
+            return $query;
+        }
+        else {
+            return false;
+        } 
     }
 
     function get_horario($qtd = 0, $inicio = 0) {
@@ -281,6 +322,18 @@ class Crud_model extends CI_Model {
         $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica');
         $this->db->group_by('p.nome');
         $query = $this->db->get();
+        if($query->num_rows() > 0) {
+            return $query;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    function get_matricula_alu($id_aluno) {
+        $query = $this->db->query('select * from matricula as m
+                                    WHERE m.id_aluno = '.$id_aluno.';
+                                ');        
         if($query->num_rows() > 0) {
             return $query;
         }

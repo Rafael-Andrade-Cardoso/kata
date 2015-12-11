@@ -7,7 +7,7 @@
 			
 		}
 		
-		public function aluno_matri(){
+		public function aluno_matri($per_ini, $per_fim){
 			$query=$this->db->query('Select * from  
 									( 
 									SELECT * from 
@@ -19,10 +19,15 @@
 											ON (ppf.id_pessoa_fisica = pd.id_pessoa_fisica)  
 										inner join aluno as a 
 											ON (a.id_pessoa_fisica = ppf.id_pessoa_fisica)
+										inner join matricula as m
+											ON (m.id_aluno = a.id_aluno)
+									WHERE m.id_ta_situacao = 1 
+									AND m.dt_matricula 
+									BETWEEN "'. $per_ini .'"
+									AND "'. $per_fim .'"
 									order by ppf.nome;
 									');
 			$data = $query;
-			//return $query;
 			return $data;
 		} 	
 		
@@ -43,7 +48,9 @@
 			return $data;
 		} 
 		
-		public function aluno_instrutor(){
+		public function aluno_instrutor($per_ini, $per_fim){
+			//$per_fim = '0000-00-00';
+			//$per_ini = '0000-00-00';
 			$query=$this->db->query('Select ppf.nome as nome_aluno,ppf.sobrenome as sobrenome_aluno, 
 											ps.nome as nome_instrutor, pf2.sobrenome as sobrenome_instrutor,
 											ppf.dt_nascimento as nasc_aluno, ppf.sexo as sexo_aluno from 
@@ -71,13 +78,16 @@
 												ON (pf2.id_pessoa_fisica = i.id_pessoa_fisica)
 											inner join pessoa as ps
 												ON (ps.id_pessoa = pf2.id_pessoa_fisica)
+											WHERE t.dt_final
+											BETWEEN "'. $per_ini .'"
+											AND "'. $per_fim .'"
 											order by ppf.nome;
 									');
 		$data = $query;							
 		return $data;
 		}
 		
-		public function get_turma(){
+		public function get_turma($per_ini, $per_fim){
 			$query=$this->db->query('Select * from  
 									( 
 										SELECT * from 
@@ -91,6 +101,8 @@
 											ON (h.id_instrutor = i.id_instrutor)
 										inner join turma as t
 											ON (h.id_horario = t.id_horario)
+									WHERE t.dt_final <= "'.  $per_fim . '"
+									AND t.dt_inicio >= "'.  $per_ini . '"
 									order by ppf.nome;
 									');
 			return $query;
@@ -112,6 +124,8 @@
 											ON (h.id_horario = a.id_horario)
 										inner join arte_marcial am
 											ON (a.id_arte_marcial = am.id_arte_marcial)
+									WHERE a.dt_aula >= "2015-01-11" 
+									AND a.dt_aula <= "2015-01-12"
 									order by ppf.nome, a.dt_aula;
 									');
 			return $query;

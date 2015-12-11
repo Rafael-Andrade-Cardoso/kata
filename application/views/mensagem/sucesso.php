@@ -17,7 +17,7 @@
         <div class="mensagem">
             <a href="" onclick="javascript:window.history.go(-1)">Cadastrar novo </a>
             <?php
-                $nova_url = $bodytag = str_replace("cadastro/insert_", "listar/", $this->uri->uri_string());
+                $nova_url = $bodytag = str_replace("relatorio/insert_", "listar/", $this->uri->uri_string());
             ?>
             <a href="<?php echo $nova_url; ?>">Listar registros </a>
             <a href="<?php echo base_url('dashboard'); ?>">Concluído </a>

@@ -6,9 +6,14 @@
     <div class="row mt">
     		<div class="col-lg-12">
             <div class="form-panel">
-            	  <h4 class="mb"><i class="fa fa-angle-right"></i> Dados Pessoais</h4>
+            	<h4 class="mb"><i class="fa fa-angle-right"></i> Dados Pessoais &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#FF0202" size="2">Dados obrigatórios*</font></h4>
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label"> Nome</label>
+                    <label class="col-sm-2 col-sm-2 control-label"> Nome<font color="#FF0202">*</font></label>
                     <div class="col-sm-10">
                         <input type="text" id="nome" class="form-control" name="nome" value="<?php echo set_value('nome'); ?>" title="Digite o nome do aluno"/>
                         <div class="error"><?php echo form_error('nome'); ?></div>
@@ -16,7 +21,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Sobrenome</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Sobrenome<font color="#FF0202">*</font></label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="sobrenome" value="<?php echo set_value('sobrenome'); ?>" title="Digite seu sobrenome"/>
                         <div class="error"><?php echo form_error('sobrenome'); ?></div>
@@ -24,7 +29,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">CPF</label>
+                    <label class="col-sm-2 col-sm-2 control-label">CPF<font color="#FF0202">*</font></label>
                     <div class="col-sm-5">
                         <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo set_value('cpf'); ?>" title="Digite seu CPF"/>
                         <div class="error"><?php echo form_error('cpf'); ?></div>
@@ -33,7 +38,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Data de nascimento</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Data de nascimento<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">
                         <input type="date" class="form-control" name="dt_nascimento" value="<?php echo set_value('dt_nascimento'); ?>" title="Selecione uma data"/>
                         <div class="error"><?php echo form_error('dt_nascimento'); ?></div>
@@ -41,7 +46,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Peso</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Peso<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">
                     <div class="input-group">                    
                         <input type="text" class="form-control" name="peso" value="<?php echo set_value('peso'); ?>" title="Digite seu peso em kilogramas"/>
@@ -50,7 +55,7 @@
                     </div>
                     </div>
                     
-                    <label class="col-sm-2 col-sm-2 control-label">Altura</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Altura<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">                        
                     <div class="input-group"> 
                         <input type="text" class="form-control" name="altura" value="<?php echo set_value('altura'); ?>" title="Digite sua altura em metros"/>
@@ -60,19 +65,8 @@
                     </div>
                 </div>
                 
-              <!--  <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Altura</label>
-                    <div class="col-sm-3">                        
-                    <div class="input-group"> 
-                        <input type="text" class="form-control" name="altura" value="<?php echo set_value('altura'); ?>" title="Em metros"/>
-                        <span class="input-group-addon">mts</span>
-                        <div class="error"><?php echo form_error('altura'); ?></div>
-                    </div>
-                    </div>
-                </div>-->
-
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Tipo sanguíneo</label>                                    
+                    <label class="col-sm-2 col-sm-2 control-label">Tipo sanguíneo<font color="#FF0202">*</font></label>                                    
                     <div class="col-sm-3">
                         <select name="tipo_sanguineo" class="form-control" title="Selecione um tipo sanguíneo">
                             <option value="">Escolha um tipo</option>
@@ -90,7 +84,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Sexo</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Sexo<font color="#FF0202">*</font></label>
                     <div class="col-sm-8">
                         <label>
                             <input type="radio" name="sexo" value="0" checked="true"> Masculino
@@ -155,8 +149,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Sexo</label>
                     <div class="col-sm-10">
-                        <input type="radio" name="sexo_responsavel" value="0" checked="true"> Masculino<br />
-                        <input type="radio" name="sexo_responsavel" value="1"> Feminino
+                        <input type="radio" name="sexo_responsavel" value="M" checked="true"> Masculino<br />
+                        <input type="radio" name="sexo_responsavel" value="F"> Feminino
                         <div class="error"><?php echo form_error('sexo_responsavel'); ?></div>
                     </div>
                 </div>
@@ -172,8 +166,8 @@
             	  <h4 class="mb"><i class="fa fa-angle-right"></i> Endereço</h4>
                   
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">País</label>
-                      <div class="col-sm-10">
+                      <label class="col-sm-2 col-sm-2 control-label">País<font color="#FF0202">*</font></label>
+                      <div class="col-sm-4">
                           <select name="id_ta_pais" class="form-control" title="Selecione um país">
                               <option value="<?php echo set_value('id_ta_pais'); ?>">Escolha uma pessoal</option>
                               <?php
@@ -188,11 +182,11 @@
                           </select>
                           <div class="error"><?php echo form_error('id_ta_pais'); ?></div>
                       </div>
-                  </div>
+                  <!--</div>
                   
-                  <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Estado</label>
-                      <div class="col-sm-10">
+                  <div class="form-group">-->
+                      <label class="col-sm-2 col-sm-2 control-label">Estado<font color="#FF0202">*</font></label>
+                      <div class="col-sm-4">
                           <select name="id_ta_estado" class="form-control" title="Selecione um estado">
                             <option value="<?php echo set_value('id_ta_estado'); ?>">Escolha uma pessoal</option>
                             <?php
@@ -210,7 +204,7 @@
                   </div>
                  
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Cidade</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Cidade<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">
                           <select name="id_ta_cidade" class="form-control" title="Selecione uma cidade">
                             <option value="<?php echo set_value('id_ta_cidade'); ?>">Escolha uma pessoal</option>
@@ -229,24 +223,26 @@
                   </div>
                  
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Logradouro</label>
-                      <div class="col-sm-10">
+                      <label class="col-sm-2 col-sm-2 control-label">Logradouro<font color="#FF0202">*</font></label>
+                      <div class="col-sm-6">
                           <input type="text" class="form-control" name="logradouro" value="<?php echo set_value('logradouro'); ?>" title="Digite o nome da rua em que reside"/>
                           <div class="error"><?php echo form_error('logradouro'); ?></div>
                       </div>
-                  </div>
+                  <!--</div>
                  
-                  <div class="form-group">
+                  <div class="form-group">-->
                       
-                      <label class="col-sm-2 col-sm-2 control-label">Número</label>
-                      <div class="col-sm-4">
+                      <label class="col-sm-2 col-sm-2 control-label">Número<font color="#FF0202">*</font></label>
+                      <div class="col-sm-2">
                           <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" title="Digite o número da casa"/>
                           <div class="error"><?php echo form_error('numero'); ?></div>
                       </div>
-                      
-                      <label class="col-sm-2 col-sm-2 control-label">CEP</label>
+                  </div>
+                 
+                  <div class="form-group">    
+                      <label class="col-sm-2 col-sm-2 control-label">CEP<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
-                          <input type="text" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" title="Digite o CEP"/>
+                          <input type="text" id="cep" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" title="Digite o CEP"/>
                           <div class="error"><?php echo form_error('cep'); ?></div>
                       </div>
                   </div>
@@ -276,7 +272,7 @@
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato</h4>
                  
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Tipo</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Tipo<font color="#FF0202">*</font></label>
                       <div class="col-sm-3">
                           <select name="id_ta_tipo_telefone" class="form-control" title="Selecione o tipo para contato telefonico ">
                               <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
@@ -293,9 +289,9 @@
                           <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
                       </div>
                      
-                      <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
+                      <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
                       <div class="col-sm-5">
-                          <input type="text" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
+                          <input type="text" id="telefone" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
                           <div class="error"><?php echo form_error('telefone'); ?></div>
                       </div>
                   </div>
@@ -309,7 +305,7 @@
                   </div>-->
 
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">E-mail</label>
+                      <label class="col-sm-2 col-sm-2 control-label">E-mail<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">
                           <input type="text" class="form-control" name="email" value="<?php echo set_value('email'); ?>" title="Digite o e-mail"/>
                           <div class="error"><?php echo form_error('email'); ?></div>
@@ -319,6 +315,54 @@
           </div>
       </div>
 
+      <div class="row mt"> <!-- CONTINUAR AQUI MATRICULA -->
+            <div class="col-lg-12">
+              
+              <div class="form-panel">
+                  <h4 class="mb"><i class="fa fa-angle-right"></i> Dia da Aula</h4>
+                  
+                  <div class="form-group">                      
+                      <label class="col-sm-2 col-sm-2 control-label">Horário<font color="#FF0202">*</font></label>
+                      <div class="col-sm-10">                    
+                           <select name="id_horario" class="form-control" title="Selecione o tipo para contato telefonico ">
+                              <option value="<?php echo set_value('id_horario'); ?>">Escolha o horário e dia da aula</option>
+                              <?php
+                                  foreach ($horario->result() as $value) {
+                                      if($value->dia_semana == 0)
+                                        $dia_semana = "Domingo";
+                                      else if($value->dia_semana == 1)
+                                        $dia_semana = "Segunda-feira";
+                                      else if($value->dia_semana == 2)
+                                        $dia_semana = "Terça-feira";
+                                      else if($value->dia_semana == 3)
+                                        $dia_semana = "Quarta-feira";
+                                      else if($value->dia_semana == 4)
+                                        $dia_semana = "Quinta-feira";
+                                      else if($value->dia_semana == 5)
+                                        $dia_semana = "Sexta-feira";
+                                      else if($value->dia_semana == 6)
+                                        $dia_semana = "Sábado";
+                                      echo "<option value='" . $value->id_horario . "'>". $dia_semana
+                                                                                    . " ".
+                                                                                    "-  Hora inicial: ". $value->hr_inicio . " " .
+                                                                                    "-  Hora Final: " . $value->hr_termino . " " .
+                                                                                    "-  Instrutor: " . $value->nome ." ". $value->sobrenome.
+                                            "</option>";
+                                    /*echo "<option value='" . $value->id_horario . "'";
+                                    if (set_value('id_ta_tipo_telefone')){
+                                      echo " checked ";
+                                    }
+                                    echo ">" . $value->desc_tipo_telefone . "</option>";*/
+                                  }
+                              ?>
+                          </select>
+                          <div class="error"><?php echo form_error('id_horario'); ?></div>
+                      </div>                     
+                   </div>
+    	       </div><!-- /form-panel -->
+            </div><!-- /col-lg-12 -->
+    	</div><!-- /row -->
+        
       <!-- Área de pagamento -->
       <div class="row mt">
           <div class="col-lg-12">
@@ -327,13 +371,13 @@
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para pagamento</h4>
                   
                   <div class="form-group">                      
-                      <label class="col-sm-2 col-sm-2 control-label">Melhor data para pagamento</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Melhor data para pagamento<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">                    
                           <input type="text" class="form-control" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" title="Digite a data para o pagamento da mensalidade"/>
                           <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
                       </div>
                       
-                      <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                       <div class="input-group">                      
                           <input type="text" class="form-control" name="valor_mensalidade" value="<?php echo set_value('valor_mensalidade'); ?>" title="Digite o valor da mesalidade"/>
@@ -350,7 +394,7 @@
                       </div>
                   </div>-->
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Desconto</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Desconto<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                       <div class="input-group">  
                           <input type="text" class="form-control" name="desconto" value="<?php echo set_value('desconto'); ?>" title="Digite o valor do desconto"/>
@@ -362,6 +406,8 @@
     			    </div><!-- /form-panel -->
     		  </div><!-- /col-lg-12 -->
     	</div><!-- /row -->
+        
+        
 
       <!-- Área de pagamento -->
       <div class="row mt">
@@ -371,13 +417,13 @@
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Dados de usuário</h4>
                  
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Usuário</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Usuário<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                           <input type="text" class="form-control" name="login" value="<?php echo set_value('login'); ?>" title="Digite o nome de usuário"/>
                           <div class="error"><?php echo form_error('login'); ?></div>
                       </div>
                      
-                      <label class="col-sm-2 col-sm-2 control-label">Senha</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Senha<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                           <input type="password" class="form-control" name="senha" value="<?php echo set_value('senha'); ?>" title="Digite a senha do usuário"/>
                           <div class="error"><?php echo form_error('senha'); ?></div>
@@ -393,7 +439,7 @@
                   </div>-->
                   
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Situação</label>
+                      <label class="col-sm-2 col-sm-2 control-label">Situação<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">
                           <select name="id_ta_situacao" class="form-control" title="Selecione uma situação">
                             <option value="<?php echo set_value('id_ta_situacao'); ?>">Escolha uma pessoal</option>
@@ -412,7 +458,7 @@
                   </div>
                   
                   <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Grupo de permissão</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Grupo de permissão<font color="#FF0202">*</font></label>
                     <div class="col-sm-5">
                         <?php
                             foreach ($tipos_usuario as $value) {
@@ -455,5 +501,11 @@
         $( "#toggle" ).click(function() {
             $( "#cad_responsavel" ).fadeToggle( "slow", "linear" );
         });
-
+        
+        
+        $(document).ready(function(){
+            $("#cpf").mask("999.999.999-99");
+            $("#cep").mask("99999-999"); 
+            $("#telefone").mask("(99) 9999-9999");       
+        });
 </script>
