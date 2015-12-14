@@ -31,7 +31,7 @@
 			return $data;
 		} 	
 		
-		public function get_instrutor(){
+		public function get_instrutor($per_ini, $per_fim){
 			$query=$this->db->query('Select * from  
 									( 
 									SELECT * from 
@@ -108,7 +108,7 @@
 			return $query;
 		}
 		
-		public function get_aula_instrutor(){
+		public function get_aula_instrutor($per_ini, $per_fim){
 			$query=$this->db->query('Select * from  
 									( 
 									SELECT * from 
@@ -124,14 +124,14 @@
 											ON (h.id_horario = a.id_horario)
 										inner join arte_marcial am
 											ON (a.id_arte_marcial = am.id_arte_marcial)
-									WHERE a.dt_aula >= "2015-01-11" 
-									AND a.dt_aula <= "2015-01-12"
+									WHERE a.dt_aula <= "'.  $per_fim . '"
+									AND a.dt_aula >= "'.  $per_ini . '"
 									order by ppf.nome, a.dt_aula;
 									');
 			return $query;
 		}
 		
-		public function get_aluno_grad(){
+		public function get_aluno_grad($per_ini, $per_fim){
 			$query=$this->db->query('Select * from  
 									( 
 									SELECT * from 
@@ -149,6 +149,8 @@
 											ON (m.id_matricula = mg.id_matricula)
 										inner join ta_graduacao g
 											ON (mg.id_ta_graduacao = g.id_ta_graduacao)
+									WHERE m.dt_matricula <= "'.  $per_fim . '"
+									AND m.dt_matricula >= "'.  $per_ini . '"
 									order by ppf.nome, g.ordem;
 									');
 			return $query;

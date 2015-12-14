@@ -1,3 +1,4 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <h3><i class="fa fa-angle-right"></i> Relatórios</h3>
     
           	<div class="row mt">
@@ -23,7 +24,10 @@
                                 </label><br /> 
                                 <label>
                                     <input type="radio" name="relatorio" value="Relatório de alunos por graduação."> Relatório de alunos por graduação.
-                                </label><br />       
+                                </label><br />    
+                                <label>
+                                    <input type="radio" name="relatorio" value="Relatório de aulas."> Relatório de aulas.
+                                </label><br />    
                                 <div class="error"><?php echo form_error('relatorio'); ?></div>                     
                              </div>
                              
@@ -34,14 +38,14 @@
                              <div class="form-group">
                                 <label class="col-sm-2 col-sm-2 control-label">Data inicio</label>
                                     <div class="col-sm-3">
-                                        <input type="date" class="form-control" name="dt_inicio">
+                                        <input type="date" id="dt_inicio" class="form-control" name="dt_inicio">
                                     </div>
                                     <div class="error"><?php echo form_error('dt_inicio'); ?></div>
                             </div> 
                             <div class="form-group">      
                                 <label class="col-sm-2 col-sm-2 control-label">Data Fim</label>
                                     <div class="col-sm-3">
-                                        <input type="date" class="form-control" name="dt_fim">
+                                        <input type="date" id="dt_fim" class="form-control" name="dt_fim">
                                     </div>
                                     <div class="error"><?php echo form_error('dt_fim'); ?></div>
                             </div>
@@ -50,3 +54,29 @@
                                      
           		</div><!-- col-lg-8-->      	
           	</div><!-- /row -->           
+
+<script type="text/javascript">
+
+    $("#dt_fim").blur(function(){
+        var data_1 = document.getElementById("dt_inicio").value;
+        var data_2 = document.getElementById("dt_fim").value;
+        if ((data_1 > data_2)) {
+            alert("Data final deve ser maior que a inicial!");
+            $("#dt_inicio").focus();
+            return false;    
+        }    
+    });
+    
+    $("#dt_inicio").blur(function(){
+        var data_1 = document.getElementById("dt_inicio").value;
+        var data_2 = document.getElementById("dt_fim").value;
+        if(data_2 != ""){
+            if ((data_1 > data_2)) {
+                alert("Data final deve ser maior que a inicial!");
+                $("#dt_inicio").focus();
+                return false;    
+            }    
+        }
+    });
+
+</script>

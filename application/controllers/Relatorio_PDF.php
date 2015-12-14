@@ -50,8 +50,8 @@
 			}
 		}
 		
-		function instrutor(){
-			$result = $this->relatorio_model->get_instrutor();			
+		function instrutor($per_ini, $per_fim){
+			$result = $this->relatorio_model->get_instrutor($per_ini, $per_fim);			
 			//190 tamanho máximo da celula
 			$this->pdf->SetFont('Arial','B',12);// Configurando a fonte
 			$this->pdf->SetXY(10,55);// Posicionando as células
@@ -166,8 +166,8 @@
 			}
 		}
 		
-		function aula_instrutor(){
-			$result = $this->relatorio_model->get_aula_instrutor();
+		function aula_instrutor($per_ini, $per_fim){
+			$result = $this->relatorio_model->get_aula_instrutor($per_ini, $per_fim);
 			//190 tamanho máximo da celula
 			$this->pdf->SetFont('Arial','B',12);// Configurando a fonte
 			$this->pdf->SetXY(10,55);
@@ -215,8 +215,8 @@
 			}
 		}
 		
-		function aluno_grad(){
-			$result = $this->relatorio_model->get_aluno_grad();
+		function aluno_grad($per_ini, $per_fim){
+			$result = $this->relatorio_model->get_aluno_grad($per_ini, $per_fim);
 			//190 tamanho máximo da celula
 			$this->pdf->SetFont('Arial','B',12);// Configurando a fonte
 			$this->pdf->SetXY(10,55);
@@ -244,7 +244,11 @@
 				$this->pdf->Cell(75,6,$row['graduacao'],1,0,'L');
 				$y = $y+6; 		
 			}
-		}		
+		}	
+		
+		function aulas(){
+		
+		}	
 			
 		function gerar_pdf($dados = NULL) {
 			/* Carrega a biblioteca do CodeIgniter responsável pela validação dos formulários */
@@ -309,7 +313,7 @@
 					$nome_report = "Alunos Matriculados.pdf";
 				}
 				else if($tp_report == "Relatório de instrutores."){
-					$this->instrutor();
+					$this->instrutor($per_ini, $per_fim);
 					$nome_report = "Instrutores.pdf";
 				}
 				else if($tp_report == "Relatório de alunos por instrutor."){
@@ -321,12 +325,15 @@
 					$nome_report = "Turmas.pdf";
 				}
 				else if($tp_report == "Relatório de aulas por instrutor."){
-					$this->aula_instrutor();
+					$this->aula_instrutor($per_ini, $per_fim);
 					$nome_report = "Aulas por instrutor.pdf";
 				}
 				else if($tp_report == "Relatório de alunos por graduação."){
-					$this->aluno_grad();
+					$this->aluno_grad($per_ini, $per_fim);
 					$nome_report = "Aluno graduação.pdf";
+				}else if($tp_report == "Relatório de aulas."){
+					$this->aulas();
+					$nome_report = "Relatório de aulas.";
 				}
 				$this->pdf->Output($nome_report,"D");
 			}

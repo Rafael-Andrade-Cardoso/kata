@@ -418,13 +418,13 @@ class Cadastro extends MY_Controller {
             foreach ($this->input->post() as $key => $value){
                 $data->$key = $value;
             }
-        $id_horario = $this->input->post('id_horario');
+        $id_turma = $this->input->post('id_horario');
         /* Define as regras para validação */
         $validacoes = array(
             array(
                 'field' => 'nome',
                 'label' => 'Nome',
-                'rules' => 'required|min_length[5]|max_length[50]'
+                'rules' => 'required|min_length[3]|max_length[50]'
             ),
             array(
                 'field' => 'sobrenome',
@@ -454,7 +454,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'tipo_sanguineo',
                 'label' => 'Tipo sanguíneo',
-                'rules' => 'trim|required|max_length[2]'
+                'rules' => 'trim|required|max_length[3]'
             ),
             array(
                 'field' => 'sexo',
@@ -484,7 +484,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'cep',
                 'label' => 'CEP',
-                'rules' => 'trim|required|max_length[8]'
+                'rules' => 'trim|required|max_length[9]'
             ),
             array(
                 'field' => 'complemento',
@@ -520,6 +520,11 @@ class Cadastro extends MY_Controller {
                 'field' => 'login',
                 'label' => 'Login',
                 'rules' => 'trim|required|max_length[100]'
+            ),
+            array(
+                'field' => 'id_horario',
+                'label' => 'Horário',
+                'rules' => 'required'
             ),
             array(
                 'field' => 'senha',
@@ -648,9 +653,7 @@ class Cadastro extends MY_Controller {
             $matricula->valor_mensalidade = $data->valor_mensalidade;
             $matricula->id_pessoa_fisica = $id_pessoa;
             $matricula->id_aluno = $id_aluno;
-            $id_matricula=$this->crud->insert('matricula', $matricula);
-            
-            
+            $id_matricula=$this->crud->insert('matricula', $matricula);          
 
             $usuario = new stdClass();
             $usuario->login = $data->login;
@@ -660,6 +663,18 @@ class Cadastro extends MY_Controller {
             $usuario->id_pessoa = $id_pessoa;
             $id_usuario = $this->crud->insert('usuario', $usuario);
 
+            $matricula_turma = new stdClass();
+            $matricula_turma->id_matricula = $id_matricula;
+            $matricula_turma->id_turma = $id_turma;//
+            //die(print_r($this->crud->get_turma_somente($id_horario)));
+            //$matricula_turma->id_turma = $this->crud->get_turma_somente($id_horario);
+            $id_usuario = $this->crud->insert('matricula_turma', $matricula_turma);
+            
+            $matricula_graduacao = new stdClass();
+            $matricula_graduacao->id_matricula = $id_matricula;
+            $matricula_graduacao->id_ta_graduacao = 1;
+            $matricula_graduacao->observacao = "recem matriculado";
+            $this->crud->insert('matricula_graduacao', $matricula_graduacao);
             /* Fecha a transação */
             $this->db->trans_complete();
             
@@ -669,16 +684,7 @@ class Cadastro extends MY_Controller {
                 $this->db->trans_commit();
                 $this->sucesso();
                                 
-                $matricula_turma = new stdClass();
-                $matricula_turma->id_matricula = $id_matricula;
-                $matricula_turma->id_turma = 1;//$this->crud->get_turma_somente($id_horario);
-                $id_usuario = $this->crud->insert('matricula_turma', $matricula_turma);
                 
-                $matricula_graduacao = new stdClass();
-                $matricula_graduacao->id_matricula = $id_matricula;
-                $matricula_graduacao->id_ta_graduacao = 1;
-                $matricula_graduacao->observacao = "recem matriculado";
-                $this->crud->insert('matricula_graduacao', $matricula_graduacao);
 
             } else {
                 $this->db->trans_rollback();
@@ -988,11 +994,7 @@ class Cadastro extends MY_Controller {
             unset($data['max_aluno']);
             $id = $this->crud->insert('horario', $data);
             /* Verifica se o retorno da função é um valor numérico e maior que 0 */
-            if (is_numeric($id) && $id > 0){
-                $this->sucesso();
-            } else {
-                $this->erro();
-            }
+            
             $data['id_horario'] = $id;
             $data['dt_inicio'] = $dt_inicio;
             $data['valor_mensalidade'] = $valor_mensalidade;
@@ -1003,6 +1005,12 @@ class Cadastro extends MY_Controller {
             unset($data['dia_semana']);
            // die(print_r($data));
             $this->crud->insert('turma', $data);
+            
+            if (is_numeric($id) && $id > 0){
+                $this->sucesso();
+            } else {
+                $this->erro();
+            }
         /* Em caso de falha: */
         } else 
             $this->form_horario();
@@ -1057,7 +1065,52 @@ class Cadastro extends MY_Controller {
             $this->form_aula();
         }
     }
-
+    
+    
+    
+    public function form_plano_aula(){          
+        $data['aula'] = $this->get_all('aula');
+        $data['atividade'] = $this->get_all('ta_atividade');        
+        $this->template->load('plano_aula/form_cadastro', $data);    
+    }
+    
+    public function insert_plano_aula(){
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        $validacoes = array(
+            array(
+                'field' => 'id_aula',
+                'label' => 'Aula',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'id_ta_atividade',
+                'label' => 'Atividade',
+                'rules' => 'required'
+            )
+        );
+        $this->form_validation->set_rules($validacoes);
+        
+        if ($this->form_validation->run() === TRUE) {
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->insert('plano_aula', $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            if (is_numeric($id) && $id > 0){
+                $this->sucesso();
+            } else {
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_aula();
+        }
+        
+    }
 
     public function object_to_option($data, $value, $display) {
         $option = "";
@@ -1066,8 +1119,6 @@ class Cadastro extends MY_Controller {
         }
         return $option;
     }
-
-
 
     /* Mensagens de sucesso */
 
@@ -1096,6 +1147,7 @@ class Cadastro extends MY_Controller {
             $this->template->load("mensagem/alerta");
         }
     }
+    
     public function get_estado_pais($id_pais) {
         $id_pais = $this->uri->segment(3);
         if(!isset($id_pais)){

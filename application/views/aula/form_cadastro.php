@@ -5,7 +5,12 @@
     <div class="row mt">
         <div class="col-lg-12">
             <div class="form-panel">
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados</h4>
+                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0202" size="2">Dados obrigatórios*</font></h4>
                 <?php
                    /* echo validation_errors('<p class="alert alert-danger">', '</p>');
                     if ($this->session->flashdata('cadastrook')){
@@ -16,9 +21,9 @@
 
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Arte marcial</label>
+                    <label class="col-sm-2 col-sm-2 control-label">Arte marcial<font color="#FF0202">*</font></label>
                     <div class="col-sm-10">
-                        <select name="id_arte_marcial" class="form-control">
+                        <select name="id_arte_marcial" class="form-control" title="Selecione a arte marcial ministrada na aula">
                             <option value="">Escolha o estilo</option>
                             <?php
                                 foreach ($arte_marcial as $value) {
@@ -35,9 +40,9 @@
                 </div>
              
                 <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Data da aula</label>
+                        <label class="col-sm-2 col-sm-2 control-label">Data da aula<font color="#FF0202">*</font></label>
                         <div class="col-sm-4" class="form-control">
-                            <input type="date" class="form-control" name="dt_aula" value="<?php echo set_value('dt_aula'); ?>">
+                            <input type="date" class="form-control" name="dt_aula" value="<?php echo set_value('dt_aula'); ?>" title="Digite a data da aula">
                             <div class="error"><?php echo form_error('dt_aula'); ?></div>
                         </div>                 
                 </div>
@@ -45,7 +50,7 @@
                   <div class="form-group">                      
                       <label class="col-sm-2 col-sm-2 control-label">Horário<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">                    
-                           <select name="id_horario" class="form-control" title="Selecione o tipo para contato telefonico ">
+                           <select name="id_horario" class="form-control" title="Selecione o horário que a aula acontecerá">
                               <option value="<?php echo set_value('id_horario'); ?>">Escolha o horário e dia da aula</option>
                               <?php
                                   foreach ($horario->result() as $value) {
@@ -79,7 +84,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Observações</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="observacao" ><?php echo set_value('observacao'); ?> </textarea>
+                        <textarea class="form-control" name="observacao" title="Digite as observações que acha importante"><?php echo set_value('observacao'); ?> </textarea>
                         <div class="error"><?php echo form_error('observacao'); ?></div>
                     </div>
                 </div>

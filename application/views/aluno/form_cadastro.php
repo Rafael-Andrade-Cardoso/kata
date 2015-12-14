@@ -324,7 +324,7 @@
                   <div class="form-group">                      
                       <label class="col-sm-2 col-sm-2 control-label">Horário<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">                    
-                           <select name="id_horario" class="form-control" title="Selecione o tipo para contato telefonico ">
+                           <select name="id_horario" class="form-control" title="Selecione a turma">
                               <option value="<?php echo set_value('id_horario'); ?>">Escolha o horário e dia da aula</option>
                               <?php
                                   foreach ($horario->result() as $value) {
@@ -342,7 +342,7 @@
                                         $dia_semana = "Sexta-feira";
                                       else if($value->dia_semana == 6)
                                         $dia_semana = "Sábado";
-                                      echo "<option value='" . $value->id_horario . "'>". $dia_semana
+                                      echo "<option value='" . $value->id_turma . "'>". $dia_semana
                                                                                     . " ".
                                                                                     "-  Hora inicial: ". $value->hr_inicio . " " .
                                                                                     "-  Hora Final: " . $value->hr_termino . " " .
