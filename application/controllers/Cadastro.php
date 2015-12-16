@@ -676,16 +676,11 @@ class Cadastro extends MY_Controller {
             $matricula_graduacao->observacao = "recem matriculado";
             $this->crud->insert('matricula_graduacao', $matricula_graduacao);
             /* Fecha a transação */
-            $this->db->trans_complete();
-            
-            
+            $this->db->trans_complete();           
 
             if ($this->db->trans_status() === TRUE) {
                 $this->db->trans_commit();
                 $this->sucesso();
-                                
-                
-
             } else {
                 $this->db->trans_rollback();
                 log_message('error', 'Erro ao inserir a aluno.', 'FALSE');

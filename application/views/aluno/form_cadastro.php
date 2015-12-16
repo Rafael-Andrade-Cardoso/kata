@@ -244,6 +244,7 @@
                       <div class="col-sm-4">
                           <input type="text" id="cep" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" title="Digite o CEP"/>
                           <div class="error"><?php echo form_error('cep'); ?></div>
+                          <span class="help-block">Informe apenas os números.</span>
                       </div>
                   </div>
                   <!--<div class="form-group">
@@ -324,7 +325,7 @@
                   <div class="form-group">                      
                       <label class="col-sm-2 col-sm-2 control-label">Horário<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">                    
-                           <select name="id_horario" class="form-control" title="Selecione a turma">
+                           <select name="id_horario" id="id_horario" class="form-control" title="Selecione a turma" onclick="javascript: getvalor();">
                               <option value="<?php echo set_value('id_horario'); ?>">Escolha o horário e dia da aula</option>
                               <?php
                                   foreach ($horario->result() as $value) {
@@ -346,7 +347,8 @@
                                                                                     . " ".
                                                                                     "-  Hora inicial: ". $value->hr_inicio . " " .
                                                                                     "-  Hora Final: " . $value->hr_termino . " " .
-                                                                                    "-  Instrutor: " . $value->nome ." ". $value->sobrenome.
+                                                                                    "-  Instrutor: " . $value->nome ." ". $value->sobrenome. " ".
+                                                                                    "-  Valor: ". $value->valor_mensalidade . " " .
                                             "</option>";
                                     /*echo "<option value='" . $value->id_horario . "'";
                                     if (set_value('id_ta_tipo_telefone')){
@@ -377,10 +379,10 @@
                           <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
                       </div>
                       
-                      <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade<font color="#FF0202">*</font></label>
+                     <!-- <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                       <div class="input-group">                      
-                          <input type="text" class="form-control" name="valor_mensalidade" value="<?php echo set_value('valor_mensalidade'); ?>" title="Digite o valor da mesalidade"/>
+                          <input type="text" class="form-control" name="valor_mensalidade" id="valor_mensalidade" value="<?php echo set_value('valor_mensalidade'); ?>" title="Digite o valor da mesalidade"/>
                           <span class="input-group-addon">R$</span>
                           <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
                       </div>
@@ -392,8 +394,8 @@
                           <input type="text" class="form-control" name="valor_mensalidade" value="<?php echo set_value('valor_mensalidade'); ?>" />
                           <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
                       </div>
-                  </div>-->
-                  <div class="form-group">
+                  </div>
+                  <div class="form-group">-->
                       <label class="col-sm-2 col-sm-2 control-label">Desconto<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                       <div class="input-group">  

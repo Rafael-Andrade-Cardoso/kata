@@ -212,7 +212,7 @@ class Crud_model extends CI_Model {
             return false;
         } 
     }
-
+    
     function get_horario($qtd = 0, $inicio = 0) {
         $this->db->select('h.*, p.nome, pf.sobrenome');
         $this->db->from('horario h');
