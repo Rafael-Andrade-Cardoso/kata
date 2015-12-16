@@ -741,6 +741,16 @@ class Cadastro extends MY_Controller {
                 'rules' => 'required|max_length[11]'
             ),
             array(
+                'field' => 'id_ta_cidade',
+                'label' => 'Cidade',
+                'rules' => 'required|max_length[11]'
+            ),
+            array(
+                'field' => 'id_ta_cidade',
+                'label' => 'Cidade',
+                'rules' => 'required|max_length[11]'
+            ),
+            array(
                 'field' => 'logradouro',
                 'label' => 'Logradouro',
                 'rules' => 'trim|required|max_length[255]'

@@ -107,7 +107,7 @@
                                 }
                             ?>
                         </select>
-                        <div class="error"><?php echo form_error('id_menu_pai'); ?></div>
+                        <div class="error"><?php echo form_error('id_ta_pais'); ?></div>
                       </div>
                  <!-- </div>
                   <div class="form-group">-->
@@ -210,11 +210,87 @@
                           <div class="error"><?php echo form_error('email'); ?></div>
                       </div>
                   </div>
-                <button class="btn btn-lg btn-primary" >Cadastrar</button>
+                
               </div>
           </div>
-      </div>
-
+          
+          <!-- Área de pagamento -->
+      <div class="row mt">
+          <div class="col-lg-12">
+              
+            <div class="form-panel">
+                  
+                  <h4 class="mb"><i class="fa fa-angle-right"></i> Dados de usuário</h4>
+                 
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">Usuário<font color="#FF0202">*</font></label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="login" value="<?php echo set_value('login'); ?>" title="Digite o nome de usuário"/>
+                            <div class="error"><?php echo form_error('login'); ?></div>
+                        </div>
+                        
+                        <label class="col-sm-2 col-sm-2 control-label">Senha<font color="#FF0202">*</font></label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" name="senha" value="<?php echo set_value('senha'); ?>" title="Digite a senha do usuário"/>
+                            <div class="error"><?php echo form_error('senha'); ?></div>
+                        </div>
+                    </div>
+                
+                  <!--<div class="form-group">
+                      <label class="col-sm-2 col-sm-2 control-label">Senha</label>
+                      <div class="col-sm-10">
+                          <input type="password" class="form-control" name="senha" value="<?php echo set_value('senha'); ?>" />
+                          <div class="error"><?php echo form_error('senha'); ?></div>
+                      </div>
+                  </div>-->
+                  
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">Situação<font color="#FF0202">*</font></label>
+                        <div class="col-sm-10">
+                            <select name="id_ta_situacao" class="form-control" title="Selecione uma situação">
+                                <option value="<?php echo set_value('id_ta_situacao'); ?>">Escolha uma pessoal</option>
+                                    <?php
+                                    foreach ($situacoes as $value) {
+                                        echo "<option value='" . $value->id_ta_situacao . "'";
+                                        if (set_value('id_ta_situacao')){
+                                        echo " checked ";
+                                        }
+                                        echo ">" . $value->nm_situacao . "</option>";
+                                    }
+                                    ?>
+                            </select>
+                            <div class="error"><?php echo form_error('id_ta_situacao'); ?></div>
+                        </div>
+                    </div>
+                  
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">Grupo de permissão<font color="#FF0202">*</font></label>
+                            <div class="col-sm-5">
+                                <?php
+                                    foreach ($tipos_usuario as $value) {
+                                ?>
+                                    <div class="radio">
+                                        <label>
+                                            <input name="id_ta_tipo_usuario" type="radio" value="<?php echo $value->id_ta_tipo_usuario; ?>"
+                                            <?php
+                                                if (set_value('id_ta_tipo_usuario')){
+                                                    echo ($value->id_ta_tipo_usuario == set_value('id_ta_tipo_usuario'))?" checked ":"";
+                                                }
+                                            ?>
+                                            />
+                                            <?php echo $value->ds_tipo_usuario; ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                    }
+                                ?>
+                            </div>
+                    </div>    
+                <button class="btn btn-lg btn-primary" >Cadastrar</button>
+            </div>
+        </div>
+        </div>
+       
 <?php echo form_close(); ?>
 
 <script type="text/javascript">
