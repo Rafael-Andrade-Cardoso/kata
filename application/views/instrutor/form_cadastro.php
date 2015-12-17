@@ -213,6 +213,7 @@
                 
               </div>
           </div>
+        </div>
           
           <!-- Área de pagamento -->
       <div class="row mt">

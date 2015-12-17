@@ -430,12 +430,7 @@ class Cadastro extends MY_Controller {
                 'field' => 'sobrenome',
                 'label' => 'Sobrenome',
                 'rules' => 'trim|required|max_length[100]'
-            ),
-            array(
-                'field' => 'cpf',
-                'label' => 'CPF',
-                'rules' => 'trim|required|max_length[14]'
-            ),
+            ),            
             array(
                 'field' => 'dt_nascimento',
                 'label' => 'Data de nascimenot',
@@ -510,28 +505,12 @@ class Cadastro extends MY_Controller {
                 'field' => 'dia_vencimento',
                 'label' => 'Dia de vencimento',
                 'rules' => 'trim|required|max_length[2]'
-            ),
-            array(
-                'field' => 'valor_mensalidade',
-                'label' => 'Valor da mensalidade',
-                'rules' => 'trim|required|max_length[12]'
-            ),
-            array(
-                'field' => 'login',
-                'label' => 'Login',
-                'rules' => 'trim|required|max_length[100]'
-            ),
+            ),                      
             array(
                 'field' => 'id_horario',
                 'label' => 'Horário',
                 'rules' => 'required'
-            ),
-            array(
-                'field' => 'senha',
-                'label' => 'Senha de usuário',
-                'rules' => 'required|max_length[255]'
             )
-
         );
 
         if (!empty($data->nome_responsavel)) {
@@ -655,13 +634,13 @@ class Cadastro extends MY_Controller {
             $matricula->id_aluno = $id_aluno;
             $id_matricula=$this->crud->insert('matricula', $matricula);          
 
-            $usuario = new stdClass();
+           /* $usuario = new stdClass();
             $usuario->login = $data->login;
             $usuario->senha = hash('sha256', $data->senha);
             $usuario->id_ta_situacao = $data->id_ta_situacao;
             $usuario->id_ta_tipo_usuario = $data->id_ta_tipo_usuario;
             $usuario->id_pessoa = $id_pessoa;
-            $id_usuario = $this->crud->insert('usuario', $usuario);
+            $id_usuario = $this->crud->insert('usuario', $usuario);*/
 
             $matricula_turma = new stdClass();
             $matricula_turma->id_matricula = $id_matricula;
@@ -690,9 +669,12 @@ class Cadastro extends MY_Controller {
     }
 
     function form_instrutor() {
+        $this->load->model('usuario_model', 'usuario');
         $data['paises'] = $this->get_all('ta_pais');
         $data['estados'] = $this->get_all('ta_estado');
         $data['cidades'] = $this->get_all('ta_cidade');
+        $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
+        $data['situacoes'] = $this->crud->get_all('ta_situacao')->result();
         $data['tipos_telefone'] = $this->get_all('ta_tipo_telefone');
         $this->template->load('instrutor/form_cadastro', $data);
     }
@@ -785,7 +767,33 @@ class Cadastro extends MY_Controller {
                 'label' => 'E-mail',
                 'rules' => 'trim|required'
             )
-        );
+          );
+            if (!empty($data->login)) {
+            $validacores_usuario = array(
+                array(
+                    'field' => 'login',
+                    'label' => 'Login',
+                    'rules' => 'trim|required|max_length[50]'
+                ),
+                array(
+                    'field' => 'senha',
+                    'label' => 'Senha',
+                    'rules' => 'trim|required|max_length[100]'
+                ),
+                array(
+                    'field' => 'id_ta_situacao',
+                    'label' => 'Situação',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'id_ta_tipo_usuario',
+                    'label' => 'Tipo usuário',
+                    'rules' => 'trim|required'
+                )
+            );
+            $validacoes = array_merge($validacoes, $validacores_usuario);
+        }
+        
         /* Configura as validações */
         $this->form_validation->set_rules($validacoes);
 
@@ -793,9 +801,7 @@ class Cadastro extends MY_Controller {
         if ($this->form_validation->run() === TRUE) {
             /* Abre uma transação */
             $this->db->trans_start();
-
-
-
+            
             /* Dados para cadastro de pessoa */
             $pessoa = new stdClass();
             $pessoa->nome = $data->nome;
@@ -827,6 +833,14 @@ class Cadastro extends MY_Controller {
             $pessoa_telefone->ddd = substr($data->telefone, 0,2);
             $pessoa_telefone->telefone = substr($data->telefone, 2, strlen($data->telefone));
             $this->crud->insert('pessoa_telefone', $pessoa_telefone);
+            
+            $usuario = new stdClass();
+            $usuario->login = $data->login;
+            $usuario->senha = hash('sha256', $data->senha);
+            $usuario->id_ta_situacao = $data->id_ta_situacao;
+            $usuario->id_ta_tipo_usuario = $data->id_ta_tipo_usuario;
+            $usuario->id_pessoa = $id_pessoa;
+            $id_usuario = $this->crud->insert('usuario', $usuario);
 
             $instrutor = new stdClass();
             $instrutor->id_pessoa_fisica = $id_pessoa;

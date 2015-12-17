@@ -7,9 +7,9 @@
                               <thead>
                                   <tr>
                                       <th> Nome</th>
-                                      <th> sobrenome</th>
-                                      <th class="hidden-sm hidden-xs"> Graduação</th>
-                                      <th> Situação</th>
+                                      <th> Sobrenome</th>
+                                      <th class="hidden-sm hidden-xs"> Tipo sanguineo</th>
+                                      <th> E-mail</th>
                                       <th></th>
                                   </tr>
                               </thead>
