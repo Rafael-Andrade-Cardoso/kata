@@ -240,6 +240,45 @@ class Relatorio extends MY_Controller {
         return $config;
 
     }
+    
+    public function aluno_turma($qtd = 'null', $inicio = 'null', $id_turma = 'null') {
+        //die(print_r($this->input->post));
+        $consulta = $this->crud->get_horario_somente();
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/aluno_turma', $num_rows);
+       
+         
+        
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        $data = array();
+        
+        if(!empty($this->input->post("id_horario")))
+            $id_turma = $this->input->post("id_horario");
+        else  
+            $id_turma = NULL;
+       //$id_turma = $this->input->post("id_horario");
+       // die(print_r($id_turma));
+        //$result = $this->crud->get_alunos_turma($id_turma);
+        if(!is_null($id_turma)){
+            $result = $this->crud->get_alunos_turma($id_turma);
+            //die(print_r($result));  
+            $data['aluno'] = $result;  
+        } 
+            
+        $data['horario'] = $this->crud->get_horario_somente();
+        $data['paginacao'] = $this->pagination->create_links();
+        $this->template->load('aluno_turma/lista', $data);  
+       
+    }
+    
+    public function aluno_turma_2(){
+        $id_turma = $this->input->post("id_horario");
+        $this->aluno_turma($id_turma);
+    }
 
     public function get_alunos_faixa() {
         $lista = $this->crud->get_alunos_faixa();
@@ -249,3 +288,4 @@ class Relatorio extends MY_Controller {
 
 
 }
+

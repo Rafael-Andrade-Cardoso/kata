@@ -29,18 +29,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">CPF<font color="#FF0202">*</font></label>
+                    <label class="col-sm-2 col-sm-2 control-label">CPF</label>
                     <div class="col-sm-5">
                         <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo set_value('cpf'); ?>" title="Digite seu CPF" onblur="TestaCPF"/>
                         <div class="error"><?php echo form_error('cpf'); ?></div>
                         <span class="help-block">Informe apenas os números.</span>
                     </div>
-                </div>
+                <!--</div>
 
-                <div class="form-group">
+                <div class="form-group">-->
                     <label class="col-sm-2 col-sm-2 control-label">Data de nascimento<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" name="dt_nascimento" value="<?php echo set_value('dt_nascimento'); ?>" title="Selecione uma data"/>
+                        <input type="date" id="dt_nascimento"class="form-control" name="dt_nascimento" value="<?php echo set_value('dt_nascimento'); ?>" title="Selecione uma data"/>
                         <div class="error"><?php echo form_error('dt_nascimento'); ?></div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <label class="col-sm-2 col-sm-2 control-label">Peso<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">
                     <div class="input-group">                    
-                        <input type="text" class="form-control" name="peso" value="<?php echo set_value('peso'); ?>" title="Digite seu peso em kilogramas"/>
+                        <input type="text" class="form-control" id="peso" name="peso" value="<?php echo set_value('peso'); ?>" title="Digite seu peso em kilogramas"/>
                         <span class="input-group-addon">Kg</span>
                         <div class="error"><?php echo form_error('peso'); ?></div>
                     </div>
@@ -58,7 +58,7 @@
                     <label class="col-sm-2 col-sm-2 control-label">Altura<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">                        
                     <div class="input-group"> 
-                        <input type="text" class="form-control" name="altura" value="<?php echo set_value('altura'); ?>" title="Digite sua altura em metros"/>
+                        <input type="text" class="form-control" id="altura" name="altura" value="<?php echo set_value('altura'); ?>" title="Digite sua altura em metros"/>
                         <span class="input-group-addon">Mts</span>
                         <div class="error"><?php echo form_error('altura'); ?></div>
                     </div>
@@ -133,7 +133,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Data de nascimento</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" name="dt_nascimento_responsavel" value="<?php echo set_value('dt_nascimento_responsavel'); ?>" title="Selecione ou digite a data de nascimento do responsável"/>
+                        <input type="date" class="form-control" id="dt_nascimento_responsavel" name="dt_nascimento_responsavel" value="<?php echo set_value('dt_nascimento_responsavel'); ?>" title="Selecione ou digite a data de nascimento do responsável"/>
                         <div class="error"><?php echo form_error('dt_nascimento_responsavel'); ?></div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                       <label class="col-sm-2 col-sm-2 control-label">País<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                           <select name="id_ta_pais" class="form-control" title="Selecione um país">
-                              <option value="<?php echo set_value('id_ta_pais'); ?>">Escolha uma pessoal</option>
+                              <option value="<?php echo set_value('id_ta_pais'); ?>">Escolha um país</option>
                               <?php
                                   foreach ($paises as $value) {
                                     echo "<option value='" . $value->id_ta_pais . "'";
@@ -188,7 +188,7 @@
                       <label class="col-sm-2 col-sm-2 control-label">Estado<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                           <select name="id_ta_estado" class="form-control" title="Selecione um estado">
-                            <option value="<?php echo set_value('id_ta_estado'); ?>">Escolha uma pessoal</option>
+                            <option value="<?php echo set_value('id_ta_estado'); ?>">Escolha um estado</option>
                             <?php
                                   foreach ($estados as $value) {
                                     echo "<option value='" . $value->id_estado . "'";
@@ -205,9 +205,9 @@
                  
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Cidade<font color="#FF0202">*</font></label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-4">
                           <select name="id_ta_cidade" class="form-control" title="Selecione uma cidade">
-                            <option value="<?php echo set_value('id_ta_cidade'); ?>">Escolha uma pessoal</option>
+                            <option value="<?php echo set_value('id_ta_cidade'); ?>">Escolha uma cidade</option>
                                 <?php
                                   foreach ($cidades as $value) {
                                     echo "<option value='" . $value->id_ta_cidade . "'";
@@ -220,32 +220,34 @@
                           </select>
                           <div class="error"><?php echo form_error('id_ta_cidade'); ?></div>
                       </div>
-                  </div>
-                 
-                  <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Logradouro<font color="#FF0202">*</font></label>
-                      <div class="col-sm-6">
-                          <input type="text" class="form-control" name="logradouro" value="<?php echo set_value('logradouro'); ?>" title="Digite o nome da rua em que reside"/>
-                          <div class="error"><?php echo form_error('logradouro'); ?></div>
-                      </div>
                   <!--</div>
                  
                   <div class="form-group">-->
-                      
-                      <label class="col-sm-2 col-sm-2 control-label">Número<font color="#FF0202">*</font></label>
-                      <div class="col-sm-2">
-                          <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" title="Digite o número da casa"/>
-                          <div class="error"><?php echo form_error('numero'); ?></div>
+                      <label class="col-sm-2 col-sm-2 control-label">Logradouro<font color="#FF0202">*</font></label>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" name="logradouro" value="<?php echo set_value('logradouro'); ?>" title="Digite o nome da rua em que reside"/>
+                          <div class="error"><?php echo form_error('logradouro'); ?></div>
                       </div>
                   </div>
                  
-                  <div class="form-group">    
+                  <div class="form-group">
+                      
                       <label class="col-sm-2 col-sm-2 control-label">CEP<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                           <input type="text" id="cep" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" title="Digite o CEP"/>
                           <div class="error"><?php echo form_error('cep'); ?></div>
                           <span class="help-block">Informe apenas os números.</span>
                       </div>
+                      
+                      <label class="col-sm-2 col-sm-2 control-label">Número<font color="#FF0202">*</font></label>
+                      <div class="col-sm-2">
+                          <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" title="Digite o número da casa"/>
+                          <div class="error"><?php echo form_error('numero'); ?></div>
+                      </div>
+                 <!-- </div>
+                 
+                  <div class="form-group">  -->  
+                      
                   </div>
                   <!--<div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">CEP</label>
@@ -270,7 +272,10 @@
       <div class="row mt">
           <div class="col-lg-12">
               <div class="form-panel">
-                  <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato</h4>
+                  <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato
+                    <font color="#00CC00"><span class="glyphicon glyphicon-plus" id="contato_toggle" aria-hidden="true"></span></font>
+                  </h4>
+                  
                  
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Tipo<font color="#FF0202">*</font></label>
@@ -312,9 +317,47 @@
                           <div class="error"><?php echo form_error('email'); ?></div>
                       </div>
                   </div>
-              </div>
+                  
+                    <div id="cad_contato">
+        <!--<div class="row mt">
+            <div class="col-lg-12">
+                <div class="form-panel">-->
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> Telefone</h4>                
+                    
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Tipo<font color="#FF0202">*</font></label>
+                            <div class="col-sm-3">
+                                <select name="id_ta_tipo_telefone_2" class="form-control" title="Selecione o tipo para contato telefonico ">
+                                    <option value="<?php echo set_value('id_ta_tipo_telefone_2'); ?>">Escolha o tipo</option>
+                                    <?php
+                                        foreach ($tipos_telefone as $value) {
+                                            echo "<option value='" . $value->id_ta_tipo_telefone . "'";
+                                            if (set_value('id_ta_tipo_telefone')){
+                                                echo " checked ";
+                                            }
+                                            echo ">" . $value->desc_tipo_telefone . "</option>";
+                                        }
+                                    ?>
+                                </select>
+                                <div class="error"><?php echo form_error('id_ta_tipo_telefone_2'); ?></div>
+                            </div>
+                        
+                            <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
+                            <div class="col-sm-5">
+                                <input type="text" id="telefone_2" class="form-control" name="telefone_2" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
+                                <div class="error"><?php echo form_error('telefone_2'); ?></div>
+                            </div>
+                        </div>
+                                 
+                <!--</div>
+            </div>
+        </div>-->
+                    </div>
+              </div>             
           </div>
       </div>
+      
+    
 
       <div class="row mt"> <!-- CONTINUAR AQUI MATRICULA -->
             <div class="col-lg-12">
@@ -373,9 +416,9 @@
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para pagamento</h4>
                   
                   <div class="form-group">                      
-                      <label class="col-sm-2 col-sm-2 control-label">Melhor data para pagamento<font color="#FF0202">*</font></label>
+                      <label class="col-sm-2 col-sm-2 control-label">Melhor dia para pagamento<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">                    
-                          <input type="text" class="form-control" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" title="Digite a data para o pagamento da mensalidade"/>
+                          <input type="text" class="form-control" id="dia_vencimento" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" title="Digite a data para o pagamento da mensalidade"/>
                           <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
                       </div>
                       
@@ -399,7 +442,7 @@
                       <label class="col-sm-2 col-sm-2 control-label">Desconto<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                       <div class="input-group">  
-                          <input type="text" class="form-control" name="desconto" value="<?php echo set_value('desconto'); ?>" title="Digite o valor do desconto"/>
+                          <input type="text" class="form-control" id="desconto" name="desconto" value="<?php echo set_value('desconto'); ?>" title="Digite o valor do desconto"/>
                           <span class="input-group-addon">R$</span>
                           <div class="error"><?php echo form_error('desconto'); ?></div>
                       </div>
@@ -424,6 +467,12 @@
             }
         });
         
+        $( "#contato_toggle" ).on({
+            "mouseover": function() {
+                $( this ).css("cursor", "pointer");
+            }
+        });
+        
         $('document').ready(function(){
            $( "#cad_responsavel" ).fadeOut( "fast" ); 
         });
@@ -432,11 +481,24 @@
             $( "#cad_responsavel" ).fadeToggle( "slow", "linear" );
         });
         
+        $('document').ready(function(){
+           $( "#cad_contato" ).fadeOut( "fast" ); 
+        });
+        
+        $( "#contato_toggle" ).click(function() {
+            $( "#cad_contato" ).fadeToggle( "slow", "linear" );
+        });
+        
         
         $(document).ready(function(){
-            $("#cpf").mask("999.999.999-99");
-            $("#cep").mask("99999-999"); 
-            $("#telefone").mask("(99) 9999-9999");       
+            $("#cpf").mask("999.999.999-99", {selectOnFocus: true});
+            $("#cep").mask("99999-999", {selectOnFocus: true}); 
+            $("#telefone").mask("(99) 9999-9999", {selectOnFocus: true}); 
+            $("#telefone_2").mask("(99) 9999-9999", {selectOnFocus: true}); 
+            $("#peso").mask("999", {selectOnFocus: true}); 
+            $("#altura").mask("#,99", {selectOnFocus: true});  
+            $('#desconto').mask("##,##", {reverse: true});
+            $("#dia_vencimento").mask("#0", {selectOnFocus: true});    
         });
         
         $(function(){        
@@ -456,7 +518,75 @@
                         $("#cpf").focus();
                     }             
                 }   
-            });            
+            });  
+            
+            $('#dt_nascimento').blur(function(){
+                var dt = document.getElementById("dt_nascimento").value;
+                //alert(dt);
+                var myDate = new Date();
+                var displayDate = myDate.getFullYear()-4 + '-' + (myDate.getMonth()+1) + '-' + (myDate.getDate()) ; 
+                var displayDate2 = myDate.getFullYear()-70 + '-' + (myDate.getMonth()+1) + '-' + (myDate.getDate()) ;
+                //alert(displayDate);
+                if(dt != ""){
+                    if(dt >= displayDate){
+                        alert('A criança deve ao menos ter 4 anos de idade');
+                        $("#dt_nascimento").focus();
+                    }else if(dt < displayDate2){
+                        alert('Insira uma data válida');
+                        $("#dt_nascimento").focus();
+                    }
+                }
+            });
+            
+            $('#dt_nascimento_responsavel').blur(function(){
+                var dt = document.getElementById("dt_nascimento_responsavel").value;
+                //alert(dt);
+                var myDate = new Date();
+                var displayDate = myDate.getFullYear()-18 + '-' + (myDate.getMonth()+1) + '-' + (myDate.getDate()) ; 
+                //alert(displayDate);
+                if(dt >= displayDate){
+                    alert('Responsável deve ser maior de idade');
+                    $("#dt_nascimento_responsavel").focus();
+                }    
+            });
+            
+            $('#peso').blur(function(){
+                var peso = document.getElementById("peso").value;
+                //alert(peso); 
+                //alert(displayDate);
+                if((peso < 0)){
+                    alert('Insira um valor correto para o campo peso');
+                    $("#peso").focus();
+                }else if(peso > 400){
+                    alert('Insira um valor correto para o campo peso');
+                    $("#peso").focus();
+                }    
+            }); 
+            
+            $('#altura').blur(function(){
+                var altura = document.getElementById("altura").value;
+                //alert(altura); 
+                //alert(displayDate);
+                if(altura != ""){    
+                    if((altura > "2,80")){
+                        alert('Insira um valor correto para o campo altura');
+                        $("#altura").focus();
+                    }else if(altura < "0,20"){
+                        alert('Insira um valor correto para o campo altura');
+                        $("#altura").focus();
+                    }    
+                }
+            });
+            
+            $('#dia_vencimento').blur(function(){
+                var dia_vencimento = document.getElementById("dia_vencimento").value;
+                //alert(dia_vencimento); 
+                //alert(displayDate);
+                if((dia_vencimento > 31)){
+                    alert('Insira um dia correto para o campo de vencimento');
+                    $("#dia_vencimento").focus();
+                }    
+            });          
         });     
     
         function TestaCPF(cpf) {  

@@ -541,7 +541,22 @@ class Cadastro extends MY_Controller {
                     'rules' => 'trim|required|max_length[1]'
                 )
             );
-            $validacoes = array_merge($validacoes, $validacores_responsavel);
+            
+            if (!empty($data->id_ta_tipo_telefone_2)) {
+                $validacao_telefone_2 = array(
+                    array(
+                        'field' => 'id_ta_tipo_telefone_2',
+                        'label' => 'Tipo de telefone',
+                        'rules' => 'trim|required'
+                    ),
+                    array(
+                        'field' => 'telefone_2',
+                        'label' => 'Telefone',
+                        'rules' => 'trim|required'
+                    )
+                );
+            }
+            $validacoes = array_merge($validacoes, $validacores_responsavel, $validacao_telefone_2);
         }
 
 
@@ -625,11 +640,11 @@ class Cadastro extends MY_Controller {
             }
 
             $matricula = new stdClass();
-            $matricula->id_ta_situacao = $data->id_ta_situacao;
+            $matricula->id_ta_situacao = 1;
             $matricula->dia_vencimento = $data->dia_vencimento;
             $matricula->dt_matricula = $data->dt_matricula;
             $matricula->desconto = $data->desconto;
-            $matricula->valor_mensalidade = $data->valor_mensalidade;
+            //$matricula->valor_mensalidade = $data->valor_mensalidade;
             $matricula->id_pessoa_fisica = $id_pessoa;
             $matricula->id_aluno = $id_aluno;
             $id_matricula=$this->crud->insert('matricula', $matricula);          
@@ -998,10 +1013,53 @@ class Cadastro extends MY_Controller {
                 'rules' => 'trim|required|max_length[5]'
             )
         );
+        
+        if (!empty($data->dia_semana_2)) {
+            $validacoes_dia_2 = array(
+                array(
+                    'field' => 'dia_semana_2',
+                    'label' => 'Dia da Semana',
+                    'rules' => 'trim|required'  
+                ),
+                array(
+                    'field' => 'hr_inicio_2',
+                    'label' => 'Hora Início',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'hr_termino_2',
+                    'label' => 'Hora de Início',
+                    'rules' => 'trim|required'
+                )
+            );
+            $validacoes = array_merge($validacoes, $validacoes_dia_2);
+        }
+        
+        if (!empty($data->dia_semana_3)) {
+            $validacoes_dia_3 = array(
+                array(
+                    'field' => 'dia_semana_3',
+                    'label' => 'Dia da Semana',
+                    'rules' => 'trim|required'  
+                ),
+                array(
+                    'field' => 'hr_inicio_3',
+                    'label' => 'Hora Início',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'hr_termino_3',
+                    'label' => 'Hora de Início',
+                    'rules' => 'trim|required'
+                )
+            );
+            $validacoes = array_merge($validacoes, $validacoes_dia_3);
+        }
+        
         $this->form_validation->set_rules($validacoes);
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
          
-        //die(print_r($data));      
+        die(print_r($data));      
         if ($this->form_validation->run() === TRUE) {
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
             unset($data['id_arte_marcial']);
@@ -1084,8 +1142,7 @@ class Cadastro extends MY_Controller {
             $this->form_aula();
         }
     }
-    
-    
+        
     
     public function form_plano_aula(){          
         $data['aula'] = $this->get_all('aula');

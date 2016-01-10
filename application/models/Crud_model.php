@@ -81,6 +81,26 @@ class Crud_model extends CI_Model {
             return false;
         }
     }
+    
+    function get_alunos_turma($id_turma){
+        $result = $this->db->query('Select a.*, p.nome, pf.sobrenome, pf.tipo_sanguineo, tg.graduacao from matricula_turma as mt	
+                                        inner join matricula as m
+                                            ON (mt.id_matricula = m.id_matricula)
+                                        inner join aluno as a
+                                            ON (m.id_aluno = a.id_aluno)
+                                        inner join pessoa_fisica as pf 
+                                            ON(a.id_pessoa_fisica = pf.id_pessoa_fisica)
+                                        inner join pessoa as p
+                                            ON(p.id_pessoa = pf.id_pessoa_fisica)
+                                        left join exame as e
+                                            ON (m.id_matricula = e.id_matricula)
+                                         left join ta_graduacao as tg
+                                            ON (e.id_ta_graduacao = tg.id_ta_graduacao)
+                                    Where mt.id_turma = '.$id_turma.';
+                                  ');
+        return $result->result();
+                                  
+    }
 
     function get_instrutores($qtd = 0, $inicio = 0) {
         $query=$this->db->query('Select * from  

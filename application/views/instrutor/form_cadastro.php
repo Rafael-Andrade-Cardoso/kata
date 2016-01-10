@@ -42,13 +42,13 @@
                         <div class="error"><?php echo form_error('cpf'); ?></div>
                         <span class="help-block">Informe apenas os números.</span>
                     </div>
-                </div>
+                <!--</div>
 
 
-                <div class="form-group">
+                <div class="form-group">-->
                     <label class="col-sm-2 col-sm-2 control-label">Data de nascimento<font color="#FF0202">*</font></label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" name="dt_nascimento" value="<?php echo set_value('dt_nascimento'); ?>" title="Digite ou selecione a data de nascimento do Instrutor"/>
+                        <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" value="<?php echo set_value('dt_nascimento'); ?>" title="Digite ou selecione a data de nascimento do Instrutor"/>
                         <div class="error"><?php echo form_error('dt_nascimento'); ?></div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Número<font color="#FF0202">*</font></label>
                       <div class="col-sm-3">
-                          <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" title="Digite o número"/>
+                          <input type="text" class="form-control" id="numero" name="numero" value="<?php echo set_value('numero'); ?>" title="Digite o número"/>
                           <div class="error"><?php echo form_error('numero'); ?></div>
                       </div>
                       
@@ -173,7 +173,9 @@
       <div class="row mt">
           <div class="col-lg-12">
               <div class="form-panel">
-                  <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato</h4>
+                  <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para contato
+                    <font color="#00CC00"><span class="glyphicon glyphicon-plus" id="contato_toggle" aria-hidden="true"></span></font>
+                  </h4>
                   <div class="form-group">
                       <label class="col-sm-2 col-sm-2 control-label">Tipo de telefone<font color="#FF0202">*</font></label>
                       <div class="col-sm-3">
@@ -210,6 +212,42 @@
                           <div class="error"><?php echo form_error('email'); ?></div>
                       </div>
                   </div>
+                  
+                  <div id="cad_contato">
+        <!--<div class="row mt">
+            <div class="col-lg-12">
+                <div class="form-panel">-->
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> Telefone</h4>                
+                    
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Tipo<font color="#FF0202">*</font></label>
+                            <div class="col-sm-3">
+                                <select name="id_ta_tipo_telefone_2" class="form-control" title="Selecione o tipo para contato telefonico ">
+                                    <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
+                                    <?php
+                                        foreach ($tipos_telefone as $value) {
+                                            echo "<option value='" . $value->id_ta_tipo_telefone . "'";
+                                            if (set_value('id_ta_tipo_telefone')){
+                                                echo " checked ";
+                                            }
+                                            echo ">" . $value->desc_tipo_telefone . "</option>";
+                                        }
+                                    ?>
+                                </select>
+                                <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
+                            </div>
+                        
+                            <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
+                            <div class="col-sm-5">
+                                <input type="text" id="telefone_2" class="form-control" name="telefone_2" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
+                                <div class="error"><?php echo form_error('telefone'); ?></div>
+                            </div>
+                        </div>
+                                 
+                <!--</div>
+            </div>
+        </div>-->
+                    </div>
                 
               </div>
           </div>
@@ -249,7 +287,7 @@
                         <label class="col-sm-2 col-sm-2 control-label">Situação<font color="#FF0202">*</font></label>
                         <div class="col-sm-10">
                             <select name="id_ta_situacao" class="form-control" title="Selecione uma situação">
-                                <option value="<?php echo set_value('id_ta_situacao'); ?>">Escolha uma pessoal</option>
+                                <option value="<?php echo set_value('id_ta_situacao'); ?>">Escolha uma situação</option>
                                     <?php
                                     foreach ($situacoes as $value) {
                                         echo "<option value='" . $value->id_ta_situacao . "'";
@@ -295,27 +333,57 @@
 <?php echo form_close(); ?>
 
 <script type="text/javascript">
+
+    $( "#contato_toggle" ).on({
+            "mouseover": function() {
+                $( this ).css("cursor", "pointer");
+            }
+    });
+
+    $('document').ready(function(){
+           $( "#cad_contato" ).fadeOut( "fast" ); 
+        });
+        
+        $( "#contato_toggle" ).click(function() {
+            $( "#cad_contato" ).fadeToggle( "slow", "linear" );
+    });
+    
     $(document).ready(function(){
         $("#cpf").mask("999.999.999-99");
         $("#cep").mask("99999-999"); 
-        $("#telefone").mask("(99) 9999-9999");       
-      });      
-        
+        $("#telefone").mask("(99) 9999-9999"); 
+      });       
+      
        // alert('teste');
       $(function(){        
             // ## EXEMPLO 2
             // Aciona a validação ao sair do input
             $('#cpf').blur(function(){                          
                 // O CPF ou CNPJ
+                
                 var cpf_cnpj = document.getElementById("cpf").value;                
                 // Testa a validação
-                if ( TestaCPF( cpf_cnpj ) ) {
-                   //alert('OK');
-                } else {
-                    alert('CPF inválido!');
-                    $("#cpf").focus();
-                }                
-            });            
+                if(cpf_cnpj != ""){
+                    if ( TestaCPF( cpf_cnpj ) ) {
+                    //alert('OK');
+                    } else {
+                        alert('CPF inválido!');
+                        $("#cpf").focus();
+                    }                
+                }
+            }); 
+            
+            $('#dt_nascimento').blur(function(){
+                var dt = document.getElementById("dt_nascimento").value;
+                //alert(dt);
+                var myDate = new Date();
+                var displayDate = myDate.getFullYear()-18 + '-' + (myDate.getMonth()+1) + '-' + (myDate.getDate()) ; 
+                //alert(displayDate);
+                if(dt >= displayDate){
+                    alert('Instrutor deve ser maior de idade');
+                    $("#dt_nascimento").focus();
+                }    
+            });          
         });     
     
         function TestaCPF(cpf) {  
