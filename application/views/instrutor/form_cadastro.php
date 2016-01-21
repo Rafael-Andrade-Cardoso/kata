@@ -6,12 +6,12 @@
     <!-- Área de dados do aluno -->
     <div class="row mt">
             <div class="col-lg-12">
-                <?php
+               <?php/*
                     echo validation_errors('<p class="alert alert-danger">', '</p>');
                     if ($this->session->flashdata('cadastrook')){
                       echo '<p class="alert alert-success">' . $this->session->flashdata('cadastrook').'</p>';
                     }
-                ?>
+               */ ?>
             <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Dados Pessoais&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -213,10 +213,7 @@
                       </div>
                   </div>
                   
-                  <div id="cad_contato">
-        <!--<div class="row mt">
-            <div class="col-lg-12">
-                <div class="form-panel">-->
+                    <div id="cad_contato">
                         <h4 class="mb"><i class="fa fa-angle-right"></i> Telefone</h4>                
                     
                         <div class="form-group">
@@ -234,19 +231,15 @@
                                         }
                                     ?>
                                 </select>
-                                <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
+                                <div class="error"><?php echo form_error('id_ta_tipo_telefone_2'); ?></div>
                             </div>
                         
                             <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
                             <div class="col-sm-5">
                                 <input type="text" id="telefone_2" class="form-control" name="telefone_2" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
-                                <div class="error"><?php echo form_error('telefone'); ?></div>
+                                <div class="error"><?php echo form_error('telefone_2'); ?></div>
                             </div>
                         </div>
-                                 
-                <!--</div>
-            </div>
-        </div>-->
                     </div>
                 
               </div>
@@ -262,13 +255,13 @@
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Dados de usuário</h4>
                  
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Usuário<font color="#FF0202">*</font></label>
+                        <label class="col-sm-2 col-sm-2 control-label">Usuário</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="login" value="<?php echo set_value('login'); ?>" title="Digite o nome de usuário"/>
                             <div class="error"><?php echo form_error('login'); ?></div>
                         </div>
                         
-                        <label class="col-sm-2 col-sm-2 control-label">Senha<font color="#FF0202">*</font></label>
+                        <label class="col-sm-2 col-sm-2 control-label">Senha</label>
                         <div class="col-sm-4">
                             <input type="password" class="form-control" name="senha" value="<?php echo set_value('senha'); ?>" title="Digite a senha do usuário"/>
                             <div class="error"><?php echo form_error('senha'); ?></div>
@@ -284,7 +277,7 @@
                   </div>-->
                   
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Situação<font color="#FF0202">*</font></label>
+                        <label class="col-sm-2 col-sm-2 control-label">Situação</label>
                         <div class="col-sm-10">
                             <select name="id_ta_situacao" class="form-control" title="Selecione uma situação">
                                 <option value="<?php echo set_value('id_ta_situacao'); ?>">Escolha uma situação</option>
@@ -303,7 +296,7 @@
                     </div>
                   
                     <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Grupo de permissão<font color="#FF0202">*</font></label>
+                        <label class="col-sm-2 col-sm-2 control-label">Grupo de permissão</label>
                             <div class="col-sm-5">
                                 <?php
                                     foreach ($tipos_usuario as $value) {
@@ -328,7 +321,7 @@
                 <button class="btn btn-lg btn-primary" >Cadastrar</button>
             </div>
         </div>
-        </div>
+    </div>
        
 <?php echo form_close(); ?>
 
@@ -342,16 +335,17 @@
 
     $('document').ready(function(){
            $( "#cad_contato" ).fadeOut( "fast" ); 
-        });
+    });
         
-        $( "#contato_toggle" ).click(function() {
-            $( "#cad_contato" ).fadeToggle( "slow", "linear" );
+    $( "#contato_toggle" ).click(function() {
+        $( "#cad_contato" ).fadeToggle( "slow", "linear" );
     });
     
     $(document).ready(function(){
         $("#cpf").mask("999.999.999-99");
         $("#cep").mask("99999-999"); 
-        $("#telefone").mask("(99) 9999-9999"); 
+        $("#telefone").mask("(99) 9999-9999");
+        $("#telefone_2").mask("(99) 9999-9999"); 
       });       
       
        // alert('teste');

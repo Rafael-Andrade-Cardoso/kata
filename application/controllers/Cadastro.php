@@ -695,6 +695,7 @@ class Cadastro extends MY_Controller {
     }
 
     function insert_instrutor() {
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $data = new stdClass();
         foreach ($this->input->post() as $key => $value){
             if (!is_null($value) && $value != ""){
@@ -760,7 +761,7 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'cep',
                 'label' => 'CEP',
-                'rules' => 'trim|required|max_length[8]'
+                'rules' => 'trim|required|max_length[9]'
             ),
             array(
                 'field' => 'complemento',
@@ -782,8 +783,8 @@ class Cadastro extends MY_Controller {
                 'label' => 'E-mail',
                 'rules' => 'trim|required'
             )
-          );
-            if (!empty($data->login)) {
+        );
+        if (!empty($data->login)) {
             $validacores_usuario = array(
                 array(
                     'field' => 'login',
@@ -806,7 +807,24 @@ class Cadastro extends MY_Controller {
                     'rules' => 'trim|required'
                 )
             );
+            
             $validacoes = array_merge($validacoes, $validacores_usuario);
+        }
+        
+        if(!empty($data->id_ta_tipo_telefone_2)){
+            $validacoes_telefone = array(
+                array(
+                    'field' => 'id_ta_tipo_telefone_2',
+                    'label' => 'Tipo do telefone',
+                    'rules' => 'trim|required|max_length[11]'
+                ),
+                array(
+                    'field' => 'telefone_2',
+                    'label' => 'Telefone',
+                    'rules' => 'trim|required'
+                )
+            );
+            $validacoes = array_merge($validacoes, $validacoes_telefone);
         }
         
         /* Configura as validações */
@@ -848,15 +866,26 @@ class Cadastro extends MY_Controller {
             $pessoa_telefone->ddd = substr($data->telefone, 0,2);
             $pessoa_telefone->telefone = substr($data->telefone, 2, strlen($data->telefone));
             $this->crud->insert('pessoa_telefone', $pessoa_telefone);
+                
+            if(!empty($data->id_ta_tipo_telefone_2)){
+                $pessoa_telefone_2 = new stdClass();
+                $pessoa_telefone_2->id_pessoa = $id_pessoa;
+                $pessoa_telefone_2->id_ta_tipo_telefone = $data->id_ta_tipo_telefone_2;
+                $pessoa_telefone_2->ddd = substr($data->telefone_2, 0,2);
+                $pessoa_telefone_2->telefone = substr($data->telefone_2, 2, strlen($data->telefone_2));
+                $this->crud->insert('pessoa_telefone', $pessoa_telefone_2);                
+            }
             
-            $usuario = new stdClass();
-            $usuario->login = $data->login;
-            $usuario->senha = hash('sha256', $data->senha);
-            $usuario->id_ta_situacao = $data->id_ta_situacao;
-            $usuario->id_ta_tipo_usuario = $data->id_ta_tipo_usuario;
-            $usuario->id_pessoa = $id_pessoa;
-            $id_usuario = $this->crud->insert('usuario', $usuario);
-
+            if(!empty($data->login)){
+                $usuario = new stdClass();
+                $usuario->login = $data->login;
+                $usuario->senha = hash('sha256', $data->senha);
+                $usuario->id_ta_situacao = $data->id_ta_situacao;
+                $usuario->id_ta_tipo_usuario = $data->id_ta_tipo_usuario;
+                $usuario->id_pessoa = $id_pessoa;
+                $id_usuario = $this->crud->insert('usuario', $usuario);
+            }
+            
             $instrutor = new stdClass();
             $instrutor->id_pessoa_fisica = $id_pessoa;
             $this->crud->insert('instrutor', $instrutor);
@@ -956,13 +985,13 @@ class Cadastro extends MY_Controller {
         }
     }   
 
-    public function form_horario(){
+    public function form_turma(){
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         $data['instrutor'] = $this->crud->get_instrutores();
-        $this->template->load('horario/form_cadastro', $data);
+        $this->template->load('turma/form_cadastro', $data);
     }
     
-    public function insert_horario(){
+    public function insert_turma(){
         
         foreach ($this->input->post() as $key => $value){
             if (!is_null($value) && $value != ""){
@@ -972,6 +1001,16 @@ class Cadastro extends MY_Controller {
         //die(print_r($data));
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $validacoes = array(
+            array(
+                'field' => 'nm_turma',
+                'label' => 'Nome da turma',
+                'rules' => 'trim|required|max_length[50]'
+            ),
+            array(
+                'field' => 'dia_semana',
+                'label' => 'Dia da Semana',
+                'rules' => 'trim|required'
+            ),
             array(
                 'field' => 'hr_inicio',
                 'label' => 'Hora Início',
@@ -993,11 +1032,6 @@ class Cadastro extends MY_Controller {
                 'rules' => 'required'
             ),
             array(
-                'field' => 'dia_semana',
-                'label' => 'Dia da semana',
-                'rules' => 'required'
-            ),
-            array(
                 'field' => 'max_aluno',
                 'label' => 'Máximo de alunos',
                 'rules' => 'required'
@@ -1010,11 +1044,11 @@ class Cadastro extends MY_Controller {
             array(
                 'field' => 'valor_mensalidade',
                 'label' => 'Valor mensalidade',
-                'rules' => 'trim|required|max_length[5]'
+                'rules' => 'trim|required|max_length[10]'
             )
         );
         
-        if (!empty($data->dia_semana_2)) {
+        if (!empty($data['dia_semana_2'])) {
             $validacoes_dia_2 = array(
                 array(
                     'field' => 'dia_semana_2',
@@ -1035,7 +1069,7 @@ class Cadastro extends MY_Controller {
             $validacoes = array_merge($validacoes, $validacoes_dia_2);
         }
         
-        if (!empty($data->dia_semana_3)) {
+        if (!empty($data['dia_semana_3'])) {
             $validacoes_dia_3 = array(
                 array(
                     'field' => 'dia_semana_3',
@@ -1059,38 +1093,56 @@ class Cadastro extends MY_Controller {
         $this->form_validation->set_rules($validacoes);
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
          
-        die(print_r($data));      
+        //die(print_r($data));      
         if ($this->form_validation->run() === TRUE) {
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
-            unset($data['id_arte_marcial']);
-            $dt_inicio = $data['dt_inicio'];
-            $valor_mensalidade = $data['valor_mensalidade'];
-            $max_aluno = $data['max_aluno'];
-            unset($data['dt_inicio']);
-            unset($data['valor_mensalidade']);
-            unset($data['max_aluno']);
-            $id = $this->crud->insert('horario', $data);
-            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
             
-            $data['id_horario'] = $id;
-            $data['dt_inicio'] = $dt_inicio;
-            $data['valor_mensalidade'] = $valor_mensalidade;
-            $data['max_aluno'] = $max_aluno;
-            unset($data['hr_inicio']);
-            unset($data['hr_termino']);
-            unset($data['id_instrutor']);
-            unset($data['dia_semana']);
-           // die(print_r($data));
-            $this->crud->insert('turma', $data);
+            $turma = new stdClass();
+            $turma->nm_turma = $data['nm_turma'];
+            $turma->max_aluno = $data['max_aluno'];
+            $turma->valor_mensalidade = $data['valor_mensalidade'];
+            $turma->dt_inicio = $data['dt_inicio'];
             
-            if (is_numeric($id) && $id > 0){
+            $id_turma = $this->crud->insert('turma', $turma);
+            
+            $horario = new stdClass();
+            $horario->hr_inicio = $data['hr_inicio'];
+            $horario->hr_termino = $data['hr_termino'];
+            $horario->dia_semana = $data['dia_semana'];
+            $horario->id_instrutor = $data['id_instrutor'];
+            $horario->id_turma = $id_turma;
+            
+            $this->crud->insert('horario', $horario);            
+            
+            if (!empty($data['dia_semana_2'])) {
+                $horario_2 = new stdClass();
+                $horario_2->hr_inicio = $data['hr_inicio_2'];
+                $horario_2->hr_termino = $data['hr_termino_2'];
+                $horario_2->dia_semana = $data['dia_semana_2'];
+                $horario_2->id_instrutor = $data['id_instrutor'];
+                $horario_2->id_turma = $id_turma;
+                
+                $this->crud->insert('horario', $horario_2);                
+            }
+            if (!empty($data['dia_semana_3'])) {
+                $horario_3 = new stdClass();
+                $horario_3->hr_inicio = $data['hr_inicio_3'];
+                $horario_3->hr_termino = $data['hr_termino_3'];
+                $horario_3->dia_semana = $data['dia_semana_3'];
+                $horario_3->id_instrutor = $data['id_instrutor'];
+                $horario_3->id_turma = $id_turma;
+                
+                $this->crud->insert('horario', $horario_3);                 
+            }            
+            
+            if (is_numeric($id_turma) && $id_turma > 0){
                 $this->sucesso();
             } else {
                 $this->erro();
             }
         /* Em caso de falha: */
         } else 
-            $this->form_horario();
+            $this->form_turma();
     }
     
     public function form_aula(){

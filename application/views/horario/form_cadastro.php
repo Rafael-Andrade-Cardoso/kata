@@ -190,7 +190,7 @@
                         <input type="text" class="form-control" name="valor_mensalidade" id="valor_mensalidade">
                         <span class="input-group-addon">R$</span>                        
                     </div>
-                        <div class="error"><?php echo form_error('dt_inicio'); ?></div>
+                        <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
                     </div>                 
                 </div>             
 

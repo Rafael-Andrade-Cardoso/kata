@@ -363,10 +363,10 @@
             <div class="col-lg-12">
               
               <div class="form-panel">
-                  <h4 class="mb"><i class="fa fa-angle-right"></i> Dia da Aula</h4>
+                  <h4 class="mb"><i class="fa fa-angle-right"></i> Turma</h4>
                   
                   <div class="form-group">                      
-                      <label class="col-sm-2 col-sm-2 control-label">Horário<font color="#FF0202">*</font></label>
+                      <label class="col-sm-2 col-sm-2 control-label">Turma<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">                    
                            <select name="id_horario" id="id_horario" class="form-control" title="Selecione a turma" onclick="javascript: getvalor();">
                               <option value="<?php echo set_value('id_horario'); ?>">Escolha o horário e dia da aula</option>

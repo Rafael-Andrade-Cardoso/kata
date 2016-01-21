@@ -377,6 +377,7 @@ ALTER TABLE exame ADD CONSTRAINT FK_exame_2 FOREIGN KEY (id_matricula) REFERENCE
 
 /*========== horario ==========*/
 ALTER TABLE horario ADD CONSTRAINT FK_horario_0 FOREIGN KEY (id_instrutor) REFERENCES instrutor (id_instrutor) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE horario ADD CONSTRAINT FK_horario_1 FOREIGN KEY (id_turma) REFERENCES turma (id_turma) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*========== instrutor_arte_marcial ==========*/
 ALTER TABLE instrutor_arte_marcial ADD CONSTRAINT FK_instrutor_arte_marcial_0 FOREIGN KEY (id_arte_marcial) REFERENCES arte_marcial (id_arte_marcial) ON DELETE CASCADE ON UPDATE CASCADE;

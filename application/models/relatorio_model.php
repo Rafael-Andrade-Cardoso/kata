@@ -48,10 +48,12 @@
 			return $data;
 		} 
 		
-		public function aluno_instrutor($per_ini, $per_fim){
+		public function aluno_instrutor($per_ini, $per_fim, $nome_instrutor = ""){
 			//$per_fim = '0000-00-00';
 			//$per_ini = '0000-00-00';
-			$query=$this->db->query('Select ppf.nome as nome_aluno,ppf.sobrenome as sobrenome_aluno, 
+            //$nome_instrutor = '';
+            if($nome_instrutor != ""){
+                $query=$this->db->query('Select ppf.nome as nome_aluno,ppf.sobrenome as sobrenome_aluno, 
 											ps.nome as nome_instrutor, pf2.sobrenome as sobrenome_instrutor,
 											ppf.dt_nascimento as nasc_aluno, ppf.sexo as sexo_aluno from 
 											( 
@@ -78,11 +80,46 @@
 												ON (pf2.id_pessoa_fisica = i.id_pessoa_fisica)
 											inner join pessoa as ps
 												ON (ps.id_pessoa = pf2.id_pessoa_fisica)
-											WHERE t.dt_final
+											WHERE t.dt_inicio
 											BETWEEN "'. $per_ini .'"
-											AND "'. $per_fim .'"
+											AND "'. $per_fim .'" 
+                                            AND ps.nome = "'.$nome_instrutor.'"
 											order by ppf.nome;
 									');
+            }else{
+			     $query=$this->db->query('Select ppf.nome as nome_aluno,ppf.sobrenome as sobrenome_aluno, 
+											ps.nome as nome_instrutor, pf2.sobrenome as sobrenome_instrutor,
+											ppf.dt_nascimento as nasc_aluno, ppf.sexo as sexo_aluno from 
+											( 
+												SELECT * from 
+													pessoa as p 
+												inner join pessoa_fisica as pf
+													ON(p.id_pessoa = pf.id_pessoa_fisica) 
+											) as ppf 
+											inner join pessoa_dados as pd 
+												ON (ppf.id_pessoa_fisica = pd.id_pessoa_fisica)  
+											inner join aluno as a 
+												ON (a.id_pessoa_fisica = ppf.id_pessoa_fisica)
+											inner join matricula as m
+												ON (a.id_aluno = m.id_aluno)
+											inner join matricula_turma as mt
+												on m.id_matricula = mt.id_matricula
+											inner join turma as t
+												ON(mt.id_turma = t.id_turma)
+											inner join horario as h
+												ON (h.id_horario = t.id_horario)
+											inner join instrutor as i
+												ON(h.id_instrutor = i.id_instrutor)
+											inner join pessoa_fisica as pf2  				
+												ON (pf2.id_pessoa_fisica = i.id_pessoa_fisica)
+											inner join pessoa as ps
+												ON (ps.id_pessoa = pf2.id_pessoa_fisica)
+											WHERE t.dt_inicio
+											BETWEEN "'. $per_ini .'"
+											AND "'. $per_fim .'" 
+											order by ppf.nome;
+									');
+            }
 		$data = $query;							
 		return $data;
 		}
