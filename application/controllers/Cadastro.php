@@ -406,7 +406,9 @@ class Cadastro extends MY_Controller {
         $data['tipos_telefone'] = $this->get_all('ta_tipo_telefone');
         $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
         $data['situacoes'] = $this->crud->get_all('ta_situacao')->result();
-        $data['horario'] = $this->crud->get_horario_somente();
+        //$data['horario'] = $this->crud->get_horario_somente();
+        $data['turma'] = $this->crud->get_all('turma');
+        $data['id_horario'] = null; 
         $this->template->load('aluno/form_cadastro', $data);
     }
 
@@ -507,8 +509,8 @@ class Cadastro extends MY_Controller {
                 'rules' => 'trim|required|max_length[2]'
             ),                      
             array(
-                'field' => 'id_horario',
-                'label' => 'Horário',
+                'field' => 'id_turma',
+                'label' => 'Turma',
                 'rules' => 'required'
             )
         );
@@ -681,6 +683,26 @@ class Cadastro extends MY_Controller {
                 $this->erro();
             }
         }
+    }
+    
+    function get_info_turma($id_turma){
+            
+        //$id_turma = $this->uri->segment(3);
+        if(!isset($id_turma)){
+            $id_turma = $this->input->post("id_turma");
+        }
+        //$id_turma = "id_turma";
+        
+        $info = $this->crud->get_info_turma($id_turma)->result();
+        //die(print_r($this->object_to_option($estados, 'id_ta_estado', 'nm_estado')));
+        //echo $this->object_to_option($info, 'id_turma', 'nome'); 
+        $option = "Instrutor: ";
+        foreach ($info as $each) {
+            //$option .= "<option value='" . $each->$value . "'>" . $each->$display . "</option>";
+            $aux = $each->nome ." ". $each->sobrenome;
+            $option .= $aux;
+        }
+        echo $option;
     }
 
     function form_instrutor() {

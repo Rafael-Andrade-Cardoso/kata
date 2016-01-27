@@ -368,41 +368,23 @@
                   <div class="form-group">                      
                       <label class="col-sm-2 col-sm-2 control-label">Turma<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">                    
-                           <select name="id_horario" id="id_horario" class="form-control" title="Selecione a turma" onclick="javascript: getvalor();">
-                              <option value="<?php echo set_value('id_horario'); ?>">Escolha o horário e dia da aula</option>
+                           <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
+                              <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
                               <?php
-                                  foreach ($horario->result() as $value) {
-                                      if($value->dia_semana == 0)
-                                        $dia_semana = "Domingo";
-                                      else if($value->dia_semana == 1)
-                                        $dia_semana = "Segunda-feira";
-                                      else if($value->dia_semana == 2)
-                                        $dia_semana = "Terça-feira";
-                                      else if($value->dia_semana == 3)
-                                        $dia_semana = "Quarta-feira";
-                                      else if($value->dia_semana == 4)
-                                        $dia_semana = "Quinta-feira";
-                                      else if($value->dia_semana == 5)
-                                        $dia_semana = "Sexta-feira";
-                                      else if($value->dia_semana == 6)
-                                        $dia_semana = "Sábado";
-                                      echo "<option value='" . $value->id_turma . "'>". $dia_semana
-                                                                                    . " ".
-                                                                                    "-  Hora inicial: ". $value->hr_inicio . " " .
-                                                                                    "-  Hora Final: " . $value->hr_termino . " " .
-                                                                                    "-  Instrutor: " . $value->nome ." ". $value->sobrenome. " ".
-                                                                                    "-  Valor: ". $value->valor_mensalidade . " " .
+                                  foreach ($turma->result() as $value) {                                      
+                                      echo "<option value='" . $value->id_turma . "'>". $value->nm_turma
+                                                                                    . "  " .
                                             "</option>";
-                                    /*echo "<option value='" . $value->id_horario . "'";
-                                    if (set_value('id_ta_tipo_telefone')){
-                                      echo " checked ";
-                                    }
-                                    echo ">" . $value->desc_tipo_telefone . "</option>";*/
                                   }
                               ?>
                           </select>
-                          <div class="error"><?php echo form_error('id_horario'); ?></div>
+                          <div class="error"><?php echo form_error('id_turma'); ?></div>
                       </div>                     
+                   </div>
+                   
+                   <div class="form-group">
+                        <label class="col-sm-10 col-sm-10 control-label" id="id_horario"><?php echo $info;?>
+                        </label>
                    </div>
     	       </div><!-- /form-panel -->
             </div><!-- /col-lg-12 -->
@@ -624,5 +606,21 @@
             if (rev != parseInt(cpf.charAt(10)))
                 return false;       
             return true;   
+        }
+        
+        function get_info() {
+            $("#id_turma option:selected").each(function() {
+                var id_turma = $("#id_turma").val();
+                //var id_turma2 =  document.getElementById("id_turma").value;
+                //alert(id_turma);
+                str1 = "<?php echo base_url(); ?>cadastro/get_info_turma/"
+                var res = str1.concat(id_turma);
+                $.post(res, {
+                    id_turma : id_turma
+                }, function(data) {
+                    $("#id_horario").html(data);
+                });
+                //alert(res);
+            });
         }
 </script>

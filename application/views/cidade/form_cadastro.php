@@ -24,7 +24,7 @@
                               }
                           ?>
                         </select>
-                        <div class="error"><?php echo form_error('id_menu_pai'); ?></div>
+                        <div class="error"><?php echo form_error('id_ta_pais'); ?></div>
                     </div>
                 </div>
 
@@ -39,7 +39,7 @@
                               }
                           ?>
                         </select>
-                        <div class="error"><?php echo form_error('id_menu_pai'); ?></div>
+                        <div class="error"><?php echo form_error('id_ta_estado'); ?></div>
                     </div>
                 </div>
 

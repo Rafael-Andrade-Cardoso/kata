@@ -184,12 +184,16 @@ class Crud_model extends CI_Model {
         }
     }
     
-    function get_turma_somente($id_horario){
-        $query = $this->db->query('Select id_turma from turma
-                                    Where turma.id_horario = '.$id_horario.'; 
-                                  ');
+    function get_turma_somente(){
+        $query = $this->db->query('Select * from turma order by nm_turma;');
+        //$query = $this->db->query('Select id_turma from turma Where turma.id_horario = '.$id_horario.';');
                                   //die(print_r($query->result()));
         return $query->result();
+    }
+    
+    function get_turma_horario(){
+        $query = $this->db->query('
+                                  ');
     }
 
     function get_turma($qtd = 0, $inicio = 0) {
@@ -207,6 +211,25 @@ class Crud_model extends CI_Model {
         else {
             return false;
         }
+    }
+    
+    function get_info_turma($id_turma){
+        $query=$this->db->query('
+                                Select * from horario as h
+                                    inner join instrutor as i
+                                        ON(h.id_instrutor = i.id_instrutor)
+                                    inner join pessoa_fisica pf 
+                                        ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
+                                    inner join pessoa as p 
+                                        ON(p.id_pessoa = pf.id_pessoa_fisica)
+                                    Where h.id_turma = '. $id_turma .'
+                                ');
+        if($query->num_rows() > 0) {
+            return $query;
+        }
+        else {
+            return false;
+        } 
     }
     
     function get_horario_somente(){
