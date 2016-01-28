@@ -6,12 +6,7 @@
     <!-- Área de dados do aluno -->
     <div class="row mt">
             <div class="col-lg-12">
-               <?php/*
-                    echo validation_errors('<p class="alert alert-danger">', '</p>');
-                    if ($this->session->flashdata('cadastrook')){
-                      echo '<p class="alert alert-success">' . $this->session->flashdata('cadastrook').'</p>';
-                    }
-               */ ?>
+               
             <div class="form-panel">
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Dados Pessoais&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -217,7 +212,7 @@
                         <h4 class="mb"><i class="fa fa-angle-right"></i> Telefone</h4>                
                     
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Tipo<font color="#FF0202">*</font></label>
+                            <label class="col-sm-2 col-sm-2 control-label">Tipo</label>
                             <div class="col-sm-3">
                                 <select name="id_ta_tipo_telefone_2" class="form-control" title="Selecione o tipo para contato telefonico ">
                                     <option value="<?php echo set_value('id_ta_tipo_telefone'); ?>">Escolha o tipo</option>
@@ -234,7 +229,7 @@
                                 <div class="error"><?php echo form_error('id_ta_tipo_telefone_2'); ?></div>
                             </div>
                         
-                            <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
+                            <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
                             <div class="col-sm-5">
                                 <input type="text" id="telefone_2" class="form-control" name="telefone_2" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
                                 <div class="error"><?php echo form_error('telefone_2'); ?></div>

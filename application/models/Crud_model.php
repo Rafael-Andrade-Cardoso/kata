@@ -244,8 +244,8 @@ class Crud_model extends CI_Model {
 											ON (i.id_pessoa_fisica = ppf.id_pessoa_fisica)
 										inner join horario as h
 											ON (h.id_instrutor = i.id_instrutor)                                            
-                                        inner join turma as t 
-                                            ON (t.id_horario = h.id_horario)   
+                                        /*inner join turma as t 
+                                            ON (t.id_horario = h.id_horario) */  
                                 order by h.dia_semana;
                                 ');
         if($query->num_rows() > 0) {
