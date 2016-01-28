@@ -53,7 +53,7 @@
                            <select name="id_horario" class="form-control" title="Selecione o horário que a aula acontecerá">
                               <option value="<?php echo set_value('id_horario'); ?>">Escolha o horário e dia da aula</option>
                               <?php
-                                  foreach ($horario->result() as $value) {
+                                 /* foreach ($horario->result() as $value) {
                                       if($value->dia_semana == 0)
                                         $dia_semana = "Domingo";
                                       else if($value->dia_semana == 1)
@@ -75,7 +75,7 @@
                                                                                     "-  Instrutor: " . $value->nome ." ". $value->sobrenome.
                                             "</option>";                                    
                                   }
-                              ?>
+                              */?>
                           </select>
                           <div class="error"><?php echo form_error('id_horario'); ?></div>
                       </div>                     
@@ -93,5 +93,6 @@
             </div>
         </div>
     </div>
+
 
 <?php echo form_close(); ?>

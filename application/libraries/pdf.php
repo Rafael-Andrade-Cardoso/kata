@@ -3,6 +3,7 @@
 	require('fpdf.php');
 	
 		class Pdf extends FPDF{
+            
 		// Extend FPDF using this class
 		// More at fpdf.org -> Tutorials
 			function __construct($orientation='P', $unit='mm', $size='A4')
@@ -35,4 +36,5 @@
 				$this->Cell(0,10,'Page '.$this->PageNo().'/',0,0,'C');
 			}			
 	}
+
 ?>

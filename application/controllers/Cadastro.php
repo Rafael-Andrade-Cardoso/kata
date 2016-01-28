@@ -1,3 +1,4 @@
+
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cadastro extends MY_Controller {
@@ -694,12 +695,49 @@ class Cadastro extends MY_Controller {
         //$id_turma = "id_turma";
         
         $info = $this->crud->get_info_turma($id_turma)->result();
+       /* echo "<pre>";
+        die(print_r($info));*/
         //die(print_r($this->object_to_option($estados, 'id_ta_estado', 'nm_estado')));
         //echo $this->object_to_option($info, 'id_turma', 'nome'); 
         $option = "Instrutor: ";
+        $ultimo_instrutor = "";
+        $ultimo_dia = "";
         foreach ($info as $each) {
+            $aux = "";
             //$option .= "<option value='" . $each->$value . "'>" . $each->$display . "</option>";
-            $aux = $each->nome ." ". $each->sobrenome;
+            if ($ultimo_instrutor != $each->nome ." ". $each->sobrenome) {
+                $aux ="<b>" . $each->nome ." ". $each->sobrenome . "</b>";
+            }          
+            if (isset($each->dia_semana) && $each->dia_semana != $ultimo_dia){  
+                switch($each->dia_semana){
+                    case 0:
+                        $dia="Domingo";
+                    break;
+                    case 1:
+                        $dia="Segunda-feira";
+                    break;
+                    case 2:
+                        $dia="Terça-feira";
+                    break;
+                    case 3:
+                        $dia="Quarta-feira";
+                    break;
+                    case 4:
+                        $dia="Quinta-feira";
+                    break;
+                    case 5:
+                        $dia="Sexta-feira";
+                    break;
+                    case 6:
+                        $dia="Sábado";
+                    break;
+                }
+                $aux .= "<br /><br /> Dia da semana: <b>" . $dia . "</b><br />";
+                $ultimo_dia = $dia;
+                
+            }
+            $aux .= "&nbsp;&nbsp; Horário: " . $each->hr_inicio . " às " . $each->hr_termino; 
+            $ultimo_instrutor = $each->nome ." ". $each->sobrenome;
             $option .= $aux;
         }
         echo $option;

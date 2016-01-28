@@ -1,6 +1,7 @@
+
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 	
-	class Relatorio_PDF extends MY_Controller{
+	class Relatorio_pdf extends MY_Controller{
 		
 		public function __construct(){
 			parent::__construct();
@@ -13,7 +14,7 @@
 		public function form_relatorio(){
 			$this->template->load('relatorio/form_relatorio');
 		}
-		 
+		
 		function alunos_matri($per_ini, $per_fim){
 			$result = $this->relatorio_model->aluno_matri($per_ini, $per_fim);
 			
@@ -366,5 +367,4 @@
 			
 			//$this->output->enable_profiler(true);
 		}*/
-		
 	}

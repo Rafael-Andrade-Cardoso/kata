@@ -366,26 +366,25 @@
                   <h4 class="mb"><i class="fa fa-angle-right"></i> Turma</h4>
                   
                   <div class="form-group">                      
-                      <label class="col-sm-2 col-sm-2 control-label">Turma<font color="#FF0202">*</font></label>
-                      <div class="col-sm-10">                    
-                           <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
-                              <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
-                              <?php
-                                  foreach ($turma->result() as $value) {                                      
-                                      echo "<option value='" . $value->id_turma . "'>". $value->nm_turma
-                                                                                    . "  " .
-                                            "</option>";
-                                  }
-                              ?>
-                          </select>
+                         <div class="col-sm-6 col-md-6 col-lg-6">   
+                            <label class="col-sm-2 col-sm-2 control-label">Turma<font color="#FF0202">*</font></label>
+                            <div class="col-sm-10">                    
+                                <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
+                                    <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
+                                    <?php
+                                        foreach ($turma->result() as $value) {                                      
+                                            echo "<option value='" . $value->id_turma . "'>". $value->nm_turma
+                                                                                            . "  " .
+                                                    "</option>";
+                                        }
+                                    ?>
+                                </select>
+                          </div>
                           <div class="error"><?php echo form_error('id_turma'); ?></div>
-                      </div>                     
+                      </div>
+                      <div class="col-sm-6 col-sm-6 control-label" id="id_horario"><?php echo (isset($info))?$info:"";?></div>                     
                    </div>
                    
-                   <div class="form-group">
-                        <label class="col-sm-10 col-sm-10 control-label" id="id_horario"><?php echo $info;?>
-                        </label>
-                   </div>
     	       </div><!-- /form-panel -->
             </div><!-- /col-lg-12 -->
     	</div><!-- /row -->
