@@ -1,3 +1,4 @@
+
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 	
 	class Relatorio_pdf extends MY_Controller{
@@ -366,5 +367,4 @@
 			
 			//$this->output->enable_profiler(true);
 		}*/
-		
 	}

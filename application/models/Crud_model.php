@@ -414,11 +414,4 @@ select count(mat.id_matricula) as qtd, tg.graduacao, tg.id_ta_graduacao from mat
         on tg.id_ta_graduacao = mg.id_ta_graduacao
     group by(tg.id_ta_graduacao);
 
-
-
-
-
-
-
-
 */
