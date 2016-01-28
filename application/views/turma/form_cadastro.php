@@ -137,10 +137,6 @@
                             <?php
                                 foreach ($arte_marcial as $value) {
                                     echo "<option value='" . $value->id_arte_marcial . "'>" . $value->nm_arte_marcial. "</option>";
-                                    /*if (set_value('id_arte_marcial') == $value->id_arte_marcial){
-                                          echo " checked ";
-                                    }
-                                    echo ">" . $value->nm_arte_marcial . "</option>";*/
                                 }
                             ?>
                         </select>
@@ -152,13 +148,11 @@
                         <select name="id_instrutor" class="form-control">
                           <option value="">Escolha o instrutor</option>
                             <?php
-                                foreach ($instrutor->result() as $value) {
-                                   echo "<option value='" . $value->id_instrutor . "'>" .  $value->nome . " " . $value->sobrenome . "</option>";
-                                   /*echo "<option value='" . $value->id_instrutor . "'";
-                                    if (set_value('id_instrutor')){
-                                      echo " checked ";
+                                //die(print_r($instrutor));
+                                if(is_array($instrutor)){
+                                   foreach ($instrutor as $value) {
+                                        echo "<option value='" . $value->id_instrutor . "'>" .  $value->nome . " " . $value->sobrenome . "</option>";
                                     }
-                                    echo ">" . $value->nome . " " . $value->sobrenome . "</option>";*/
                                 }
                             ?>
                         </select>
