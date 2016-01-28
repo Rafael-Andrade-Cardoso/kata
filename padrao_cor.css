@@ -1,0 +1,11 @@
+/*====== Menu =========*/
+menu {
+	background: #444;
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid #dd4814;
+}
+
+ul.top-menu > li > .logout {
+	border: 1px solid #dd4814 !important;
+	background: #dd4814;
+}
