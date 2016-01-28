@@ -13,7 +13,7 @@
 		public function form_relatorio(){
 			$this->template->load('relatorio/form_relatorio');
 		}
-		
+		 
 		function alunos_matri($per_ini, $per_fim){
 			$result = $this->relatorio_model->aluno_matri($per_ini, $per_fim);
 			
