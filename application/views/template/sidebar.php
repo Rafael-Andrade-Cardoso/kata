@@ -8,7 +8,7 @@
               <ul class="sidebar-menu" id="nav-accordion">
 
               	  <p class="centered"><a href="<?php echo base_url('dashboard');?>"><img src="<?php echo base_url('assets/img/logoasatoacademy.png');?>" class="img-circle" width="80" height="60"></a></p>
-              	  <h5 class="centered">Academia Pinheiro</h5>
+              	  <h5 class="centered">Academia Asato</h5>
                     <?php
               	   foreach ($menu as $row){
                           // Verifica se o a página atual

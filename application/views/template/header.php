@@ -25,6 +25,19 @@
     <![endif]-->
     <script src="<?php echo base_url('assets/js/valida_cpf_cnpj.js');?>"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-      
+    
+    <!-- FusionCharts -->
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.charts.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.gantt.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.maps.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.powercharts.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.treemap.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.widgets.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/fusioncharts.zoomscatter.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/themes/fusioncharts.theme.carbon.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/themes/fusioncharts.theme.fint.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/themes/fusioncharts.theme.ocean.js');?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/js/fusioncharts/themes/fusioncharts.theme.zune.js');?>"></script>
   </head>
 
