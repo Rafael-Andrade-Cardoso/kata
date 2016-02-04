@@ -137,10 +137,6 @@
                             <?php
                                 foreach ($arte_marcial as $value) {
                                     echo "<option value='" . $value->id_arte_marcial . "'>" . $value->nm_arte_marcial. "</option>";
-                                    /*if (set_value('id_arte_marcial') == $value->id_arte_marcial){
-                                          echo " checked ";
-                                    }
-                                    echo ">" . $value->nm_arte_marcial . "</option>";*/
                                 }
                             ?>
                         </select>
@@ -154,6 +150,7 @@
                             <?php
                                 foreach ($instrutor as $value) {
                                    echo "<option value='" . $value->id_instrutor . "'>" .  $value->nome . " " . $value->sobrenome . "</option>";
+
                                 }
                             ?>
                         </select>

@@ -1048,6 +1048,9 @@ class Cadastro extends MY_Controller {
     public function form_turma(){
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         $data['instrutor'] = $this->crud->get_instrutores()->result();
+
+        //echo "<pre>";
+        //die(print_r($data));
         $this->template->load('turma/form_cadastro', $data);
     }
     
