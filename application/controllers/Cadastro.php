@@ -1304,38 +1304,7 @@ class Cadastro extends MY_Controller {
             $id_turma = $this->input->post("id_turma");
         }
         //$id_turma = "id_ta_pais = $id_pais";
-        $horario = $this->crud->get_info_turma($id_turma)->result(); 
-       /* foreach ($horario as $each) {
-            if (isset($each->dia_semana) && $each->dia_semana != $ultimo_dia){  
-                switch($each->dia_semana){
-                    case 0:
-                        $dia="Domingo1";
-                    break;
-                    case 1:
-                        $dia="Segunda-feira";
-                    break;
-                    case 2:
-                        $dia="Terça-feira";
-                    break;
-                    case 3:
-                        $dia="Quarta-feira";
-                    break;
-                    case 4:
-                        $dia="Quinta-feira";
-                    break;
-                    case 5:
-                        $dia="Sexta-feira";
-                    break;
-                    case 6:
-                        $dia="Sábado";
-                    break;
-                }
-                //$aux .= "<br /><br /> Dia da semana: <b>" . $dia . "</b><br />";
-                $ultimo_dia = $dia;
-                $horario->dia_semana = $dia;                
-            } 
-        }     */ 
-        //die(print_r($horario));
+        $horario = $this->crud->get_info_turma($id_turma)->result();        
         echo $this->object_to_option($horario, 'id_horario', 'dia_semana');
     }        
     
@@ -1402,8 +1371,10 @@ class Cadastro extends MY_Controller {
                     $each->$display = "Sexta-feia";
                 else if($each->$display == 6)
                     $each->$display = "Sábado";
+                $option .= "<option value='" . $each->$value . "'>" . $each->$display . " - Início: " . $each->hr_inicio . "</option>";
+            }else{
+                $option .= "<option value='" . $each->$value . "'>" . $each->$display ."</option>";
             }
-            $option .= "<option value='" . $each->$value . "'>" . $each->$display . "</option>";
         }
         return $option;
     }

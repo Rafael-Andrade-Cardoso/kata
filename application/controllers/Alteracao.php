@@ -16,7 +16,7 @@ class Alteracao extends MY_Controller {
         if($id_aula == NULL){
             redirect('aula/lista');
         }
-       /* $tipo_usuario_selecionado = $this->menu->get_tipo_usuario_byidmenu($id_aula)->result();
+               /* $tipo_usuario_selecionado = $this->menu->get_tipo_usuario_byidmenu($id_aula)->result();
         foreach ($tipo_usuario_selecionado as $key => $value) {
             $data['tipo_usuario_selecionado'][] = $value->id_ta_tipo_usuario;
         }*/
