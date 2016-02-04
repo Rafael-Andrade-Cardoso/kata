@@ -1047,7 +1047,7 @@ class Cadastro extends MY_Controller {
 
     public function form_turma(){
         $data['arte_marcial'] = $this->get_all('arte_marcial');
-        $data['instrutor'] = $this->crud->get_instrutores();
+        $data['instrutor'] = $this->crud->get_instrutores()->result();
         $this->template->load('turma/form_cadastro', $data);
     }
     
@@ -1208,7 +1208,9 @@ class Cadastro extends MY_Controller {
     public function form_aula(){
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         //$data['instrutor'] = $this->crud->get_instrutores();
-        $data['horario'] = $this->crud->get_horario_somente();        
+        $data['turma'] = $this->crud->get_all('turma');   
+        $data['atividade'] = $this->get_all('ta_atividade');     
+        $data['horario'] = null;        
         $this->template->load('aula/form_cadastro', $data);
     }
     
@@ -1216,12 +1218,27 @@ class Cadastro extends MY_Controller {
 
         foreach ($this->input->post() as $key => $value){
             if (!is_null($value) && $value != ""){
+                //echo $value;
                 $data[$key] = $value;
             }
         }
-        //die(print_r($data));
+        $atividade = $this->input->post('id_ta_atividade');
+        //die(print_r($atividade));
+        
+        //echo count($data['id_ta_atividade']);
+        //die(print_r($plano_aula));
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $validacoes = array(
+            array(
+                'field' => 'id_turma',
+                'label' => 'Turma',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'id_horario',
+                'label' => 'Horário',
+                'rules' => 'required'
+            ),
             array(
                 'field' => 'id_arte_marcial',
                 'label' => 'Arte Marcial',
@@ -1233,18 +1250,41 @@ class Cadastro extends MY_Controller {
                 'rules' => 'required'
             ),
             array(
-                'field' => 'id_horario',
-                'label' => 'Horário',
+                'field' => 'id_ta_atividade[]',
+                'label' => 'Atividade',
                 'rules' => 'required'
-            )
+            )            
         );
         $this->form_validation->set_rules($validacoes);
         
         if ($this->form_validation->run() === TRUE) {
+           // die(print_r($data));
+            $aula = new stdClass();
+            $aula->id_arte_marcial = $data['id_arte_marcial'];
+            $aula->dt_aula = $data['dt_aula'];
+            $aula->id_horario = $data['id_horario'];
+            $aula->observacao = $data['observacao'];
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
-            $id = $this->crud->insert('aula', $data);
+            $id_aula = $this->crud->insert('aula', $aula);
+            
+            if(count($atividade)>1){
+                $i=0;
+                while($i < count($data['id_ta_atividade'])){     
+                    $plano_aula[$i] = new stdClass();
+                    $plano_aula[$i]->id_aula = $id_aula;                
+                    $plano_aula[$i]->id_ta_atividade = $atividade[$i];
+                    $id_plano_aula = $this->crud->insert('plano_aula', $plano_aula[$i]);
+                    $i++;
+                }
+            }else{
+                $plano_aula = new stdClass();
+                $plano_aula->id_aula = $id_aula;                
+                $plano_aula->id_ta_atividade = $atividade[0];
+                $id_plano_aula = $this->crud->insert('plano_aula', $plano_aula);
+            }       
+           
             /* Verifica se o retorno da função é um valor numérico e maior que 0 */
-            if (is_numeric($id) && $id > 0){
+            if (is_numeric($id_plano_aula)){
                 $this->sucesso();
             } else {
                 $this->erro();
@@ -1254,7 +1294,47 @@ class Cadastro extends MY_Controller {
             $this->form_aula();
         }
     }
-        
+    
+    public function get_info_aula($id_turma) {
+        //$id_pais = $this->uri->segment(3);
+        if(!isset($id_turma)){
+            $id_turma = $this->input->post("id_turma");
+        }
+        //$id_turma = "id_ta_pais = $id_pais";
+        $horario = $this->crud->get_info_turma($id_turma)->result(); 
+       /* foreach ($horario as $each) {
+            if (isset($each->dia_semana) && $each->dia_semana != $ultimo_dia){  
+                switch($each->dia_semana){
+                    case 0:
+                        $dia="Domingo1";
+                    break;
+                    case 1:
+                        $dia="Segunda-feira";
+                    break;
+                    case 2:
+                        $dia="Terça-feira";
+                    break;
+                    case 3:
+                        $dia="Quarta-feira";
+                    break;
+                    case 4:
+                        $dia="Quinta-feira";
+                    break;
+                    case 5:
+                        $dia="Sexta-feira";
+                    break;
+                    case 6:
+                        $dia="Sábado";
+                    break;
+                }
+                //$aux .= "<br /><br /> Dia da semana: <b>" . $dia . "</b><br />";
+                $ultimo_dia = $dia;
+                $horario->dia_semana = $dia;                
+            } 
+        }     */ 
+        //die(print_r($horario));
+        echo $this->object_to_option($horario, 'id_horario', 'dia_semana');
+    }        
     
     public function form_plano_aula(){          
         $data['aula'] = $this->get_all('aula');
@@ -1302,7 +1382,24 @@ class Cadastro extends MY_Controller {
 
     public function object_to_option($data, $value, $display) {
         $option = "";
+        
         foreach ($data as $each) {
+            if($value == 'id_horario'){
+                if($each->$display == 0)
+                    $each->$display = "Domingo";
+                else if($each->$display == 1)
+                    $each->$display ="Segunda-feira";
+                else if($each->$display == 2)
+                    $each->$display ="Terça-feira";
+                else if($each->$display == 3)
+                    $each->$display = "Quarta-feira";
+                else if($each->$display == 4)
+                    $each->$display = "Quinta-feira";
+                else if($each->$display == 5)
+                    $each->$display = "Sexta-feia";
+                else if($each->$display == 6)
+                    $each->$display = "Sábado";
+            }
             $option .= "<option value='" . $each->$value . "'>" . $each->$display . "</option>";
         }
         return $option;

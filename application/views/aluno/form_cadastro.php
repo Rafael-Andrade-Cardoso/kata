@@ -373,9 +373,7 @@
                                     <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
                                     <?php
                                         foreach ($turma->result() as $value) {                                      
-                                            echo "<option value='" . $value->id_turma . "'>". $value->nm_turma
-                                                                                            . "  " .
-                                                    "</option>";
+                                            echo "<option value='" . $value->id_turma . "'>". $value->nm_turma ."</option>";
                                         }
                                     ?>
                                 </select>
