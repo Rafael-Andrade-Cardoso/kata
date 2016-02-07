@@ -1,8 +1,15 @@
     <h3><i class="fa fa-angle-right"></i> Dashboard</h3><hr />
     <div class="col-md-6 com-sm-10" id="chartContainer">FusionCharts XT will load here!</div>
     <div class="col-md-6 com-sm-10" id="chartContainer1">FusionCharts XT will load here!</div>
-    
+    <?php /*
+                    $i = 0;
+                    foreach($alunos_turma as $dados) {
+                        $i++;
+                    }
+                    die(print_r($i));*/
+    ?>
     <script type="text/javascript">
+    
       FusionCharts.ready(function(){
         var revenueChart = new FusionCharts({
             "type": "column2d",
@@ -19,60 +26,29 @@
                 "theme": "ocean"
             },
             "data": [
-                {
-                  "label": "Instrutor 1",
-                  "value": "40000"
-                },
-                {
-                  "label": "Instrutor 2",
-                  "value": "810000"
-                },
-                {
-                  "label": "Instrutor 3",
-                  "value": "720000"
-                },
-                {
-                  "label": "Instrutor 4",
-                  "value": "550000"
-                },
-                {
-                  "label": "May",
-                  "value": "910000"
-                },
-                {
-                  "label": "Jun",
-                  "value": "510000"
-                },
-                {
-                  "label": "Jul",
-                  "value": "680000"
-                },
-                {
-                  "label": "Aug",
-                  "value": "620000"
-                },
-                {
-                  "label": "Sep",
-                  "value": "610000"
-                },
-                {
-                  "label": "Oct",
-                  "value": "490000"
-                },
-                {
-                  "label": "Nov",
-                  "value": "900000"
-                },
-                {
-                  "label": "Dec",
-                  "value": "730000"
-                }
+                <?php
+                $i = 0;
+                    foreach($alunos_turma as $dados) {
+                        echo '
+                        {
+                        "label": "' . $dados->qtd_aluno . '",
+                        "value": "' . $dados->id_turma . '"
+                        }';
+                        if($i < 1) {
+                            echo ",";
+                        } else {
+                            break;
+                        }
+                        $i++;
+                    }
+                ?>
               ]
           }
     
       });
     revenueChart.render();
     })
+    
     
     FusionCharts.ready(function(){
         var revenueChart = new FusionCharts({
