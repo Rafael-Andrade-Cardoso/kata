@@ -19,10 +19,10 @@
             "dataFormat": "json",
             "dataSource":  {
               "chart": {
-                "caption": "Alunos por instrutor",
-                "subCaption": "Harry's SuperMart",
-                "xAxisName": "Month",
-                "yAxisName": "Revenues (In USD)",
+                "caption": "Alunos por Turma",
+                "subCaption": "",
+                "xAxisName": "Número da Turma",
+                "yAxisName": "Número de alunos",
                 "theme": "ocean"
             },
             "data": [
