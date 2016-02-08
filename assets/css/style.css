@@ -2305,3 +2305,21 @@ a {
 .campos_obrigatorios {
     float: right;
 }
+
+.dias_aula {
+    margin: 15px;
+    padding: 15px;
+    width: 300px;
+    float: left;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.dias_aula_instrutor {
+    margin: 15px;
+    padding: 10px;
+    float: left;
+    background-color: #BBB;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

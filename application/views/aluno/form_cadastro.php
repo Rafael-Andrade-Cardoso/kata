@@ -1,6 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar aluno</h3>
 
-<input type="submit" OnClick="deleteReg(1,'<?=base_url("aluno/teste");?>');" value="TESTEEEEEEEEE">
 <?php echo form_open('cadastro/insert_aluno', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
 <input type="hidden" name="dt_matricula" value="<?php echo date("Y-m-d");  ?>" />
 <!-- Área de dados do aluno -->
@@ -362,7 +361,7 @@
         <h4 class="mb"><i class="fa fa-angle-right"></i> Turma</h4>
 
         <div class="form-group">                      
-         <div class="col-sm-6 col-md-6 col-lg-6">   
+         <div class="col-sm-12 col-md-12 col-lg-12">   
           <label class="col-sm-2 col-sm-2 control-label">Turma<font color="#FF0202">*</font></label>
           <div class="col-sm-10">                    
             <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
@@ -375,8 +374,8 @@
             </select>
           </div>
           <div class="error"><?php echo form_error('id_turma'); ?></div>
-        </div>
-        <div class="col-sm-6 col-sm-6 control-label" id="id_horario"><?php echo (isset($info))?$info:"";?></div>                     
+        </div><br />
+        <div class="col-sm-12 col-sm-12 control-label" id="id_horario"><?php echo (isset($info))?$info:"";?></div>                     
       </div>
 
     </div><!-- /form-panel -->
@@ -390,9 +389,9 @@
     <div class="form-panel">
       <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para pagamento</h4>
 
-      <div class="form-group">                      
-        <label class="col-sm-2 col-sm-2 control-label">Melhor dia para pagamento<font color="#FF0202">*</font></label>
-        <div class="col-sm-4">                    
+      <div class="col-lg-6 form-group">                      
+        <label class="col-sm-3 control-label">Melhor dia para pagamento<font color="#FF0202">*</font></label>
+        <div class="col-sm-2">                    
           <input type="text" class="form-control" id="dia_vencimento" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" title="Digite a data para o pagamento da mensalidade"/>
           <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
         </div>
@@ -413,20 +412,20 @@
                           <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
                       </div>
                     </div>-->
-                    <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Desconto<font color="#FF0202">*</font></label>
-                      <div class="col-sm-4">
-                        <div class="input-group">  
-                          <span class="input-group-addon">R$</span>
-                          <input type="text" class="form-control" id="desconto" name="desconto" value="<?php echo set_value('desconto'); ?>" title="Digite o valor do desconto"/>
-                          <div class="error"><?php echo form_error('desconto'); ?></div>
-                        </div>
-                      </div>
-                    </div>
-                    <button class="btn btn-lg btn-primary" >Cadastrar</button>
-                  </div><!-- /form-panel -->
-                </div><!-- /col-lg-12 -->
-              </div><!-- /row -->
+      <div class="col-lg-6 form-group">
+        <label class="col-sm-2 col-sm-2 control-label">Desconto<font color="#FF0202">*</font></label>
+        <div class="col-sm-10">
+          <div class="input-group">  
+            <span class="input-group-addon">R$</span>
+            <input type="text" class="form-control" id="desconto" name="desconto" value="<?php echo set_value('desconto'); ?>" title="Digite o valor do desconto"/>
+            <div class="error"><?php echo form_error('desconto'); ?></div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-lg btn-primary" >Cadastrar</button>
+    </div><!-- /form-panel -->
+  </div><!-- /col-lg-12 -->
+</div><!-- /row -->
 
 
               <!-- </div> /form-panel -->
