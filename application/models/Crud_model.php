@@ -449,6 +449,12 @@ class Crud_model extends CI_Model {
             return false;
         }
     }
+
+    function update_ativos($tabela, $campo, $id) {
+        $this->db->where('id_aluno', $id);
+        $this->db->set(array("ativo" => "0"));
+        return $this->db->update($tabela);
+    }
 }
 /*
 matricula
