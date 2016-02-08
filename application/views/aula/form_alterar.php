@@ -1,5 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar aula</h3>
-<?php echo form_open('cadastro/insert_aula', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
+<?php echo form_open('alteracao/alterar_aula/query->id_aula', array('class' => 'form-horizontal style-form', 'id' => 'form_alterar'));?>
     <!-- dt_aula, obs-->
     <!-- Área de dados do menu -->
     <div class="row mt">
@@ -17,6 +17,8 @@
                       echo '<p class="alert alert-success">' . $this->session->flashdata('cadastrook').'</p>';
                     }
                     //debug($this->session);*/
+                    echo "<pre>";
+                    print_r($query);
                 ?>
 
                 <div class="form-group">                      
@@ -25,8 +27,12 @@
                            <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
                                 <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
                                 <?php
-                                    foreach ($turma->result() as $value) {
-                                        echo "<option value='" . $value->id_turma . "'>" . $value->nm_turma. "</option>";                                    
+                                    foreach ($turma as $value) {
+                                        echo "<option value='" . $value->id_turma . "'";
+                                            if (set_value('id_turma', $query->id_turma) == $value->id_turma){
+                                                echo " selected ";
+                                            }
+                                        echo ">" . $value->nm_turma. "</option>";                                    
                                     }
                                 ?>
                           </select>
@@ -36,11 +42,14 @@
                       <label class="col-sm-2 col-sm-2 control-label">Horário<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">                    
                            <select name="id_horario" id="id_horario" class="form-control" title="Selecione o horário que a aula acontecerá">
-                                <option value="<?php echo set_value('id_horario'); ?>">Escolha o dia da semana e horário</option>
+                                <option value="<?php echo set_value('id_horario'); ?><?php echo set_value('id_horario', $query->id_horario); ?>">Escolha o horário e dia da aula</option>
                                 <?php
-                                    foreach ($horario as $value) {
-                                        
-                                        echo "<option value='" . $value->id_horario . "'>" . $value->dia_semana . "</option>";                                    
+                                    foreach ($horario as $value) {                                        
+                                        echo "<option value='" . $value->id_horario . "'";
+                                            if (set_value('id_horario', $query->id_horario) == $value->id_horario){
+                                                echo " selected ";
+                                            }
+                                        echo ">" . $value->dia_semana . "</option>";                                    
                                     }
                                 ?>
                           </select>
@@ -55,7 +64,11 @@
                             <option value="">Escolha o estilo</option>
                             <?php
                                 foreach ($arte_marcial as $value) {
-                                    echo "<option value='" . $value->id_arte_marcial . "'>" . $value->nm_arte_marcial. "</option>";                                    
+                                    echo "<option value='" . $value->id_arte_marcial . "'";
+                                        if (set_value('id_arte_marcial', $query->id_arte_marcial) == $value->id_arte_marcial){
+                                            echo " selected ";
+                                        }
+                                    echo ">" . $value->nm_arte_marcial. "</option>";                                    
                                 }
                             ?>
                         </select>
@@ -64,39 +77,37 @@
                     
                     <label class="col-sm-2 col-sm-2 control-label">Data da aula<font color="#FF0202">*</font></label>
                     <div class="col-sm-4" class="form-control">
-                        <input type="date" class="form-control" name="dt_aula" id="dt_aula" value="<?php echo set_value('dt_aula'); ?>" title="Digite a data da aula">
+                        <input type="date" class="form-control" name="dt_aula" id="dt_aula" value="<?php echo set_value('dt_aula'); ?><?php echo set_value('dt_aula', $query->dt_aula); ?>" title="Digite a data da aula">
                         <div class="error"><?php echo form_error('dt_aula'); ?></div>
                     </div>                 
                 </div>
-                
-                <div class="form-group">
+                    
+                <div class="form-group" >                
                     <label class="col-sm-2 col-sm-2 control-label">Atividade<font color="#FF0202">*</font></label>
-                    <div class="col-sm-5">
-                        <?php
-                            foreach ($atividade as $value) {
-                        ?>
-                            <div class="checkbox">
-                                <label>
-                                    <input name="id_ta_atividade[]" type="checkbox" value="<?php echo $value->id_ta_atividade; ?>"
-                                    <?php
-                                        if (set_value('id_ta_atividade')){
-                                            echo (in_array($value->id_ta_atividade, set_value('id_ta_atividade')))?" checked ":"";
-                                        }
-                                    ?>
-                                    />
-                                    <?php echo $value->nm_atividade; ?>
-                                </label>
-                            </div>
-                        <?php
-                            }
-                        ?>
-                    </div>
+                    <!--<font color="#00CC00"><span class="glyphicon glyphicon-plus" id="adicionar" aria-hidden="true"></span></font>-->
+                    
+                    <div class="col-sm-4">
+                        <select MULTIPLE  SIZE=4 name="id_ta_atividade[]" class="form-control" title="Selecione uma ou mais atividades que terá a aula">
+                            <option value="">Escolha a atividade</option>
+                            <?php
+                                foreach ($atividade as $value) {
+                                    echo "<option value='" . $value->id_ta_atividade . "'";
+                                        if (set_value('id_ta_atividade[]', $query->id_ta_atividade) == $value->id_ta_atividade){
+                                            echo " selected ";
+                                        }   
+                                    echo ">" . $value->nm_atividade. "</option>";
+                                }
+                            ?>
+                        </select>
+                        <div class="error"><?php echo form_error('id_ta_atividade[]'); ?></div>
+                    </div>                 
+                       
                 </div>  
                
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Observações</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="observacao" title="Digite as observações que acha importante"><?php echo set_value('observacao'); ?> </textarea>
+                        <textarea class="form-control" name="observacao" title="Digite as observações que acha importante"><?php echo set_value('observacao'); ?><?php echo set_value('observacao', $query->observacao); ?> </textarea>
                         <div class="error"><?php echo form_error('observacao'); ?></div>
                     </div>
                 </div>
@@ -110,18 +121,21 @@
     
     $(document).ready(function(){
         var now = new Date();
-        if(now.getDate() > 9 && now.getMonth() > 9){
-            var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
-        }else if(now.getDate() < 10 && now.getMonth() < 10){
-            var today = now.getFullYear() + '-' + 0+(now.getMonth() + 1) + '-' + 0+now.getDate();
-        }else if(now.getDate() < 10 && now.getMonth() > 9){
-            var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + 0+now.getDate();
-        }else if(now.getDate() > 10 && now.getMonth() < 9){        
-            var today = now.getFullYear() + '-' + 0+(now.getMonth() + 1) + '-' + now.getDate();
-        }
-        
+        var today = now.getFullYear() + '-' + 0+(now.getMonth() + 1) + '-' + now.getDate()   ;
         //alert(today);
         $('#dt_aula').val(today);
+        
+        $( "#adicionar" ).on({
+            "mouseover": function() {
+                $( this ).css("cursor", "pointer");
+            }
+        });
+        $( "#remover" ).on({
+            "mouseover": function() {
+                $( this ).css("cursor", "pointer");
+            }
+        });        
+        
     });
     
     function get_info() {

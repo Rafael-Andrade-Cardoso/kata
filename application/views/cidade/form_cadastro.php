@@ -35,7 +35,7 @@
                           <option value="">Escolha o Estado</option>
                           <?php
                               foreach ($estados as $value) {
-                                echo "<option value='" . $value->id_ta_estado . "'>" . $value->nm_pais . "</option>";
+                                echo "<option value='" . $value->id_ta_estado . "'>" . $value->nm_estado . "</option>";
                               }
                           ?>
                         </select>

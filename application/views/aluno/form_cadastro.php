@@ -369,9 +369,7 @@
               <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
               <?php
               foreach ($turma->result() as $value) {                                      
-                echo "<option value='" . $value->id_turma . "'>". $value->nm_turma
-                . "  " .
-                "</option>";
+                echo "<option value='" . $value->id_turma . "'>". $value->nm_turma . "</option>";
               }
               ?>
             </select>
@@ -399,7 +397,6 @@
           <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
         </div>
       </div>
-
                      <!-- <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">
                       <div class="input-group">                      

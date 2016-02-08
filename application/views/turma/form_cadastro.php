@@ -148,11 +148,9 @@
                         <select name="id_instrutor" class="form-control">
                           <option value="">Escolha o instrutor</option>
                             <?php
-                                //die(print_r($instrutor));
-                                if(is_array($instrutor)){
-                                   foreach ($instrutor as $value) {
-                                        echo "<option value='" . $value->id_instrutor . "'>" .  $value->nome . " " . $value->sobrenome . "</option>";
-                                    }
+                                foreach ($instrutor as $value) {
+                                   echo "<option value='" . $value->id_instrutor . "'>" .  $value->nome . " " . $value->sobrenome . "</option>";
+
                                 }
                             ?>
                         </select>

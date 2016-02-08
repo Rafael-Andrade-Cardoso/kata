@@ -275,6 +275,25 @@ class Relatorio extends MY_Controller {
        
     }
     
+    public function aula($qtd = 'null', $inicio = 'null', $id_turma = 'null'){
+        $consulta = $this->crud->get_aula('1', 2);
+        $num_rows = $consulta->num_rows();
+        $config = $this->config_pagination('relatorio/aula', $num_rows);
+        
+        /* Define $qtd */
+        $qtd = $config['per_page'];
+        /* Define $inicio */
+        ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
+        $this->pagination->initialize($config);
+        //$data = array();
+        
+        $alunos['aula'] = $consulta->result();
+        $alunos['paginacao'] = $this->pagination->create_links();
+        /*echo "<pre>";
+        die(print_r($data));*/
+        $this->template->load('aula/lista', $alunos);        
+    }
+    
     public function aluno_turma_2(){
         $id_turma = $this->input->post("id_horario");
         $this->aluno_turma($id_turma);

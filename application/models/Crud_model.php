@@ -455,6 +455,34 @@ class Crud_model extends CI_Model {
         $this->db->set(array("ativo" => "0"));
         return $this->db->update($tabela);
     }
+    
+    function get_aula($id_aula, $aux){
+        if($aux == 1){
+            $query = $this->db->query('Select * from aula as a
+                                        inner join horario as h
+                                            ON(a.id_horario = h.id_horario)
+                                        inner join turma as t
+                                            ON(h.id_turma = t.id_turma)
+                                        inner join plano_aula as pa
+                                            ON(pa.id_aula = a.id_aula)
+                                        inner join ta_atividade as ta
+                                            ON(ta.id_ta_atividade = pa.id_ta_atividade)
+                                        WHERE a.id_aula = '.$id_aula.';
+                                    ');
+        }else{
+            $query = $this->db->query('Select * from aula as a
+                                        inner join horario as h
+                                            ON(a.id_horario = h.id_horario)
+                                       ;
+                                    ');
+        }
+        /*$this->db->select('*');
+        $this->db->from('aula');
+        $query = $this->db->get()->result();
+        echo "<pre>";
+        die(print_r($query->result()));*/
+        return $query;
+    }
 }
 /*
 matricula
