@@ -7,6 +7,7 @@
                               <thead>
                                   <tr>
                                       <!--<th> ID</th>-->
+                                      <th> Turma</th>
                                       <th> Instrutor</th>
                                       <th class="hidden-sm hidden-xs"> Máximo de alunos</th>
                                       <th> Valor mensalidade</th>
@@ -23,10 +24,11 @@
                                       $qtd = $this->uri->segment(3);
                                       $inicio = $this->uri->segment(4);
 
-                                      foreach ($turmas as $value) {
+                                      foreach ($turma as $value) {
                                   ?>
                                       <tr id="line_menu<?php echo $value->id_turma; ?>">
                                           <!--<td><a href="basic_table.htm#l"><?php echo $value->id_turma; ?></a></td>-->
+                                          <td><?php echo $value->nm_turma; ?></td>
                                           <td><?php echo $value->nome . " " . $value->sobrenome; ?></td>
                                           <td class="hidden-sm hidden-xs"><?php echo $value->max_aluno; ?></td>
                                           <td><?php echo "R$".$value->valor_mensalidade; ?></td>
@@ -51,7 +53,7 @@
                                                 ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_turma); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a href="<?php echo base_url("alteracao/form_alterar_turma/" . $value->id_turma); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                               <a type="button" onclick="return deleteReg('<?php echo $value->id_turma;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>

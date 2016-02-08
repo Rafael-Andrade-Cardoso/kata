@@ -4,9 +4,11 @@
   */
   function deleteReg(id, url){
     var caminho = '<?php echo base_url()?>';
+    alert(url);
     caminho += url;
+    //alert("teste" + caminho);
     var agree = confirm("Tem certeza de que deseja excluir este registro?");
-    if(agree){
+   if(agree){
       $("#line_menu"+id).fadeOut('slow');
       $.post(caminho, {id:id}, function(){
 

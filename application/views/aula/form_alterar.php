@@ -1,4 +1,4 @@
-<h3><i class="fa fa-angle-right"></i> Cadastrar aula</h3>
+<h3><i class="fa fa-angle-right"></i> Alterar aula</h3>
 <?php echo form_open('alteracao/alterar_aula/query->id_aula', array('class' => 'form-horizontal style-form', 'id' => 'form_alterar'));?>
     <!-- dt_aula, obs-->
     <!-- Área de dados do menu -->
@@ -16,15 +16,15 @@
                     if ($this->session->flashdata('cadastrook')){
                       echo '<p class="alert alert-success">' . $this->session->flashdata('cadastrook').'</p>';
                     }
-                    //debug($this->session);*/
+                    //debug($this->session);
                     echo "<pre>";
-                    print_r($query);
+                    print_r($query);*/
                 ?>
 
                 <div class="form-group">                      
                       <label class="col-sm-2 col-sm-2 control-label">Turma<font color="#FF0202">*</font></label>
                       <div class="col-sm-4">                    
-                           <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
+                           <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onchange="javascript: get_info();">
                                 <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
                                 <?php
                                     foreach ($turma as $value) {
@@ -49,7 +49,16 @@
                                             if (set_value('id_horario', $query->id_horario) == $value->id_horario){
                                                 echo " selected ";
                                             }
-                                        echo ">" . $value->dia_semana . "</option>";                                    
+                                        switch($value->dia_semana){
+                                            case 0: $dia = 'Domingo'; break;
+                                            case 1: $dia = 'Segunda-feira'; break;
+                                            case 2: $dia = 'Terça-feira'; break;
+                                            case 3: $dia = 'Quarta-feira'; break;
+                                            case 4: $dia = 'Quinta-feira'; break;
+                                            case 5: $dia = 'Sexta-feira'; break;
+                                            case 6: $dia = 'Sábado'; break;
+                                        }
+                                        echo ">" . $dia . " - Início: ". substr($value->hr_inicio, 0,5) ."</option>";                                    
                                     }
                                 ?>
                           </select>
@@ -81,28 +90,33 @@
                         <div class="error"><?php echo form_error('dt_aula'); ?></div>
                     </div>                 
                 </div>
-                    
-                <div class="form-group" >                
+                
+                <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Atividade<font color="#FF0202">*</font></label>
-                    <!--<font color="#00CC00"><span class="glyphicon glyphicon-plus" id="adicionar" aria-hidden="true"></span></font>-->
-                    
-                    <div class="col-sm-4">
-                        <select MULTIPLE  SIZE=4 name="id_ta_atividade[]" class="form-control" title="Selecione uma ou mais atividades que terá a aula">
-                            <option value="">Escolha a atividade</option>
-                            <?php
-                                foreach ($atividade as $value) {
-                                    echo "<option value='" . $value->id_ta_atividade . "'";
+                    <div class="col-sm-5">
+                        <?php
+                            foreach ($atividade as $value) {
+                        ?>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="id_ta_atividade[]" type="checkbox" value="<?php echo $value->id_ta_atividade; ?>"
+                                    <?php
                                         if (set_value('id_ta_atividade[]', $query->id_ta_atividade) == $value->id_ta_atividade){
-                                            echo " selected ";
-                                        }   
-                                    echo ">" . $value->nm_atividade. "</option>";
-                                }
-                            ?>
-                        </select>
-                        <div class="error"><?php echo form_error('id_ta_atividade[]'); ?></div>
-                    </div>                 
-                       
-                </div>  
+                                            echo " checked ";
+                                        }
+                                       /* if (set_value('id_ta_atividade')){
+                                            echo (in_array($value->id_ta_atividade, set_value('id_ta_atividade')))?" checked ":"";
+                                        }*/
+                                    ?>
+                                    />
+                                    <?php echo $value->nm_atividade; ?>
+                                </label>
+                            </div>
+                        <?php
+                            }
+                        ?>
+                    </div>
+                </div>
                
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Observações</label>

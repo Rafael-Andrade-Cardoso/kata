@@ -16,19 +16,15 @@ class Alteracao extends MY_Controller {
         if($id_aula == NULL){
             redirect('aula/lista');
         }
-               /* $tipo_usuario_selecionado = $this->menu->get_tipo_usuario_byidmenu($id_aula)->result();
-        foreach ($tipo_usuario_selecionado as $key => $value) {
-            $data['tipo_usuario_selecionado'][] = $value->id_ta_tipo_usuario;
-        }*/
-        //$data['tipo_usuario_menu'] = $this->usuario->get_tipo_usuario()->result();
-        //$data['query'] = $this->menu->get_byid($id_aula)->row();
+        
         $data['arte_marcial'] = $this->crud->get_all('arte_marcial')->result();
         $data['turma'] = $this->crud->get_all('turma')->result();   
         $data['atividade'] = $this->crud->get_all('ta_atividade')->result();     
-        $data['horario'] = null; 
-        $data['query'] = $this->crud->get_aula($id_aula, 1)->result();
-        //echo "<pre>";
-        //die(print_r($data['query']));
+        $data['horario'] = $this->crud->get_all('horario')->result(); 
+        //$data['query'] = $this->crud->get_aula($id_aula, 1)->result();
+        $data['query'] = $this->crud->get_aula($id_aula, 1)->row();
+        /*echo "<pre>";
+        die(print_r($data['query']));*/
         $this->template->load('aula/form_alterar', $data);
     }
 
@@ -36,41 +32,48 @@ class Alteracao extends MY_Controller {
     public function alterar_aula() {
         foreach ($this->input->post() as $key => $value){
             if (!is_null($value) && $value != ""){
+                //echo $value;
                 $data[$key] = $value;
             }
         }
-
+        $atividade = $this->input->post('id_ta_atividade');
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $validacoes = array(
             array(
-                'field' => 'id_menu_pai',
-                'label' => 'Menu pai',
-                'rules' => 'max_length[11]'
+                'field' => 'id_turma',
+                'label' => 'Turma',
+                'rules' => 'required'
             ),
             array(
-                'field' => 'nome',
-                'label' => 'Nome',
-                'rules' => 'trim|required|max_length[30]'
+                'field' => 'id_horario',
+                'label' => 'Horário',
+                'rules' => 'required'
             ),
             array(
-                'field' => 'url',
-                'label' => 'URL',
-                'rules' => 'trim|required|max_length[255]'
+                'field' => 'id_arte_marcial',
+                'label' => 'Arte Marcial',
+                'rules' => 'trim|required'
             ),
             array(
-                'field' => 'desc_menu',
-                'label' => 'Descrição',
-                'rules' => 'trim|max_length[45]'
-            )
+                'field' => 'dt_aula',
+                'label' => 'Data Aula',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'id_ta_atividade[]',
+                'label' => 'Atividade',
+                'rules' => 'required'
+            )            
         );
         $this->form_validation->set_rules($validacoes);
 
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === FALSE) {
-            $this->form_alterar();
+            $this->form_alterar_aula();
         /* Senão, caso sucesso: */
         } else {
-            $id_menu = $this->menu->update($data, $data['id_menu']);
-            if ($id_menu){
+            $id_aula = $this->menu->update($data, $data['id_aula']);
+            if ($id_aula){
                 $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
                 redirect(current_url());
             } else {
@@ -78,6 +81,21 @@ class Alteracao extends MY_Controller {
             }
 
         }
+    }
+    
+    public function form_alterar_turma() {
+        $data = array();
+        $id_turma = $this->uri->segment(3);
+        if($id_turma == NULL){
+            redirect(current_url());
+        }
+        
+        $data['arte_marcial'] = $this->crud->get_all('arte_marcial')->result();
+        $data['instrutor'] = $this->crud->get_instrutores()->result();
+        $data['query'] = $this->crud->get_turma($id_turma)->row();
+        //echo "<pre>";
+        //die(print_r($data['query']));
+        $this->template->load('turma/form_alterar', $data);
     }
 
     public function lista($qtd = 'null', $inicio = 'null') {

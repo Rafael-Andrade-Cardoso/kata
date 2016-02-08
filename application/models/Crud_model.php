@@ -27,6 +27,23 @@ class Crud_model extends CI_Model {
         $this->db->set($data);
         return $this->db->update('aluno');
     }
+    
+    function update_ativos($tabela=NULL, $campo=NULL, $id=NULL){
+        if($tabela != NULL && $id != NULL){
+            //unset($data['id_menu']);
+            //unset($data['id_ta_tipo_usuario']);
+            //update_ativos('ta_atividade', 'id_ta_atvidade', 1);
+            $data = new stdClass();
+            $data->ativo = '0';
+            $result = $this->db->update($tabela, $data, array($campo => $id));
+            die(print_r($result));
+            if ($result){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
     function delete($id) {
         $this->db->where('id_aluno', $id);
@@ -188,23 +205,38 @@ class Crud_model extends CI_Model {
         $query = $this->db->query('Select * from turma order by nm_turma;');
         //$query = $this->db->query('Select id_turma from turma Where turma.id_horario = '.$id_horario.';');
                                   //die(print_r($query->result()));
-        return $query->result();
+        //return $query->result();
+        return $query;
     }
     
-    function get_turma_horario(){
-        $query = $this->db->query('
+    function get_turma_instrutor(){
+        $query = $this->db->query(' Select * from turma as t
+                                        inner join horario as h
+                                            ON(t.id_turma = h.id_turma)
+                                        inner join instrutor as i
+                                            ON(h.id_instrutor = i.id_instrutor)
+                                        inner join pessoa_fisica pf 
+                                            ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
+                                        inner join pessoa as p 
+                                            ON(p.id_pessoa = pf.id_pessoa_fisica)
+                                        group by t.id_turma
+                                        ;
                                   ');
+        return $query;
     }
 
-    function get_turma($qtd = 0, $inicio = 0) {
-        $this->db->select('t.*, h.*, p.nome, pf.sobrenome');
-        $this->db->from('turma t');
-        $this->db->join('horario h', 'h.id_horario = t.id_horario');
-        $this->db->join('instrutor i', 'i.id_instrutor = h.id_instrutor');
-        $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = i.id_pessoa_fisica');
-        $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica');
-        $this->db->order_by('dt_inicio','asc');
-        $query = $this->db->get();
+    function get_turma($id_turma) {
+        $query = $this->db->query(' Select * from turma as t
+                                        inner join horario as h
+                                            ON(t.id_turma = h.id_turma)
+                                        inner join instrutor as i
+                                            ON(h.id_instrutor = i.id_instrutor)
+                                        inner join pessoa_fisica pf 
+                                            ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
+                                        inner join pessoa as p 
+                                            ON(p.id_pessoa = pf.id_pessoa_fisica)
+                                        Where t.id_turma = '.$id_turma.';
+                                    ');
         if($query->num_rows() > 0) {
             return $query;
         }
@@ -403,21 +435,24 @@ class Crud_model extends CI_Model {
     
     function get_aula($id_aula, $aux){
         if($aux == 1){
-            $query = $this->db->query('Select * from aula as a
+            $query = $this->db->query("Select * from aula as a
                                         inner join horario as h
                                             ON(a.id_horario = h.id_horario)
                                         inner join turma as t
                                             ON(h.id_turma = t.id_turma)
-                                        inner join plano_aula as pa
+                                        left outer join plano_aula as pa
                                             ON(pa.id_aula = a.id_aula)
                                         inner join ta_atividade as ta
                                             ON(ta.id_ta_atividade = pa.id_ta_atividade)
-                                        WHERE a.id_aula = '.$id_aula.';
-                                    ');
+                                        WHERE a.id_aula = ".$id_aula.";
+                                    ");
         }else{
             $query = $this->db->query('Select * from aula as a
-                                        inner join horario as h
+                                        left outer join horario as h
                                             ON(a.id_horario = h.id_horario)
+                                        inner join turma as t
+                                            ON(h.id_turma = t.id_turma)
+                                       /*WHERE a.ativo <> 10*/
                                        ;
                                     ');
         }

@@ -66,9 +66,7 @@
             var id_ta_pais = $("#id_ta_pais").val();
             str1 = "<?php echo base_url(); ?>cadastro/get_estado_pais/"
             var res = str1.concat(id_ta_pais);
-            $.post(res, {
-                id_ta_pais : id_ta_pais
-            }, function(data) {
+            $.post(res, {id_ta_pais : id_ta_pais}, function(data) {
                 $("#id_estado").html(data);
             });
             //alert(res);

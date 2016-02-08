@@ -40,7 +40,7 @@
                                 <?php
                                     foreach ($horario as $value) {
                                         
-                                        echo "<option value='" . $value->id_horario . "'>" . $value->dia_semana . "</option>";                                    
+                                        echo "<option value='" . $value->id_horario . "'>" . $value->dia_semana .  "</option>";                                    
                                     }
                                 ?>
                           </select>

@@ -89,7 +89,7 @@ class Relatorio extends MY_Controller {
     }
 
     public function turma($qtd = 'null', $inicio = 'null') {
-        $consulta = $this->crud->get_turma();
+        $consulta = $this->crud->get_turma_instrutor();
         $num_rows = $consulta->num_rows();
         $config = $this->config_pagination('relatorio/turma', $num_rows);
 
@@ -99,7 +99,7 @@ class Relatorio extends MY_Controller {
         ($this->uri->segment(3) != '')? $inicio=$this->uri->segment(3): $inicio = 0;
         $this->pagination->initialize($config);
         $data = array();
-        $data['turmas'] = $this->crud->get_turma($qtd, $inicio)->result();
+        $data['turma'] = $consulta->result();
         $data['paginacao'] = $this->pagination->create_links();
         $this->template->load('turma/lista', $data);
     }
@@ -245,9 +245,7 @@ class Relatorio extends MY_Controller {
         //die(print_r($this->input->post));
         $consulta = $this->crud->get_horario_somente();
         $num_rows = $consulta->num_rows();
-        $config = $this->config_pagination('relatorio/aluno_turma', $num_rows);
-       
-         
+        $config = $this->config_pagination('relatorio/aluno_turma', $num_rows);  
         
         /* Define $qtd */
         $qtd = $config['per_page'];
@@ -287,11 +285,11 @@ class Relatorio extends MY_Controller {
         $this->pagination->initialize($config);
         //$data = array();
         
-        $alunos['aula'] = $consulta->result();
-        $alunos['paginacao'] = $this->pagination->create_links();
+        $aula['aula'] = $consulta->result();
+        $aula['paginacao'] = $this->pagination->create_links();
         /*echo "<pre>";
         die(print_r($data));*/
-        $this->template->load('aula/lista', $alunos);        
+        $this->template->load('aula/lista', $aula);        
     }
     
     public function aluno_turma_2(){

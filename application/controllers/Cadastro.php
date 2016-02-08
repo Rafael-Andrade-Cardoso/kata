@@ -662,9 +662,7 @@ class Cadastro extends MY_Controller {
 
             $matricula_turma = new stdClass();
             $matricula_turma->id_matricula = $id_matricula;
-            $matricula_turma->id_turma = $id_turma;//
-            //die(print_r($this->crud->get_turma_somente($id_horario)));
-            //$matricula_turma->id_turma = $this->crud->get_turma_somente($id_horario);
+            $matricula_turma->id_turma = $id_turma;
             $id_usuario = $this->crud->insert('matricula_turma', $matricula_turma);
             
             $matricula_graduacao = new stdClass();
@@ -1226,10 +1224,6 @@ class Cadastro extends MY_Controller {
             }
         }
         $atividade = $this->input->post('id_ta_atividade');
-        //die(print_r($atividade));
-        
-        //echo count($data['id_ta_atividade']);
-        //die(print_r($plano_aula));
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $validacoes = array(
             array(
@@ -1371,7 +1365,7 @@ class Cadastro extends MY_Controller {
                     $each->$display = "Sexta-feia";
                 else if($each->$display == 6)
                     $each->$display = "Sábado";
-                $option .= "<option value='" . $each->$value . "'>" . $each->$display . " - Início: " . $each->hr_inicio . "</option>";
+                $option .= "<option value='" . $each->$value . "'>" . $each->$display . " - Início: ". substr($each->hr_inicio, 0,5) . "</option>";
             }else{
                 $option .= "<option value='" . $each->$value . "'>" . $each->$display ."</option>";
             }
@@ -1414,7 +1408,7 @@ class Cadastro extends MY_Controller {
         }
         $id_ta_pais = "id_ta_pais = $id_pais";
         $estados = $this->crud->get_where("ta_estado", $id_ta_pais)->result();
-        //die(print_r($this->object_to_option($estados, 'id_ta_estado', 'nm_estado')));
+        //die(print_r($id_ta_pais));
         echo $this->object_to_option($estados, 'id_ta_estado', 'nm_estado');
     }
 
