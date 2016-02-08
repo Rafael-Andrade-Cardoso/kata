@@ -2301,3 +2301,7 @@ a {
 .pagination{
     margin-left: 20px;
 }
+
+.campos_obrigatorios {
+    float: right;
+}
