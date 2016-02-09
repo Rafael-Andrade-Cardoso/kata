@@ -417,11 +417,14 @@ class Cadastro extends MY_Controller {
         /* Define as tags onde a mensagem de erro será exibida na página */
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $data = new stdClass();
-            /* Recebe os dados do formulário (visão) */
-            foreach ($this->input->post() as $key => $value){
-                $data->$key = $value;
-            }
-        $id_turma = $this->input->post('id_horario');
+        /* Recebe os dados do formulário (visão) */
+        foreach ($this->input->post() as $key => $value){
+            $data->$key = $value;
+        }
+        
+            //echo "<pre>";
+            //die(print_r($data));
+        $id_turma = $this->input->post('id_turma');
         /* Define as regras para validação */
         $validacoes = array(
             array(
@@ -570,7 +573,6 @@ class Cadastro extends MY_Controller {
             $this->form_aluno();
         /* Senão, caso sucesso: */
         } else {
-
             /* Abre uma transação */
             $this->db->trans_start();
 
