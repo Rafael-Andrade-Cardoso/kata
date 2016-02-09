@@ -1,10 +1,4 @@
             <h3><i class="fa fa-angle-right"></i> Lista de alunos</h3>
-            <?php
-            $id = 16;
-            $caminho = base_url('exclusao/excluir');
-            ?> 
-            <a type="button" OnClick="deleteReg('<?=$id?>','http://127,0,0,1/kata/exclusao/excluir_aluno');" class="btn btn-danger">testeeee</a>
-            <!--    ('<?php echo $value->id_aluno;?>','<?=base_url("exclusao/excluir_aluno");?>'-->
               <div class="row mt">
                   <div class="col-md-12">
                       <a href="<?php echo base_url('cadastro/form_aluno'); ?>" class="btn btn-primary">Cadastrar</a><br /><br />
