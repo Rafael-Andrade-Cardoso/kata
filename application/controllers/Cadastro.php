@@ -417,11 +417,14 @@ class Cadastro extends MY_Controller {
         /* Define as tags onde a mensagem de erro será exibida na página */
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $data = new stdClass();
-            /* Recebe os dados do formulário (visão) */
-            foreach ($this->input->post() as $key => $value){
-                $data->$key = $value;
-            }
-        $id_turma = $this->input->post('id_horario');
+        /* Recebe os dados do formulário (visão) */
+        foreach ($this->input->post() as $key => $value){
+            $data->$key = $value;
+        }
+        
+            //echo "<pre>";
+            //die(print_r($data));
+        $id_turma = $this->input->post('id_turma');
         /* Define as regras para validação */
         $validacoes = array(
             array(
@@ -570,7 +573,6 @@ class Cadastro extends MY_Controller {
             $this->form_aluno();
         /* Senão, caso sucesso: */
         } else {
-
             /* Abre uma transação */
             $this->db->trans_start();
 
@@ -697,14 +699,14 @@ class Cadastro extends MY_Controller {
         die(print_r($info));*/
         //die(print_r($this->object_to_option($estados, 'id_ta_estado', 'nm_estado')));
         //echo $this->object_to_option($info, 'id_turma', 'nome'); 
-        $option = "Instrutor: ";
+        $option = "";
         $ultimo_instrutor = "";
         $ultimo_dia = "";
         foreach ($info as $each) {
             $aux = "";
             //$option .= "<option value='" . $each->$value . "'>" . $each->$display . "</option>";
             if ($ultimo_instrutor != $each->nome ." ". $each->sobrenome) {
-                $aux ="<b>" . $each->nome ." ". $each->sobrenome . "</b>";
+                $aux ="<div class='col-lg-11 dias_aula_instrutor'> Instrutor: <b>" . $each->nome ." ". $each->sobrenome . "</b></div>";
             }          
             if (isset($each->dia_semana) && $each->dia_semana != $ultimo_dia){  
                 switch($each->dia_semana){
@@ -730,12 +732,14 @@ class Cadastro extends MY_Controller {
                         $dia="Sábado";
                     break;
                 }
-                $aux .= "<br /><br /> Dia da semana: <b>" . $dia . "</b><br />";
-                $ultimo_dia = $dia;
-                
+                $aux .= "<div class='dias_aula'>";
+                $aux .= "Dia da semana: <b>" . $dia . "</b><br />";
+                $ultimo_dia = $dia;               
             }
             $aux .= "&nbsp;&nbsp; Horário: " . $each->hr_inicio . " às " . $each->hr_termino; 
+            $aux .= "</div>"; 
             $ultimo_instrutor = $each->nome ." ". $each->sobrenome;
+            $option .= "</div>";
             $option .= $aux;
         }
         echo $option;

@@ -1,6 +1,5 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar aluno</h3>
 
-<input type="submit" OnClick="deleteReg(1,'<?=base_url("aluno/teste");?>');" value="TESTEEEEEEEEE">
 <?php echo form_open('cadastro/insert_aluno', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
 <input type="hidden" name="dt_matricula" value="<?php echo date("Y-m-d");  ?>" />
 <!-- Área de dados do aluno -->
@@ -15,7 +14,7 @@
         <label class="col-sm-2 col-sm-2 control-label"> Nome<font color="#FF0202">*</font></label>
         <div class="col-sm-10">
           <input type="text" id="nome" class="form-control" name="nome" value="<?php echo set_value('nome'); ?>" title="Digite o nome do aluno"/>
-          <div class="error"><?php echo form_error('nome'); ?></div>
+          <?php echo form_error('nome', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>
 
@@ -23,7 +22,7 @@
         <label class="col-sm-2 col-sm-2 control-label">Sobrenome<font color="#FF0202">*</font></label>
         <div class="col-sm-10">
           <input type="text" class="form-control" name="sobrenome" value="<?php echo set_value('sobrenome'); ?>" title="Digite seu sobrenome"/>
-          <div class="error"><?php echo form_error('sobrenome'); ?></div>
+          <?php echo form_error('sobrenome', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>
 
@@ -31,7 +30,7 @@
         <label class="col-sm-2 col-sm-2 control-label">CPF</label>
         <div class="col-sm-10">
           <input type="text" id="cpf" class="form-control" name="cpf" value="<?php echo set_value('cpf'); ?>" title="Digite seu CPF" onblur="TestaCPF"/>
-          <div class="error"><?php echo form_error('cpf'); ?></div>
+          <?php echo form_error('cpf', '<div class="alert alert-danger">', '</div>'); ?>
           <span class="help-block">Informe apenas os números.</span>
         </div>
       </div>
@@ -40,7 +39,7 @@
         <label class="col-sm-2 col-sm-2 control-label">Data de nascimento<font color="#FF0202">*</font></label>
         <div class="col-sm-10">
           <input type="date" id="dt_nascimento"class="form-control" name="dt_nascimento" value="<?php echo set_value('dt_nascimento'); ?>" title="Selecione uma data"/>
-          <div class="error"><?php echo form_error('dt_nascimento'); ?></div>
+          <?php echo form_error('dt_nascimento', '<div class="alert alert-danger">', '</div>'); ?>
           <span class="help-block">&nbsp;</span>
         </div>
       </div>
@@ -51,10 +50,11 @@
           <div class="input-group"> 
             <input type="text" class="form-control" id="altura" name="altura" value="<?php echo set_value('altura'); ?>" title="Digite sua altura em metros"/>
             <span class="input-group-addon">Mts</span>
-            <div class="error"><?php echo form_error('altura'); ?></div>
-          </div>
+          </div>          
+          <?php echo form_error('altura', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>
+
 
       <div class="col-md-6 form-group">
         <label class="col-sm-2 col-sm-2 control-label">Peso<font color="#FF0202">*</font></label>
@@ -62,8 +62,8 @@
           <div class="input-group">                    
             <input type="text" class="form-control" id="peso" name="peso" value="<?php echo set_value('peso'); ?>" title="Digite seu peso em kilogramas"/>
             <span class="input-group-addon">Kg</span>
-            <div class="error"><?php echo form_error('peso'); ?></div>
           </div>
+          <?php echo form_error('peso', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>      
 
@@ -82,7 +82,7 @@
             <option value="0-">O-</option>                                
           </select>
           <!--<input type="text" class="form-control" name="tipo_sanguineo" value="<?php echo set_value('tipo_sanguineo'); ?>" />-->
-          <div class="error"><?php echo form_error('tipo_sanguineo'); ?></div>
+          <?php echo form_error('tipo_sanguineo', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>
 
@@ -95,7 +95,7 @@
           <label>
             <input type="radio" name="sexo" value="1"> Feminino
           </label>
-          <div class="error"><?php echo form_error('sexo'); ?></div>
+          <?php echo form_error('sexo', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>
 
@@ -103,7 +103,7 @@
         <label class="col-lg-2 control-label">Observações sobre o(a) aluno(a)</label>
         <div class="col-lg-10">
           <textarea class="form-control" name="observacao" ><?php echo set_value('observacao'); ?> </textarea>
-          <div class="error"><?php echo form_error('observacao'); ?></div>
+          <?php echo form_error('observacao', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>      
 
@@ -123,7 +123,7 @@
           <label class="col-sm-2 col-sm-2 control-label">Nome</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" name="nome_responsavel" value="<?php echo set_value('nome_responsavel'); ?>" title="Digite o nome do responsável" />
-            <div class="error"><?php echo form_error('nome_responsavel'); ?></div>
+          <?php echo form_error('nome_responsavel', '<div class="alert alert-danger">', '</div>'); ?>
           </div>
         </div>
 
@@ -131,7 +131,7 @@
           <label class="col-sm-2 col-sm-2 control-label">Sobrenome</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" name="sobrenome_responsavel" value="<?php echo set_value('sobrenome_responsavel'); ?>" title="Digite o sobrenome do responsável"/>
-            <div class="error"><?php echo form_error('sobrenome_responsavel'); ?></div>
+          <?php echo form_error('sobrenome_responsavel', '<div class="alert alert-danger">', '</div>'); ?>
           </div>
         </div>
 
@@ -139,7 +139,7 @@
           <label class="col-sm-2 col-sm-2 control-label">Data de nascimento</label>
           <div class="col-sm-3">
             <input type="date" class="form-control" id="dt_nascimento_responsavel" name="dt_nascimento_responsavel" value="<?php echo set_value('dt_nascimento_responsavel'); ?>" title="Selecione ou digite a data de nascimento do responsável"/>
-            <div class="error"><?php echo form_error('dt_nascimento_responsavel'); ?></div>
+          <?php echo form_error('dt_nascimento_responsavel', '<div class="alert alert-danger">', '</div>'); ?>
           </div>
         </div>
 
@@ -147,7 +147,7 @@
           <label class="col-sm-2 col-sm-2 control-label">E-mail</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" name="email_responsavel" value="<?php echo set_value('email_responsavel'); ?>" title="Digite o e-mail do responsável"/>
-            <div class="error"><?php echo form_error('email_responsavel'); ?></div>
+          <?php echo form_error('email_responsavel', '<div class="alert alert-danger">', '</div>'); ?>
           </div>
         </div>
 
@@ -156,7 +156,7 @@
           <div class="col-sm-10">
             <input type="radio" name="sexo_responsavel" value="M" checked="true"> Masculino<br />
             <input type="radio" name="sexo_responsavel" value="F"> Feminino
-            <div class="error"><?php echo form_error('sexo_responsavel'); ?></div>
+          <?php echo form_error('sexo_responsavel', '<div class="alert alert-danger">', '</div>'); ?>
           </div>
         </div>
       </div>
@@ -185,7 +185,7 @@
           }
           ?>
         </select>
-        <div class="error"><?php echo form_error('id_ta_pais'); ?></div>
+          <?php echo form_error('id_ta_pais', '<div class="alert alert-danger">', '</div>'); ?>
       </div>
     </div>
 
@@ -204,7 +204,7 @@
           }
           ?>
         </select>
-        <div class="error"><?php echo form_error('id_ta_estado'); ?></div>
+          <?php echo form_error('id_ta_estado', '<div class="alert alert-danger">', '</div>'); ?>
       </div>
     </div>
 
@@ -223,7 +223,7 @@
           }
           ?>
         </select>
-        <div class="error"><?php echo form_error('id_ta_cidade'); ?></div>
+          <?php echo form_error('id_ta_cidade', '<div class="alert alert-danger">', '</div>'); ?>
       </div>
     </div>
 
@@ -231,7 +231,7 @@
       <label class="col-sm-2 col-sm-2 control-label">Logradouro<font color="#FF0202">*</font></label>
       <div class="col-sm-10">
         <input type="text" class="form-control" name="logradouro" value="<?php echo set_value('logradouro'); ?>" title="Digite o nome da rua em que reside"/>
-        <div class="error"><?php echo form_error('logradouro'); ?></div>
+          <?php echo form_error('logradouro', '<div class="alert alert-danger">', '</div>'); ?>
       </div>
     </div>
 
@@ -240,7 +240,7 @@
       <label class="col-sm-2 col-sm-2 control-label">CEP<font color="#FF0202">*</font></label>
       <div class="col-sm-5">
         <input type="text" id="cep" class="form-control" name="cep" value="<?php echo set_value('cep'); ?>" title="Digite o CEP"/>
-        <div class="error"><?php echo form_error('cep'); ?></div>
+          <?php echo form_error('cep', '<div class="alert alert-danger">', '</div>'); ?>
         <span class="help-block">Informe apenas os números.</span>
       </div>
     </div>
@@ -249,7 +249,7 @@
       <label class="col-sm-2 col-sm-2 control-label">Número<font color="#FF0202">*</font></label>
       <div class="col-sm-5">
         <input type="text" class="form-control" name="numero" value="<?php echo set_value('numero'); ?>" title="Digite o número da casa"/>
-        <div class="error"><?php echo form_error('numero'); ?></div>
+          <?php echo form_error('numero', '<div class="alert alert-danger">', '</div>'); ?>
         <span class="help-block">&nbsp;</span>
       </div>
     </div>
@@ -258,7 +258,7 @@
       <label class="col-sm-2 col-sm-2 control-label">Complemento</label>
       <div class="col-sm-10">
         <textarea class="form-control" name="complemento" > <?php echo set_value('complemento'); ?> </textarea>
-        <div class="error"><?php echo form_error('complemento'); ?></div>
+          <?php echo form_error('complemento', '<div class="alert alert-danger">', '</div>'); ?>
       </div>
     </div>
   </div>
@@ -288,13 +288,13 @@
             }
             ?>
           </select>
-          <div class="error"><?php echo form_error('id_ta_tipo_telefone'); ?></div>
+          <?php echo form_error('id_ta_tipo_telefone', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
 
         <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
         <div class="col-sm-5">
           <input type="text" id="telefone" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
-          <div class="error"><?php echo form_error('telefone'); ?></div>
+          <?php echo form_error('telefone', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>
 
@@ -310,7 +310,7 @@
                       <label class="col-sm-2 col-sm-2 control-label">E-mail<font color="#FF0202">*</font></label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" name="email" value="<?php echo set_value('email'); ?>" title="Digite o e-mail"/>
-                        <div class="error"><?php echo form_error('email'); ?></div>
+          <?php echo form_error('email', '<div class="alert alert-danger">', '</div>'); ?>
                       </div>
                     </div>
 
@@ -335,13 +335,13 @@
                       }
                       ?>
                     </select>
-                    <div class="error"><?php echo form_error('id_ta_tipo_telefone_2'); ?></div>
+          <?php echo form_error('id_ta_tipo_telefone_2', '<div class="alert alert-danger">', '</div>'); ?>
                   </div>
 
                   <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
                   <div class="col-sm-5">
                     <input type="text" id="telefone_2" class="form-control" name="telefone_2" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
-                    <div class="error"><?php echo form_error('telefone_2'); ?></div>
+          <?php echo form_error('telefone_2', '<div class="alert alert-danger">', '</div>'); ?>
                   </div>
                 </div>
 
@@ -362,7 +362,7 @@
         <h4 class="mb"><i class="fa fa-angle-right"></i> Turma</h4>
 
         <div class="form-group">                      
-         <div class="col-sm-6 col-md-6 col-lg-6">   
+         <div class="col-sm-12 col-md-12 col-lg-12">   
           <label class="col-sm-2 col-sm-2 control-label">Turma<font color="#FF0202">*</font></label>
           <div class="col-sm-10">                    
             <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
@@ -374,9 +374,9 @@
               ?>
             </select>
           </div>
-          <div class="error"><?php echo form_error('id_turma'); ?></div>
-        </div>
-        <div class="col-sm-6 col-sm-6 control-label" id="id_horario"><?php echo (isset($info))?$info:"";?></div>                     
+          <?php echo form_error('id_turma', '<div class="alert alert-danger">', '</div>'); ?>
+        </div><br />
+        <div class="col-sm-12 col-sm-12 control-label" id="id_horario"><?php echo (isset($info))?$info:"";?></div>                     
       </div>
 
     </div><!-- /form-panel -->
@@ -390,11 +390,11 @@
     <div class="form-panel">
       <h4 class="mb"><i class="fa fa-angle-right"></i> Informações para pagamento</h4>
 
-      <div class="form-group">                      
-        <label class="col-sm-2 col-sm-2 control-label">Melhor dia para pagamento<font color="#FF0202">*</font></label>
-        <div class="col-sm-4">                    
+      <div class="col-lg-6 form-group">                      
+        <label class="col-sm-3 control-label">Melhor dia para pagamento<font color="#FF0202">*</font></label>
+        <div class="col-sm-2">                    
           <input type="text" class="form-control" id="dia_vencimento" name="dia_vencimento" value="<?php echo set_value('dia_vencimento'); ?>" title="Digite a data para o pagamento da mensalidade"/>
-          <div class="error"><?php echo form_error('dia_vencimento'); ?></div>
+          <?php echo form_error('dia_vencimento', '<div class="alert alert-danger">', '</div>'); ?>
         </div>
       </div>
                      <!-- <label class="col-sm-2 col-sm-2 control-label">Valor da mensalidade<font color="#FF0202">*</font></label>
@@ -413,20 +413,20 @@
                           <div class="error"><?php echo form_error('valor_mensalidade'); ?></div>
                       </div>
                     </div>-->
-                    <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">Desconto<font color="#FF0202">*</font></label>
-                      <div class="col-sm-4">
-                        <div class="input-group">  
-                          <span class="input-group-addon">R$</span>
-                          <input type="text" class="form-control" id="desconto" name="desconto" value="<?php echo set_value('desconto'); ?>" title="Digite o valor do desconto"/>
-                          <div class="error"><?php echo form_error('desconto'); ?></div>
-                        </div>
-                      </div>
-                    </div>
-                    <button class="btn btn-lg btn-primary" >Cadastrar</button>
-                  </div><!-- /form-panel -->
-                </div><!-- /col-lg-12 -->
-              </div><!-- /row -->
+      <div class="col-lg-6 form-group">
+        <label class="col-sm-2 col-sm-2 control-label">Desconto<font color="#FF0202">*</font></label>
+        <div class="col-sm-10">
+          <div class="input-group">  
+            <span class="input-group-addon">R$</span>
+            <input type="text" class="form-control" id="desconto" name="desconto" value="<?php echo set_value('desconto'); ?>" title="Digite o valor do desconto"/>
+          <?php echo form_error('desconto', '<div class="alert alert-danger">', '</div>'); ?>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-lg btn-primary" >Cadastrar</button>
+    </div><!-- /form-panel -->
+  </div><!-- /col-lg-12 -->
+</div><!-- /row -->
 
 
               <!-- </div> /form-panel -->
