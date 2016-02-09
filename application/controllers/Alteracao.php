@@ -132,67 +132,31 @@ class Alteracao extends MY_Controller {
         $data['paginacao'] = $this->pagination->create_links();
         $this->template->load('menu/menu_list', $data);
     }
-
-    public function excluir() {
-        $id = $this->input->post('id');
-        //redirect(base_url().'news-and-events');
-        $status = $this->menu->delete($id);
-        return $status;
-        //redirect('/menu/lista/'. $qtd . '/' . $inicio, 'refresh');
-    }
-
-    public function inserir() {
-        foreach ($this->input->post() as $key => $value){
-            if (!is_null($value) && $value != ""){
-                $data[$key] = $value;
-            }
+    
+    public function form_alterar_aluno() {
+        $data = array();
+        $id_aluno = $this->uri->segment(3);
+        if($id_aluno == NULL){
+            redirect('aula/lista');
         }
-        $validacoes = array(
-            array(
-                'field' => 'id_menu_pai',
-                'label' => 'Menu pai',
-                'rules' => 'max_length[11]'
-            ),
-            array(
-                'field' => 'nome',
-                'label' => 'Nome',
-                'rules' => 'trim|required|max_length[30]'
-            ),
-            array(
-                'field' => 'url',
-                'label' => 'URL',
-                'rules' => 'trim|required|max_length[255]'
-            ),
-            array(
-                'field' => 'desc_menu',
-                'label' => 'Descrição',
-                'rules' => 'trim|max_length[45]'
-            )
-        );
-        $this->form_validation->set_rules($validacoes);
-
-        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
-        if ($this->form_validation->run() === FALSE) {
-            $this->form_cadastro();
-        /* Senão, caso sucesso: */
-        } else {
-            $id_ta_tipo_usuario = $data['id_ta_tipo_usuario'];
-            unset($data['id_ta_tipo_usuario']);
-            $id_menu = $this->menu->insert($data);
-            if ($id_menu != 0){
-                $dados['id_menu'] = $id_menu;
-                foreach ($id_ta_tipo_usuario as $value) {
-                    $dados['id_ta_tipo_usuario'] = $value;
-                    $menuusuario = $this->menu->insert_tipo_usuario($dados);
-                }
-                $this->sucesso();
-            } else {
-                $this->erro();
-            }
-
-        }
-
+        
+        $this->load->model('usuario_model', 'usuario');
+        
+        $data['paises'] = $this->crud->get_all('ta_pais')->result();
+        $data['estados'] = $this->crud->get_all('ta_estado')->result();
+        $data['cidades'] = $this->crud->get_all('ta_cidade')->result();
+        $data['tipos_telefone'] = $this->crud->get_all('ta_tipo_telefone')->result();
+        $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
+        $data['situacoes'] = $this->crud->get_all('ta_situacao')->result();
+        //$data['horario'] = $this->crud->get_horario_somente();
+        $data['turma'] = $this->crud->get_all('turma')->result();
+        $data['id_horario'] = null;
+        $data['query'] = $this->crud->get_info_alunos($id_aluno)->row();
+        /*echo "<pre>";
+        die(print_r($data['query']));*/
+        $this->template->load('aluno/form_alterar', $data);
     }
+    
 
     public function sucesso($msg = null) {
         if ($msg != null){

@@ -2,31 +2,31 @@
   *   @param id (primary key)
   *   @param url (destino)
   */
-  function deleteReg(id, url){
-<<<<<<< HEAD
-    var caminho = '<?php echo base_url()?>';
-    alert(url);
-    caminho += url;
-    //alert("teste" + caminho);
-    var agree = confirm("Tem certeza de que deseja excluir este registro?");
-   if(agree){
-      $("#line_menu"+id).fadeOut('slow');
-      $.post(caminho, {id:id}, function(){
-=======
-    /*var caminho = "<?=base_url();?>";
-    var caminho = url+"/"+id;*/
-    var agree = confirm("Tem certeza de que deseja excluir este registro?");
-    if(agree){
-      //alert(id);      
-      $("#line"+id).fadeOut('slow');
-      $.post(url, {id:id}, function(){
->>>>>>> e8db55b55e03aee3ec67da17b9b9609d1a1587ae
+    function deleteReg(id, url){
+        var agree = confirm("Tem certeza de que deseja excluir este registro?");
+        if(agree){           
+            $("#line"+id).fadeOut('slow');
+            $.post(url, {id:id}, function(){
 
-      });
-    }else{
-      return false;
+            });
+        }else{
+            return false;
+        }
     }
-  }
+    
+    
+    function deleteReg1(id, url) {
+        myForm = document.createElement("form");
+        myForm.action = url;
+        myForm.method = "POST";
+        var input = document.createElement("input");
+        input.type = "text";
+        input.value = id;
+        input.name = "id";
+        myForm.appendChild(input);
+        document.body.appendChild(myForm);
+        myForm.submit();
+    }
 
   $(document).ready(function() {
       $("#botao").click(function(e, idform, url){

@@ -28,7 +28,7 @@ class Crud_model extends CI_Model {
         return $this->db->update('aluno');
     }
     
-    function update_ativos($tabela=NULL, $campo=NULL, $id=NULL){
+    /*function update_ativos($tabela=NULL, $campo=NULL, $id=NULL){
         if($tabela != NULL && $id != NULL){
             //unset($data['id_menu']);
             //unset($data['id_ta_tipo_usuario']);
@@ -43,7 +43,7 @@ class Crud_model extends CI_Model {
                 return false;
             }
         }
-    }
+    }*/
 
     function delete($id) {
         $this->db->where('id_aluno', $id);
@@ -85,11 +85,41 @@ class Crud_model extends CI_Model {
         $this->db->join('matricula_turma mt', 'm.id_matricula = mt.id_matricula', 'left');
         $this->db->join('turma t', 't.id_turma = mt.id_turma', 'left');
         $this->db->join('presenca pr', 'pr.id_matricula = m.id_matricula', 'left');
+        $this->db->where('a.ativo = 1');
         $this->db->order_by('p.nome','asc');
         //debug($this->db->get()->result());
         if ($qtd > 0 && $inicio > 0){
             $this->db->limit($qtd, $inicio);
         }
+        $query = $this->db->get();
+        if($query->num_rows() > 0) {
+            return $query;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    function get_info_alunos($id_aluno) {
+        $this->db->select('*');
+        $this->db->from('aluno a');
+        $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = a.id_pessoa_fisica', 'left');
+        $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica', 'left');
+        $this->db->join('endereco end', 'p.id_pessoa = end.id_pessoa', 'left');
+        $this->db->join('ta_cidade cd', 'cd.id_ta_cidade = end.id_ta_cidade', 'left');
+        $this->db->join('ta_estado est', 'est.id_ta_estado = cd.id_ta_estado', 'left');
+        $this->db->join('ta_pais pais', 'pais.id_ta_pais = est.id_ta_pais', 'left');
+        $this->db->join('pessoa_telefone pt', 'p.id_pessoa = pt.id_pessoa', 'left');
+        $this->db->join('ta_tipo_telefone ttt', 'ttt.id_ta_tipo_telefone = pt.id_ta_tipo_telefone', 'left');
+        $this->db->join('pessoa_dados pd', 'pd.id_pessoa_fisica = pf.id_pessoa_fisica', 'left');
+        $this->db->join('matricula m', 'm.id_aluno = a.id_aluno', 'left');
+        $this->db->join('matricula_turma mt', 'm.id_matricula = mt.id_matricula', 'left');
+        $this->db->join('turma t', 't.id_turma = mt.id_turma', 'left');
+        $this->db->join('presenca pr', 'pr.id_matricula = m.id_matricula', 'left');
+        $this->db->where('a.id_aluno = '.$id_aluno);
+        $this->db->order_by('p.nome','asc');
+        //debug($this->db->get()->result());
+        
         $query = $this->db->get();
         if($query->num_rows() > 0) {
             return $query;
@@ -483,8 +513,8 @@ class Crud_model extends CI_Model {
     }
 
     function update_ativos($tabela, $campo, $id) {
-        $this->db->where('id_aluno', $id);
-        $this->db->set(array("ativo" => "0"));
+        $this->db->where($campo, $id);
+        $this->db->set(array("ativo" => 0));
         return $this->db->update($tabela);
     }
     
@@ -507,7 +537,7 @@ class Crud_model extends CI_Model {
                                             ON(a.id_horario = h.id_horario)
                                         inner join turma as t
                                             ON(h.id_turma = t.id_turma)
-                                       /*WHERE a.ativo <> 10*/
+                                       WHERE a.ativo = 1
                                        ;
                                     ');
         }
