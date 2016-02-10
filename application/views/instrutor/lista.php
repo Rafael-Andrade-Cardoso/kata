@@ -23,7 +23,7 @@
 
                                       foreach ($instrutores as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_instrutor; ?>">
+                                      <tr id="line<?php echo $value->id_instrutor; ?>">
                                           <td><a href="basic_table.html#"><?php echo $value->nome; ?></a></td>
                                           <td><?php echo $value->sobrenome; ?></td>
                                           <td class="hidden-sm hidden-xs"><?php echo data_from_db($value->tipo_sanguineo); ?></td>
@@ -31,7 +31,7 @@
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("menu/form_alterar/" . $value->id_instrutor); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_instrutor;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_instrutor;?>','<?=base_url("exclusao/excluir_instrutor");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

@@ -24,7 +24,7 @@
 
                                       foreach ($aula as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_aula; ?>">
+                                      <tr id="line<?php echo $value->id_aula; ?>">
                                                 <td class="hidden-sm hidden-xs"><?php echo $value->nm_turma; ?></td>
                                                 <td class="hidden-sm hidden-xs"><?php echo data_from_db($value->dt_aula); ?></td>
                                                 <?php
@@ -45,7 +45,7 @@
                                                 <td>
                                                     <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                                     <a href="<?php echo base_url("alteracao/form_alterar_aula/" . $value->id_aula); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                                    <a href="<?php //echo base_url(); ?>" type="button" id="excluir" onclick="return deleteReg1('<?php echo $value->id_aula;?>','exclusao/excluir_aula/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                                    <a type="button" id="excluir" OnClick="deleteReg('<?php echo $value->id_aula;?>','<?=base_url("exclusao/excluir_aula");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                                 </td>
                                             </tr>

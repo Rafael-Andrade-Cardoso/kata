@@ -194,7 +194,8 @@ class Crud_model extends CI_Model {
                                     Where mt.id_turma = '.$id_turma.';
                                   ');
                                   */
-        return $result->result();
+        //return $result->result();
+        return $result;
                                   
     }
 
@@ -208,6 +209,7 @@ class Crud_model extends CI_Model {
                                 ) as ppf
                                     inner join instrutor as i 
                                         ON (i.id_pessoa_fisica = ppf.id_pessoa_fisica)
+                                where i.ativo = 1
                                 order by ppf.nome;
                                 ');
         /*$this->db->select('*');
@@ -231,6 +233,7 @@ class Crud_model extends CI_Model {
         $this->db->join('menu mp', 'mp.id_menu = m.id_menu_pai', 'left');
         $this->db->join('menu_tipo_usuario mtu', 'mtu.id_menu = m.id_menu');
         $this->db->join('ta_tipo_usuario tu', 'tu.id_ta_tipo_usuario = mtu.id_ta_tipo_usuario');
+        $this->db->where('m.ativo = 1');
         $this->db->order_by('m.ordem','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -244,6 +247,7 @@ class Crud_model extends CI_Model {
     function get_atividades($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_atividade');
+        $this->db->where('ta_atividade.ativo = 1');
         $this->db->order_by('nm_atividade','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -256,7 +260,8 @@ class Crud_model extends CI_Model {
 
     function get_arte_marcial($qtd = 0, $inicio = 0) {
         $this->db->select('*');
-        $this->db->from('arte_marcial');
+        $this->db->from('arte_marcial am');
+        $this->db->where('am.ativo = 1');
         $this->db->order_by('nm_arte_marcial','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -270,6 +275,7 @@ class Crud_model extends CI_Model {
     function get_graduacao($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_graduacao');
+        $this->db->where('ta_graduacao.ativo = 1');
         $this->db->order_by('ordem','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -298,7 +304,9 @@ class Crud_model extends CI_Model {
                                             ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
                                         inner join pessoa as p 
                                             ON(p.id_pessoa = pf.id_pessoa_fisica)
+                                        WHERE t.ativo = 1
                                         group by t.id_turma
+                                        order by t.nm_turma
                                         ;
                                   ');
         return $query;
@@ -399,6 +407,7 @@ class Crud_model extends CI_Model {
     function get_comunicado($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('comunicado');
+        $this->db->where('comunicado.ativo = 1');
         $this->db->order_by('titulo','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {

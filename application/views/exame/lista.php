@@ -10,8 +10,8 @@
                                       <th> Aluno</th>
                                       <th> Graduação</th>
                                       <th> Data exame</th>
-                                      <th class="hidden-sm hidden-xs"> valor</th>
-                                      <th> local</th>
+                                      <th class="hidden-sm hidden-xs"> Valor</th>
+                                      <th> Local</th>
                                       <th class="hidden-sm hidden-xs"> Descrição</th>
                                       <th></th>
                                   </tr>
@@ -23,7 +23,7 @@
 
                                       foreach ($exames as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_instrutor; ?>">
+                                      <tr id="line<?php echo $value->id_instrutor; ?>">
                                           <td><a href="basic_table.html#"><?php echo $value->nm_arte_marcial; ?></a></td>
                                           <td><?php echo $value->nome . " " . $value->sobrenome; ?></td>
                                           <td><?php echo data_from_db($value->dt_exame); ?></td>

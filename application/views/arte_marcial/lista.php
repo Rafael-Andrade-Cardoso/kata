@@ -18,13 +18,13 @@
 
                                       foreach ($artes_marciais as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_arte_marcial; ?>">
+                                      <tr id="line<?php echo $value->id_arte_marcial; ?>">
                                           <td><a href="basic_table.html#"><?php echo $value->nm_arte_marcial; ?></a></td>
                                           <td><?php echo $value->descricao; ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("menu/form_alterar/" . $value->id_arte_marcial); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_arte_marcial;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_arte_marcial;?>','<?=base_url("exclusao/excluir_arte_marcial");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

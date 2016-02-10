@@ -32,7 +32,7 @@ class Cadastro extends MY_Controller {
         );
         /* Configura as validações */
         $this->form_validation->set_rules($validacoes);
-
+        $data['ativo']= 1;
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === TRUE) {
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
@@ -96,6 +96,7 @@ class Cadastro extends MY_Controller {
         } else {
             $id_ta_tipo_usuario = $data['id_ta_tipo_usuario'];
             unset($data['id_ta_tipo_usuario']);
+            $data['ativo'] = 1;
             $id_menu = $this->crud->insert('menu', $data);
             if (is_numeric($id_menu) && $id_menu > 0){
                 $dados['id_menu'] = $id_menu;
@@ -140,6 +141,7 @@ class Cadastro extends MY_Controller {
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === TRUE) {
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $data['ativo'] = 1;
             $id = $this->crud->insert('ta_atividade', $data);
             /* Verifica se o retorno da função é um valor numérico e maior que 0 */
             if (is_numeric($id) && $id > 0){
@@ -212,6 +214,7 @@ class Cadastro extends MY_Controller {
 
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === TRUE) {
+            $data['ativo'] = 1;
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
             $id = $this->crud->insert('ta_graduacao', $data);
             /* Verifica se o retorno da função é um valor numérico e maior que 0 */
@@ -619,6 +622,7 @@ class Cadastro extends MY_Controller {
             $aluno = new stdClass();
             $aluno->observacao = $data->observacao;
             $aluno->id_pessoa_fisica = $id_pessoa;
+            $aluno->ativo = 1;
             $id_aluno = $this->crud->insert('aluno', $aluno);
 
             if (!empty($data->nome_responsavel)) {
@@ -950,6 +954,7 @@ class Cadastro extends MY_Controller {
             
             $instrutor = new stdClass();
             $instrutor->id_pessoa_fisica = $id_pessoa;
+            $instrutor->ativo = 1;
             $this->crud->insert('instrutor', $instrutor);
 
             /* Fecha a transação */
@@ -1167,6 +1172,7 @@ class Cadastro extends MY_Controller {
             $turma->max_aluno = $data['max_aluno'];
             $turma->valor_mensalidade = $data['valor_mensalidade'];
             $turma->dt_inicio = $data['dt_inicio'];
+            $turma->ativo = 1;
             
             $id_turma = $this->crud->insert('turma', $turma);
             
@@ -1265,6 +1271,7 @@ class Cadastro extends MY_Controller {
             $aula->dt_aula = $data['dt_aula'];
             $aula->id_horario = $data['id_horario'];
             $aula->observacao = $data['observacao'];
+            $aula->ativo = 1;
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
             $id_aula = $this->crud->insert('aula', $aula);
             
