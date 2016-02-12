@@ -362,15 +362,12 @@ class Alteracao extends MY_Controller {
             $id_matricula = $this->crud->get_id('matricula', 'id_matricula', 'id_aluno='.$id_aluno)->row();
             $id_pessoa_telefone = $this->crud->get_id('pessoa_telefone', 'id_pessoa_telefone', 'id_pessoa = '.$id_pessoa_fisica->id_pessoa_fisica)->row();
             $id_pessoa_dados = $this->crud->get_id('pessoa_dados', 'id_pessoa_dados', 'id_pessoa_fisica='.$id_pessoa_fisica->id_pessoa_fisica)->row();
+            
             $id_turma = $this->input->post('id_turma');
             /* Abre uma transação */
             $this->db->trans_start();
             
-            /*$id_pessoa = $this->db->get_where('aluno', 'id_aluno ='.$data->id_aluno)->result();
-            foreach($id_pessoa as $value){
-                $id_pessoa_fisica = $value->id_pessoa_fisica;
-            }*/
-            //die(print_r($id_endereco));
+            //die(print_r($id_endereco->id_endereco));
             
             $pessoa = new stdClass();
             $pessoa->nome = $data->nome;
@@ -380,12 +377,10 @@ class Alteracao extends MY_Controller {
             
             $aluno = new stdClass();
             $aluno->observacao = $data->observacao;
-            //$aluno->id_pessoa_fisica = $id_pessoa;
             $aluno->ativo = 1;
             $this->crud->update('aluno','id_aluno',$data->id_aluno, $aluno);
             
             $pessoa_fisica = new stdClass();
-            //$pessoa_fisica->id_pessoa_fisica = $id_pessoa_fisica;
             $pessoa_fisica->sobrenome = $data->sobrenome;
             $pessoa_fisica->tipo_sanguineo = $data->tipo_sanguineo;
             $pessoa_fisica->sexo = $data->sexo;
@@ -395,7 +390,6 @@ class Alteracao extends MY_Controller {
             /* Dados para cadastro de pessoa */
             $endereco = new stdClass();
             $endereco->id_ta_cidade = $data->id_ta_cidade;
-            //$endereco->id_pessoa = $id_pessoa;
             $endereco->logradouro = $data->logradouro;
             $endereco->numero = $data->numero;
             $endereco->complemento = $data->complemento;
@@ -403,7 +397,6 @@ class Alteracao extends MY_Controller {
             $this->crud->update('endereco','id_endereco',$id_endereco->id_endereco ,$endereco);
 
             $pessoa_telefone = new stdClass();
-            //$pessoa_telefone->id_pessoa = $id_pessoa;
             $pessoa_telefone->id_ta_tipo_telefone = $data->id_ta_tipo_telefone;
             $pessoa_telefone->ddd = substr($data->telefone, 1,3);
             $pessoa_telefone->telefone = substr($data->telefone, 4, strlen($data->telefone));
@@ -411,33 +404,36 @@ class Alteracao extends MY_Controller {
 
             /* Dados para cadastro de dados de pessoa */
             $pessoa_dados = new stdClass();
-            //$pessoa_dados->id_pessoa_fisica = $id_pessoa;
             $pessoa_dados->peso = $data->peso;
             $pessoa_dados->altura = $data->altura;
             $pessoa_dados->dt_dados = $data->dt_matricula;
             $this->crud->update('pessoa_dados','id_pessoa_dados', $id_pessoa_dados->id_pessoa_dados , $pessoa_dados);            
 
             if (!empty($data->nome_responsavel)) {
+                $id_pessoa_respon = $this->crud->get_id('aluno _responsavel', 'id_pessoa', 'id_aluno ='.$id_aluno)->row();
                 /* Dados para cadastro de pessoa para responsável */
                 $pessoa = new stdClass();
                 $pessoa->nome = $data->nome_responsavel;
                 $pessoa->dt_nascimento = $data->dt_nascimento_responsavel;
                 $pessoa->email = $data->email_responsavel;
-                $id_responsavel = $this->crud->insert('pessoa', $pessoa);
+               // $id_responsavel = $this->crud->insert('pessoa', $pessoa);
+                $this->crud->update('pessoa','id_pessoa', $id_pessoa_respon->id_pessoa , $pessoa);
 
                 /* Dados para cadastro de pessoa para responsável */
                 $pessoa_fisica = new stdClass();
-                $pessoa_fisica->id_pessoa_fisica = $id_responsavel;
+                //$pessoa_fisica->id_pessoa_fisica = $id_pessoa_respon->id_pessoa;
                 $pessoa_fisica->sobrenome = $data->sobrenome_responsavel;
                 $pessoa_fisica->sexo = $data->sexo_responsavel;
-                $id_pessoa_fisica = $this->crud->insert('pessoa_fisica', $pessoa_fisica);
+                $this->crud->update('pessoa_fisica','id_pessoa_fisica', $id_pessoa_respon->id_pessoa , $pessoa_fisica);
+                //$id_pessoa_fisica = $this->crud->insert('pessoa_fisica', $pessoa_fisica);
 
                 /* Dados para cadastro da tabela aluno_responsavel para responsável */
                 $aluno_responsavel = new stdClass();
-                $aluno_responsavel->id_responsavel = $id_pessoa_fisica;
-                $aluno_responsavel->id_aluno = $data->observacao;
-                $aluno_responsavel->observacao = $id_pessoa;
-                $aluno_responsavel = $this->crud->insert('aluno_responsavel', $aluno_responsavel);
+                //$aluno_responsavel->id_responsavel = $id_pessoa_fisica;
+                //$aluno_responsavel->id_aluno = $data->observacao;
+                $aluno_responsavel->observacao = $data->observacao;
+                $this->crud->update('aluno_responsavel','id_aluno', $id_aluno , $aluno_responsavel);
+                //$aluno_responsavel = $this->crud->insert('aluno_responsavel', $aluno_responsavel);
             }
 
             $matricula = new stdClass();
@@ -445,28 +441,16 @@ class Alteracao extends MY_Controller {
             $matricula->dia_vencimento = $data->dia_vencimento;
             $matricula->dt_matricula = $data->dt_matricula;
             $matricula->desconto = $data->desconto;
-            //$matricula->valor_mensalidade = $data->valor_mensalidade;
-            //$matricula->id_pessoa_fisica = $id_pessoa;
-            $matricula->id_aluno = $data->id_aluno;
-            //$id_matricula=$this->crud->insert('matricula', $matricula);             
+            $matricula->id_aluno = $data->id_aluno;            
             $this->crud->update('matricula','id_matricula', $id_matricula->id_matricula , $matricula);              
 
-           /* $usuario = new stdClass();
-            $usuario->login = $data->login;
-            $usuario->senha = hash('sha256', $data->senha);
-            $usuario->id_ta_situacao = $data->id_ta_situacao;
-            $usuario->id_ta_tipo_usuario = $data->id_ta_tipo_usuario;
-            $usuario->id_pessoa = $id_pessoa;
-            $id_usuario = $this->crud->insert('usuario', $usuario);*/
-
             $matricula_turma = new stdClass();
-            $matricula_turma->id_matricula = $id_matricula;
-            $matricula_turma->id_turma = $id_turma;
-            //$id_usuario = $this->crud->insert('matricula_turma', $matricula_turma);            
+            $matricula_turma->id_matricula = $id_matricula->id_matricula;
+            $matricula_turma->id_turma = $id_turma;          
             $this->crud->update('matricula_turma','id_matricula', $id_matricula->id_matricula , $matricula_turma);
             
             $matricula_graduacao = new stdClass();
-            $matricula_graduacao->id_matricula = $id_matricula;
+            $matricula_graduacao->id_matricula = $id_matricula->id_matricula;
             $matricula_graduacao->id_ta_graduacao = 1;
             $matricula_graduacao->observacao = "recem matriculado";
             $this->crud->update('matricula_graduacao','id_matricula', $id_matricula->id_matricula , $matricula_graduacao);

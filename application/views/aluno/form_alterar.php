@@ -74,7 +74,7 @@
         <div class="col-sm-10">
           <select name="tipo_sanguineo" class="form-control" title="Selecione um tipo sanguíneo">
               <?php
-                    echo "<option value='".set_value('tipo_sanguineo', $query->id_aluno)."'>";                                
+                    echo "<option value='".set_value('tipo_sanguineo', $query->tipo_sanguineo)."'>";                                
                     echo $query->tipo_sanguineo. "</option>";
               ?>                                           
           </select>

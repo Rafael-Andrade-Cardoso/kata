@@ -87,6 +87,8 @@ class Crud_model extends CI_Model {
         $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica', 'left');
         $this->db->join('pessoa_dados pd', 'pd.id_pessoa_fisica = pf.id_pessoa_fisica', 'left');
         $this->db->join('matricula m', 'm.id_aluno = a.id_aluno', 'left');
+        $this->db->join('matricula_graduacao mg', 'm.id_matricula = mg.id_matricula', 'left');
+        $this->db->join('ta_graduacao tg', 'tg.id_ta_graduacao = mg.id_ta_graduacao', 'left');
         $this->db->join('matricula_turma mt', 'm.id_matricula = mt.id_matricula', 'left');
         $this->db->join('turma t', 't.id_turma = mt.id_turma', 'left');
         $this->db->join('presenca pr', 'pr.id_matricula = m.id_matricula', 'left');
