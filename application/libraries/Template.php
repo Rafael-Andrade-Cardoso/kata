@@ -10,9 +10,16 @@ class Template{
 
 	public function load($view, $data = array(), $template = 'template'){
 		$this->ci->load->view($template.'/header');
-		$this->ci->load->view($template.'/topbar');
+		$id_pessoa = $this->ci->session->userdata['usuario']->id_pessoa;
+		$this->ci->load->model('Crud_model');
+		$mensagens = $this->ci->Crud_model->get_mensagens_usuario($id_pessoa);
+		$data['n_mensagens'] = $mensagens->num_rows();
+		$data['mensagens'] = $mensagens->result();
+		
+		$this->ci->load->view($template.'/topbar', $data);
 		$this->ci->load->model('Menu_model');
 		$item_menu = $this->ci->Menu_model->get_menu();
+		
 		$data['menu'] = array();
 		// Para cada item trazido de menu (primeiro nível)...
 		foreach($item_menu->result() as $item){
@@ -23,7 +30,7 @@ class Template{
 			}
 		}
 		//echo "<pre>";
-		//die(print_r($item_menu));
+		//die(print_r($data));
 		$this->ci->load->view($template.'/sidebar', $data);
 		$this->ci->load->view($view);
 		$this->ci->load->view($template.'/footer');

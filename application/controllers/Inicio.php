@@ -13,8 +13,13 @@ class Inicio extends MY_Controller {
         $data['alunos_turma'] = $this->crud->get_qtd_alunos_turma()->result();
         //echo "<pre>";
 		//die(print_r($data));
-        
-		
+		/*$id_pessoa = $this->session->userdata['usuario']->id_pessoa;
+		$mensagens = $this->crud->get_mensagens_usuario($id_pessoa);
+		$data['n_mensagens'] = $mensagens->num_rows();
+		$data['mensagens'] = $mensagens->result();
+		*/
+		//echo "<pre>";
+		//die(print_r($data['n_mensagens']));		
 		$this->template->load('dashboard', $data);
 	}
 	

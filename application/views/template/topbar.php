@@ -10,7 +10,7 @@
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
             <!--logo start-->
-            <a href="index.html" class="logo"><b>Katá Project</b></a>
+            <a href="index.html" class="logo"><b>Sistema Katá</b></a>
             <!--logo end-->
 
             <div class="nav notify-row" id="top_menu">
@@ -20,33 +20,28 @@
                     <li id="header_inbox_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="badge bg-theme">2</span>
+                            <span class="badge bg-theme"><?php echo $n_mensagens;?></span>
                         </a>
                         <ul class="dropdown-menu extended inbox">
                             <div class="notify-arrow notify-arrow-green"></div>
                             <li>
-                                <p class="green">Você tem 2 novas mensagens</p>
+                                <p class="green">Você tem <?php echo $n_mensagens;?> nova(s) mensagen(s)</p>
                             </li>
-                            <li>
-                                <a href="index.html#">
-                                    <span class="subject">
-                                        <span class="from">Data do exame</span>
-                                    </span>
-                                    <span class="message">
-                                        Data alterada para 09/11/2015
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html#">
-                                    <span class="subject">
-                                        <span class="from">Horario de treino</span>
-                                    </span>
-                                    <span class="message">
-                                        Novo horário de treino disponível, ...
-                                    </span>
-                                </a>
-                            </li>
+                            <?php
+                              //die(print_r($mensagens));
+                              foreach($mensagens as $mensagem) {
+                                echo"<li>
+                                    <a href='index.html#'>
+                                        <span class='subject'>
+                                            <span class='from'>" . $mensagem->titulo . "</span>
+                                        </span>
+                                        <span class='message'>" .
+                                            substr($mensagem->descricao, 0, 30) . "...
+                                        </span>
+                                    </a>
+                                </li>";     
+                              }
+                            ?>
                             <!--
                             <li>
                                 <a href="index.html#">

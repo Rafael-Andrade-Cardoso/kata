@@ -10,7 +10,7 @@ class Dashboard extends MY_Controller {
 
 	public function index()	{	
 		$data = array();
-        $data['dados'] = $this->crud>get_alunos_turma()->result();
+        $data['dados'] = $this->crud->get_alunos_turma()->result();
         echo "<pre>";
 	die(print_r($data));
         

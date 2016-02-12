@@ -973,6 +973,7 @@ class Cadastro extends MY_Controller {
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         $data['graduacao'] = $this->get_all('ta_graduacao');
         $data['aluno'] = $this->crud->get_alunos()->result();
+        $data['turma'] = $this->crud->get_turma_somente()->result();
         $this->template->load('exame/form_cadastro', $data);
     }
 
@@ -982,18 +983,19 @@ class Cadastro extends MY_Controller {
                 $data[$key] = $value;
             }
         }
-       // die(print_r($data));
-        $result = $this->crud->get_matricula_alu($data['id_aluno']);
+        //die(print_r($data['alunos']));
+        //$alunos
+        // die(print_r($data));
         $validacoes = array(
             array(
-                'field' => 'id_ta_graduacao',
-                'label' => 'Graduação',
+                'field' => 'id_turma',
+                'label' => 'Arte marcial',
                 'rules' => 'trim|required|max_length[11]'
             ),
             array(
-                'field' => 'id_arte_marcial',
-                'label' => 'Arte marcial',
-                'rules' => 'trim|required|max_length[11]'
+                'field' => 'alunos[]',
+                'label' => 'Alunos',
+                'rules' => 'required'
             ),
             array(
                 'field' => 'dt_exame',
@@ -1001,52 +1003,111 @@ class Cadastro extends MY_Controller {
                 'rules' => 'trim|required'
             ),
             array(
-                'field' => 'valor',
+                'field' => 'local',
                 'label' => 'Valor',
-                'rules' => 'trim|max_length[10]'
+                'rules' => 'trim|max_length[255]'
+            )
+        );
+            
+            //unset($data['id_aluno']);
+            /* Configura as validações */
+            $this->form_validation->set_rules($validacoes);
+            /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+            if ($this->form_validation->run() === TRUE) { 
+                //echo "<pre>";
+                //die(print_r($data)); 
+                foreach($data['alunos'] as $key => $aluno){
+                    $id_matricula = $this->crud->get_matricula_alu($data['alunos'][$key])->result();
+                    $id_matricula = $id_matricula[0]->id_matricula;
+                    //die(print_r($id_matricula));
+                    $id_ta_graduacao = $this->crud->get_proxima_grad($id_matricula);
+                    $exame = array();
+                    $id_arte_marcial = $this->crud->get_arte_marcial_turma($data['id_turma'])->result();
+                    //echo "<pre>";
+                    //die(print_r($id_arte_marcial));
+                    $exame['id_ta_graduacao'] = $id_ta_graduacao;              
+                    $exame['id_arte_marcial'] = $id_arte_marcial[0]->id_arte_marcial;            
+                    $exame['id_matricula'] = $id_matricula;             
+                    $exame['dt_exame'] = $data['dt_exame'];              
+                    $exame['valor'] = $data['valor'];              
+                    $exame['local'] = $data['local'];              
+                    $exame['descricao'] = $data['descricao'];                              
+                    //die(print_r($data['alunos'][$key]));
+                    //array_push($id_matricula, $data);
+                    //die(print_r($exame));        
+                    /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+                    $id = $this->crud->insert('exame', $exame);
+                    /* Verifica se o retorno da função é um valor numérico e maior que 0 */                                
+                }
+                if (is_numeric($id) && $id > 0){
+                    $this->sucesso();
+                } else {
+                    $this->erro();
+                }
+            /* Em caso de falha: */
+            } else {
+                $this->form_exame();
+            }
+    }   
+
+    public function form_comunicado() {
+        $data['tipos_usuario'] = $this->crud->get_tipo_usuario()->result();
+        $this->template->load('comunicado/form_cadastro', $data);        
+    }
+    
+    function insert_comunicado() {
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        $validacoes = array(
+            array(
+                'field' => 'titulo',
+                'label' => 'Título',
+                'rules' => 'trim|required'
             ),
             array(
-                'field' => 'local',
-                'label' => 'Local',
-                'rules' => 'trim|required|max_length[255]'
+                'field' => 'dt_vencimento',
+                'label' => 'Nome',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'dt_publicacao',
+                'label' => 'URL',
+                'rules' => 'required'
             ),
             array(
                 'field' => 'descricao',
                 'label' => 'Descrição',
-                'rules' => 'trim|required|max_length[255]'
-            )/*,
-            array(
-                'field' => 'id_matricula',
-                'label' => '1',
-                'rules' => 'trim|required|max_length[11]'
-            )*/
+                'rules' => 'trim'
+            )
         );
-        foreach($result->result_array() as $row){            
-            if($row['id_matricula']){
-                $data['id_matricula']=$row['id_matricula'];                
-            }
-        }
-        unset($data['id_aluno']);
-        //$this->removeFromArray($data, $data['id_aluno']);
-       //die(print_r($data));
-        /* Configura as validações */
         $this->form_validation->set_rules($validacoes);
-        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
-        if ($this->form_validation->run() === TRUE) {
-            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
-            $id = $this->crud->insert('exame', $data);
-            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
-            if (is_numeric($id) && $id > 0){
-                $this->sucesso();
-            } else {
-                $this->erro();
-            }
-        /* Em caso de falha: */
-        } else {
-            $this->form_exame();
-        }
-    }   
 
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === FALSE) {
+            $this->form_comunicado();
+        /* Senão, caso sucesso: */
+        } else {
+            $data['dt_criacao'] = date("Y-m-d");
+            //$data['ativo'] = 1;
+            $id_ta_tipo_usuario = $data['id_ta_tipo_usuario'];
+            unset($data['id_ta_tipo_usuario']);            
+            $id_comunicado = $this->crud->insert('comunicado', $data);
+            if (is_numeric($id_comunicado) && $id_comunicado > 0){
+                $dados['id_comunicado'] = $id_comunicado;
+                
+                foreach ($id_ta_tipo_usuario as $value) {
+                    //$dados['id_ta_tipo_usuario'] = $value;
+                    $dados['id_pessoa'] = $value;
+                    $menuusuario = $this->crud->insert('pessoa_comunicado', $dados);
+                }
+                
+            }
+        }
+    }
+    
     public function form_turma(){
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         $data['instrutor'] = $this->crud->get_instrutores()->result();
@@ -1210,6 +1271,7 @@ class Cadastro extends MY_Controller {
             $this->form_turma();
     }
     
+    // Cadastra aula e as presenças
     public function form_aula(){
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         //$data['instrutor'] = $this->crud->get_instrutores();
@@ -1218,6 +1280,8 @@ class Cadastro extends MY_Controller {
         $data['horario'] = null;        
         $this->template->load('aula/form_cadastro', $data);
     }
+    
+    
     
     public function insert_aula(){
 
@@ -1423,6 +1487,20 @@ class Cadastro extends MY_Controller {
     /* Retorna todos os registros da "$table" onde o "$campo" = "$valor" */
     public function get_where($table, $field, $value){
         return $this->crud->get_all($table)->result();
+    }
+
+    public function alunos_turma($id_turma) {
+        $id_turma = $this->uri->segment(3);
+        $alunos = $this->crud->get_alunos_turmas($id_turma);
+        //echo "<pre>";
+        //die(print_r($alunos));
+        if(count($alunos) > 0) {
+            foreach ($alunos as $value) {
+                echo "<label class='alunos_exame'><input type='checkbox' name='alunos[]' value='" . $value->id_aluno . "'> " . $value->nome . " " . $value->sobrenome . "</label>";
+            }        
+        } else {
+            echo "<label class='alunos_exame'>Não há alunos nesta turma.</label>";
+        }
     }
 
 }
