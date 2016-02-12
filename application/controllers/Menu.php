@@ -41,7 +41,7 @@ class Menu extends MY_Controller {
                 $data[$key] = $value;
             }
         }
-
+        
         $validacoes = array(
             array(
                 'field' => 'id_menu_pai',

@@ -1,12 +1,10 @@
 <h3><i class="fa fa-angle-right"></i> Cadastrar aluno</h3>
 
-<input type="submit" OnClick="deleteReg(1,'<?=base_url("aluno/teste");?>');" value="TESTEEEEEEEEE">
-<?php echo form_open('cadastro/insert_aluno', array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro')); ?>
+<!--<input type="submit" OnClick="deleteReg(1,'<?=base_url("aluno/teste");?>');" value="TESTEEEEEEEEE">-->
+<?php echo form_open("alteracao/alterar_aluno/$query->id_aluno", array('class' => 'form-horizontal style-form', 'id' => 'form_alterar')); ?>
 <input type="hidden" name="dt_matricula" value="<?php echo date("Y-m-d");  ?>" />
-<?php
-    /*echo "<pre>";
-    die(print_r($query));*/
-?>
+<input type="hidden" name="id_aluno" value="<?php echo set_value('id_aluno', $query->id_aluno); ?>" />
+
 <!-- Área de dados do aluno -->
 <div class="row mt">
   <div class="col-lg-12">
@@ -89,10 +87,22 @@
         <label class="col-sm-2 col-sm-2 control-label">Sexo<font color="#FF0202">*</font></label>
         <div class="col-sm-8">
           <label>
-            <input type="radio" name="sexo" value="0" checked="true"> Masculino
+            <input type="radio" name="sexo" value="0"
+                <?php 
+                    if (set_value('sexo', $query->sexo) == 0 ){
+                        echo " checked = 'true'";
+                    }
+                ?>
+                > Masculino
           </label><br />
           <label>
-            <input type="radio" name="sexo" value="1"> Feminino
+            <input type="radio" name="sexo" value="1" 
+                <?php 
+                    if (set_value('sexo', $query->sexo) == 1 ){
+                        echo " checked = 'true'";
+                    }
+                ?>
+                > Feminino
           </label>
           <div class="error"><?php echo form_error('sexo'); ?></div>
         </div>
@@ -101,7 +111,7 @@
       <div class="form-group">
         <label class="col-lg-2 control-label">Observações sobre o(a) aluno(a)</label>
         <div class="col-lg-10">
-          <textarea class="form-control" name="observacao" ><?php echo set_value('observacao'); ?><?php echo set_value('nome', $query->nome); ?> </textarea>
+          <textarea class="form-control" name="observacao" ><?php echo set_value('observacao'); ?><?php echo set_value('observacao', $query->observacao); ?> </textarea>
           <div class="error"><?php echo form_error('observacao'); ?></div>
         </div>
       </div>      
@@ -292,18 +302,10 @@
 
         <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
         <div class="col-sm-5">
-          <input type="text" id="telefone" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?><?php echo set_value('telefone', $query->telefone); ?>" title="Digite o número do telefone"/>
+          <input type="text" id="telefone" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?><?php echo set_value('telefone', $query->ddd.''.$query->telefone); ?>" title="Digite o número do telefone"/>
           <div class="error"><?php echo form_error('telefone'); ?></div>
         </div>
       </div>
-
-                  <!--<div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone</label>
-                      <div class="col-sm-10">
-                          <input type="text" class="form-control" name="telefone" value="<?php echo set_value('telefone'); ?>" />
-                          <div class="error"><?php echo form_error('telefone'); ?></div>
-                      </div>
-                    </div>-->
 
     <div class="form-group">
         <label class="col-sm-2 col-sm-2 control-label">E-mail<font color="#FF0202">*</font></label>
@@ -327,8 +329,8 @@
                         <?php
                             foreach ($tipos_telefone as $value) {
                                 echo "<option value='" . $value->id_ta_tipo_telefone . "'";
-                                if (set_value('id_ta_tipo_telefone_2')){
-                                    echo " checked ";
+                                if (set_value('id_ta_tipo_telefone_2', $query2->id_ta_tipo_telefone) == $value->id_ta_tipo_telefone){
+                                    echo " selected";
                                 }
                                 echo ">" . $value->desc_tipo_telefone . "</option>";
                             }
@@ -339,7 +341,7 @@
 
                     <label class="col-sm-2 col-sm-2 control-label">DDD + Telefone<font color="#FF0202">*</font></label>
                     <div class="col-sm-5">
-                        <input type="text" id="telefone_2" class="form-control" name="telefone_2" value="<?php echo set_value('telefone'); ?>" title="Digite o número do telefone"/>
+                        <input type="text" id="telefone_2" class="form-control" name="telefone_2" value="<?php echo set_value('telefone'); ?><?php echo set_value('telefone', $query2->ddd.''.$query2->telefone); ?>" title="Digite o número do telefone"/>
                         <div class="error"><?php echo form_error('telefone_2'); ?></div>
                     </div>
                 </div>
@@ -367,12 +369,12 @@
                 <select name="id_turma" id="id_turma" class="form-control" title="Selecione a turma" onclick="javascript: get_info();">
                 <option value="<?php echo set_value('id_turma'); ?>">Escolha a turma</option>
                 <?php
-                    echo "<option value='" . $value->id_turma . "'";
-                    foreach ($turma as $value) {  
-                        if (set_value('id_turma', $query->id_turma) == $value->id_turma){
-                            echo " selected";
-                        }                                    
-                        echo ">". $value->nm_turma . "</option>";
+                    foreach ($turma as $value) {
+                        echo "<option value='" . $value->id_turma . "'";
+                            if (set_value('id_turma', $query->id_turma) == $value->id_turma){
+                                echo " selected ";
+                            }
+                            echo ">" . $value->nm_turma. "</option>";                                    
                     }
                 ?>
                 </select>
@@ -445,11 +447,16 @@
                 });
 
                 $('document').ready(function(){
-                 $( "#cad_contato" ).fadeOut( "fast" ); 
+                    $( "#cad_contato" ).fadeOut( "fast" ); 
+                    var telefone2 = $("id_ta_tipo_telefone_2").val();
+                    if( telefone2 != ""){
+                        $( "#cad_contato" ).fadeIn( "fast" );
+                    }
                });
 
                 $( "#contato_toggle" ).click(function() {
                   $( "#cad_contato" ).fadeToggle( "slow", "linear" );
+                  
                 });
 
 
@@ -475,6 +482,10 @@
                             $("#id_horario").html(data);
                         });
                         alert(res);                        
+                    }
+                    
+                    function toggle_contato(){
+                        
                     }
                 });
 

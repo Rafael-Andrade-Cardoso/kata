@@ -421,10 +421,12 @@ class Cadastro extends MY_Controller {
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $data = new stdClass();
         /* Recebe os dados do formulário (visão) */
-        foreach ($this->input->post() as $key => $value){
-            $data->$key = $value;
-        }
         
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data->$key = $value;
+            }
+        }        
             //echo "<pre>";
             //die(print_r($data));
         $id_turma = $this->input->post('id_turma');
@@ -599,10 +601,19 @@ class Cadastro extends MY_Controller {
             $pessoa_telefone = new stdClass();
             $pessoa_telefone->id_pessoa = $id_pessoa;
             $pessoa_telefone->id_ta_tipo_telefone = $data->id_ta_tipo_telefone;
-            $pessoa_telefone->ddd = substr($data->telefone, 0,2);
-            $pessoa_telefone->telefone = substr($data->telefone, 2, strlen($data->telefone));
+            $pessoa_telefone->ddd = substr($data->telefone, 1,3);
+            $pessoa_telefone->telefone = substr($data->telefone, 4, strlen($data->telefone));
             $this->crud->insert('pessoa_telefone', $pessoa_telefone);
-
+            
+            if(!empty($data->id_ta_tipo_telefone_2)){
+                $pessoa_telefone2 = new stdClass();
+                $pessoa_telefone2->id_pessoa = $id_pessoa;
+                $pessoa_telefone2->id_ta_tipo_telefone = $data->id_ta_tipo_telefone_2;
+                $pessoa_telefone2->ddd = substr($data->telefone_2, 1,3);
+                $pessoa_telefone2->telefone = substr($data->telefone_2, 4, strlen($data->telefone_2));
+                $this->crud->insert('pessoa_telefone', $pessoa_telefone2);
+            }
+            
             $pessoa_fisica = new stdClass();
             $pessoa_fisica->id_pessoa_fisica = $id_pessoa;
             $pessoa_fisica->sobrenome = $data->sobrenome;

@@ -22,10 +22,15 @@ class Crud_model extends CI_Model {
             return $query->result();
     }
 
-    function update($data) {
-        $this->db->where('id_aluno', $data['id']);
-        $this->db->set($data);
-        return $this->db->update('aluno');
+    function update($tabela, $campo, $id, $data) {
+        $this->db->where($campo, $id);
+        $result = $this->db->update($tabela, $data);
+         
+        if ($result){
+                return true;
+            } else {
+                return false;
+            }
     }
     
     /*function update_ativos($tabela=NULL, $campo=NULL, $id=NULL){
@@ -119,8 +124,9 @@ class Crud_model extends CI_Model {
         $this->db->where('a.id_aluno = '.$id_aluno);
         $this->db->order_by('p.nome','asc');
         //debug($this->db->get()->result());
-        
         $query = $this->db->get();
+        /*echo "<pre>";
+        die(print_r($query->result()));*/
         if($query->num_rows() > 0) {
             return $query;
         }
@@ -527,7 +533,12 @@ class Crud_model extends CI_Model {
         return $this->db->update($tabela);
     }
     
-    function get_aula($id_aula, $aux){
+    function get_id(  $tabela,$id, $where){
+        $result = $this->db->query('Select '.$id.' from '.$tabela.' where '.$where.';');
+        return $result;
+    }
+    
+    function get_aula($id_aula = null, $aux){
         if($aux == 1){
             $query = $this->db->query("Select * from aula as a
                                         inner join horario as h
