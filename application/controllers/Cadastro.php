@@ -32,7 +32,7 @@ class Cadastro extends MY_Controller {
         );
         /* Configura as validações */
         $this->form_validation->set_rules($validacoes);
-
+        $data['ativo']= 1;
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === TRUE) {
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
@@ -96,6 +96,7 @@ class Cadastro extends MY_Controller {
         } else {
             $id_ta_tipo_usuario = $data['id_ta_tipo_usuario'];
             unset($data['id_ta_tipo_usuario']);
+            $data['ativo'] = 1;
             $id_menu = $this->crud->insert('menu', $data);
             if (is_numeric($id_menu) && $id_menu > 0){
                 $dados['id_menu'] = $id_menu;
@@ -140,6 +141,7 @@ class Cadastro extends MY_Controller {
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === TRUE) {
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $data['ativo'] = 1;
             $id = $this->crud->insert('ta_atividade', $data);
             /* Verifica se o retorno da função é um valor numérico e maior que 0 */
             if (is_numeric($id) && $id > 0){
@@ -212,6 +214,7 @@ class Cadastro extends MY_Controller {
 
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
         if ($this->form_validation->run() === TRUE) {
+            $data['ativo'] = 1;
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
             $id = $this->crud->insert('ta_graduacao', $data);
             /* Verifica se o retorno da função é um valor numérico e maior que 0 */
@@ -418,10 +421,12 @@ class Cadastro extends MY_Controller {
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $data = new stdClass();
         /* Recebe os dados do formulário (visão) */
-        foreach ($this->input->post() as $key => $value){
-            $data->$key = $value;
-        }
         
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data->$key = $value;
+            }
+        }        
             //echo "<pre>";
             //die(print_r($data));
         $id_turma = $this->input->post('id_turma');
@@ -596,10 +601,19 @@ class Cadastro extends MY_Controller {
             $pessoa_telefone = new stdClass();
             $pessoa_telefone->id_pessoa = $id_pessoa;
             $pessoa_telefone->id_ta_tipo_telefone = $data->id_ta_tipo_telefone;
-            $pessoa_telefone->ddd = substr($data->telefone, 0,2);
-            $pessoa_telefone->telefone = substr($data->telefone, 2, strlen($data->telefone));
+            $pessoa_telefone->ddd = substr($data->telefone, 1,3);
+            $pessoa_telefone->telefone = substr($data->telefone, 4, strlen($data->telefone));
             $this->crud->insert('pessoa_telefone', $pessoa_telefone);
-
+            
+            if(!empty($data->id_ta_tipo_telefone_2)){
+                $pessoa_telefone2 = new stdClass();
+                $pessoa_telefone2->id_pessoa = $id_pessoa;
+                $pessoa_telefone2->id_ta_tipo_telefone = $data->id_ta_tipo_telefone_2;
+                $pessoa_telefone2->ddd = substr($data->telefone_2, 1,3);
+                $pessoa_telefone2->telefone = substr($data->telefone_2, 4, strlen($data->telefone_2));
+                $this->crud->insert('pessoa_telefone', $pessoa_telefone2);
+            }
+            
             $pessoa_fisica = new stdClass();
             $pessoa_fisica->id_pessoa_fisica = $id_pessoa;
             $pessoa_fisica->sobrenome = $data->sobrenome;
@@ -619,6 +633,7 @@ class Cadastro extends MY_Controller {
             $aluno = new stdClass();
             $aluno->observacao = $data->observacao;
             $aluno->id_pessoa_fisica = $id_pessoa;
+            $aluno->ativo = 1;
             $id_aluno = $this->crud->insert('aluno', $aluno);
 
             if (!empty($data->nome_responsavel)) {
@@ -950,6 +965,7 @@ class Cadastro extends MY_Controller {
             
             $instrutor = new stdClass();
             $instrutor->id_pessoa_fisica = $id_pessoa;
+            $instrutor->ativo = 1;
             $this->crud->insert('instrutor', $instrutor);
 
             /* Fecha a transação */
@@ -1255,6 +1271,7 @@ class Cadastro extends MY_Controller {
             $turma->max_aluno = $data['max_aluno'];
             $turma->valor_mensalidade = $data['valor_mensalidade'];
             $turma->dt_inicio = $data['dt_inicio'];
+            $turma->ativo = 1;
             
             $id_turma = $this->crud->insert('turma', $turma);
             
@@ -1303,7 +1320,7 @@ class Cadastro extends MY_Controller {
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         //$data['instrutor'] = $this->crud->get_instrutores();
         $data['turma'] = $this->crud->get_all('turma');   
-        $data['atividade'] = $this->get_all('ta_atividade');     
+        $data['atividade'] = $this->crud->get_where('ta_atividade', 'ativo = 1');     
         $data['horario'] = null;        
         $this->template->load('aula/form_cadastro', $data);
     }
@@ -1360,6 +1377,7 @@ class Cadastro extends MY_Controller {
             $aula->dt_aula = $data['dt_aula'];
             $aula->id_horario = $data['id_horario'];
             $aula->observacao = $data['observacao'];
+            $aula->ativo = 1;
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
             $id_aula = $this->crud->insert('aula', $aula);
             foreach($data['alunos'] as $id_aluno) {

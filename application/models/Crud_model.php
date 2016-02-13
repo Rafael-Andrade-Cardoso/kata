@@ -22,10 +22,26 @@ class Crud_model extends CI_Model {
             return $query->result();
     }
 
-    function update($data) {
-        $this->db->where('id_aluno', $data['id']);
-        $this->db->set($data);
-        return $this->db->update('aluno');
+    function update($tabela, $campo, $id, $data) {
+        $this->db->where($campo, $id);
+        $result = $this->db->update($tabela, $data);
+         
+        if ($result){
+                return true;
+            } else {
+                return false;
+            }
+    }
+    
+    function update_complexo($tabela, $where, $data) {
+        $this->db->where($where);
+        $result = $this->db->update($tabela, $data);
+         
+        if ($result){
+                return true;
+            } else {
+                return false;
+            }
     }
     
     /*function update_ativos($tabela=NULL, $campo=NULL, $id=NULL){
@@ -82,6 +98,8 @@ class Crud_model extends CI_Model {
         $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica', 'left');
         $this->db->join('pessoa_dados pd', 'pd.id_pessoa_fisica = pf.id_pessoa_fisica', 'left');
         $this->db->join('matricula m', 'm.id_aluno = a.id_aluno', 'left');
+        $this->db->join('matricula_graduacao mg', 'm.id_matricula = mg.id_matricula', 'left');
+        $this->db->join('ta_graduacao tg', 'tg.id_ta_graduacao = mg.id_ta_graduacao', 'left');
         $this->db->join('matricula_turma mt', 'm.id_matricula = mt.id_matricula', 'left');
         $this->db->join('turma t', 't.id_turma = mt.id_turma', 'left');
         $this->db->join('presenca pr', 'pr.id_matricula = m.id_matricula', 'left');
@@ -119,8 +137,34 @@ class Crud_model extends CI_Model {
         $this->db->where('a.id_aluno = '.$id_aluno);
         $this->db->order_by('p.nome','asc');
         //debug($this->db->get()->result());
-        
         $query = $this->db->get();
+        /*echo "<pre>";
+        die(print_r($query->result()));*/
+        if($query->num_rows() > 0) {
+            return $query;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    function get_info_instrutor($id_instrutor){
+        $this->db->select('*');
+        $this->db->from('instrutor i');
+        $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = i.id_pessoa_fisica', 'left');
+        $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica', 'left');
+        $this->db->join('endereco end', 'p.id_pessoa = end.id_pessoa', 'left');
+        $this->db->join('ta_cidade cd', 'cd.id_ta_cidade = end.id_ta_cidade', 'left');
+        $this->db->join('ta_estado est', 'est.id_ta_estado = cd.id_ta_estado', 'left');
+        $this->db->join('ta_pais pais', 'pais.id_ta_pais = est.id_ta_pais', 'left');
+        $this->db->join('pessoa_telefone pt', 'p.id_pessoa = pt.id_pessoa', 'left');
+        $this->db->join('ta_tipo_telefone ttt', 'ttt.id_ta_tipo_telefone = pt.id_ta_tipo_telefone', 'left');
+       // $this->db->join('pessoa_dados pd', 'pd.id_pessoa_fisica = pf.id_pessoa_fisica', 'left');
+        $this->db->join('usuario u', 'u.id_pessoa = p.id_pessoa', 'left');
+        $this->db->join('ta_situacao ts', 'ts.id_ta_situacao = u.id_ta_situacao', 'left');
+        $this->db->where('i.id_instrutor = '.$id_instrutor);
+        $query = $this->db->get();
+        
         if($query->num_rows() > 0) {
             return $query;
         }
@@ -220,7 +264,8 @@ class Crud_model extends CI_Model {
                                     Where mt.id_turma = '.$id_turma.';
                                   ');
                                   */
-        return $result->result();
+        //return $result->result();
+        return $result;
                                   
     }
 
@@ -234,6 +279,7 @@ class Crud_model extends CI_Model {
                                 ) as ppf
                                     inner join instrutor as i 
                                         ON (i.id_pessoa_fisica = ppf.id_pessoa_fisica)
+                                where i.ativo = 1
                                 order by ppf.nome;
                                 ');
         /*$this->db->select('*');
@@ -257,6 +303,7 @@ class Crud_model extends CI_Model {
         $this->db->join('menu mp', 'mp.id_menu = m.id_menu_pai', 'left');
         $this->db->join('menu_tipo_usuario mtu', 'mtu.id_menu = m.id_menu');
         $this->db->join('ta_tipo_usuario tu', 'tu.id_ta_tipo_usuario = mtu.id_ta_tipo_usuario');
+        $this->db->where('m.ativo = 1');
         $this->db->order_by('m.ordem','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -270,6 +317,7 @@ class Crud_model extends CI_Model {
     function get_atividades($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_atividade');
+        $this->db->where('ta_atividade.ativo = 1');
         $this->db->order_by('nm_atividade','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -282,7 +330,8 @@ class Crud_model extends CI_Model {
 
     function get_arte_marcial($qtd = 0, $inicio = 0) {
         $this->db->select('*');
-        $this->db->from('arte_marcial');
+        $this->db->from('arte_marcial am');
+        $this->db->where('am.ativo = 1');
         $this->db->order_by('nm_arte_marcial','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -296,6 +345,7 @@ class Crud_model extends CI_Model {
     function get_graduacao($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_graduacao');
+        $this->db->where('ta_graduacao.ativo = 1');
         $this->db->order_by('ordem','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -324,7 +374,9 @@ class Crud_model extends CI_Model {
                                             ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
                                         inner join pessoa as p 
                                             ON(p.id_pessoa = pf.id_pessoa_fisica)
+                                        WHERE t.ativo = 1
                                         group by t.id_turma
+                                        order by t.nm_turma
                                         ;
                                   ');
         return $query;
@@ -425,6 +477,7 @@ class Crud_model extends CI_Model {
     function get_comunicado($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('comunicado');
+        $this->db->where('comunicado.ativo = 1');
         $this->db->order_by('titulo','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -578,7 +631,12 @@ class Crud_model extends CI_Model {
         return $this->db->update($tabela);
     }
     
-    function get_aula($id_aula, $aux){
+    function get_id(  $tabela,$id, $where){
+        $result = $this->db->query('Select '.$id.' from '.$tabela.' where '.$where.';');
+        return $result;
+    }
+    
+    function get_aula($id_aula = null, $aux){
         if($aux == 1){
             $query = $this->db->query("Select * from aula as a
                                         inner join horario as h

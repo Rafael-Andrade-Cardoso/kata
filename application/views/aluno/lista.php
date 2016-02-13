@@ -9,7 +9,7 @@
                                       <th> Nome</th>
                                       <th> Sobrenome</th>
                                       <th class="hidden-sm hidden-xs"> Data de nascimento</th>
-                                      <th> Situação</th>
+                                      <th> Graduação</th>
                                       <th></th>
                                   </tr>
                               </thead>
@@ -26,7 +26,7 @@
                                           <td><a href="basic_table.html#"><?php echo $value->nome; ?></a></td>
                                           <td><?php echo $value->sobrenome; ?></td>
                                           <td class="hidden-sm hidden-xs"><?php echo data_from_db($value->dt_nascimento); ?></td>
-                                          <td><span class="label label-info label-mini"><?php echo $value->id_ta_situacao; ?></span></td>
+                                          <td><span class="label label-info label-mini"><?php echo $value->graduacao; ?></span></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("alteracao/form_alterar_aluno/" . $value->id_aluno); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>

@@ -1,24 +1,21 @@
 <h3><i class="fa fa-angle-right"></i> Alterar aula</h3>
-<?php echo form_open('alteracao/alterar_aula/query->id_aula', array('class' => 'form-horizontal style-form', 'id' => 'form_alterar'));?>
+<?php echo form_open("alteracao/alterar_aula/$query->id_aula", array('class' => 'form-horizontal style-form', 'id' => 'form_cadastro'));?>
+<input type="hidden" name="id_aula" value="<?php echo set_value('id_aula', $query->id_aula);?>" />
     <!-- dt_aula, obs-->
     <!-- Área de dados do menu -->
     <div class="row mt">
         <div class="col-lg-12">
             <div class="form-panel">
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0202" size="2">Dados obrigatórios*</font></h4>
+                <h4 class="mb"><i class="fa fa-angle-right"></i> Dados
+                    <font color="#FF0202" size="2" class="campos_obrigatorios">Campos obrigatórios*</font>
+                </h4>
                 <?php
-                   /* echo validation_errors('<p class="alert alert-danger">', '</p>');
-                    if ($this->session->flashdata('cadastrook')){
-                      echo '<p class="alert alert-success">' . $this->session->flashdata('cadastrook').'</p>';
+                    echo validation_errors('<p class="alert alert-danger">', '</p>');
+                    if ($this->session->flashdata('edicaook')){
+                      echo '<p class="alert alert-success">' . $this->session->flashdata('edicaook').'</p>';
                     }
-                    //debug($this->session);
-                    echo "<pre>";
-                    print_r($query);*/
+                    //echo '<pre>';
+                    //die(print_r($query));
                 ?>
 
                 <div class="form-group">                      
@@ -101,12 +98,12 @@
                                 <label>
                                     <input name="id_ta_atividade[]" type="checkbox" value="<?php echo $value->id_ta_atividade; ?>"
                                     <?php
-                                        if (set_value('id_ta_atividade[]', $query->id_ta_atividade) == $value->id_ta_atividade){
-                                            echo " checked ";
+                                        for($j=0;$j<$i;$j++){
+                                            $nome = "query";    
+                                            if (set_value('id_ta_atividade[]', ${$nome . $j}->id_ta_atividade) == $value->id_ta_atividade){
+                                                echo " checked ";
+                                            }
                                         }
-                                       /* if (set_value('id_ta_atividade')){
-                                            echo (in_array($value->id_ta_atividade, set_value('id_ta_atividade')))?" checked ":"";
-                                        }*/
                                     ?>
                                     />
                                     <?php echo $value->nm_atividade; ?>
@@ -135,21 +132,9 @@
     
     $(document).ready(function(){
         var now = new Date();
-        var today = now.getFullYear() + '-' + 0+(now.getMonth() + 1) + '-' + now.getDate()   ;
+       /* var today = now.getFullYear() + '-' + 0+(now.getMonth() + 1) + '-' + now.getDate()   ;
         //alert(today);
-        $('#dt_aula').val(today);
-        
-        $( "#adicionar" ).on({
-            "mouseover": function() {
-                $( this ).css("cursor", "pointer");
-            }
-        });
-        $( "#remover" ).on({
-            "mouseover": function() {
-                $( this ).css("cursor", "pointer");
-            }
-        });        
-        
+        $('#dt_aula').val(today); */
     });
     
     function get_info() {

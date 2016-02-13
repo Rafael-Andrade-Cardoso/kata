@@ -11,13 +11,12 @@ class Dashboard extends MY_Controller {
 	public function index()	{	
 		$data = array();
         $data['dados'] = $this->crud->get_alunos_turma()->result();
-        echo "<pre>";
-	die(print_r($data));
-        
-        $data['menus'] = $this->get_all('menu');
+       /*echo "<pre>";
+	   die(print_r($data));*/        
+        $data['menus'] = $this->crud->get_all('menu');
         //die(print_r($data['menus']));
-        $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
-        $this->template->load('menu/form_cadastro', $data);
+        $data['tipos_usuario'] = $this->crud->get_tipo_usuario()->result();
+        //$this->template->load('menu/form_cadastro', $data);
 		
 		$this->template->load('dashboard');
         //$this->crud->get_alunos_graduacao();

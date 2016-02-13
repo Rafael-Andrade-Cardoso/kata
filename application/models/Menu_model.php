@@ -91,6 +91,7 @@ class Menu_model extends CI_Model {
         $this->db->join("ta_tipo_usuario ttu","ttu.id_ta_tipo_usuario = mtu.id_ta_tipo_usuario");
         $this->db->where('m.id_menu_pai', null);
         $this->db->where("mtu.id_ta_tipo_usuario", $_SESSION['usuario']->id_ta_tipo_usuario);
+        $this->db->where("m.ativo = 1");
         $this->db->order_by("m.ordem", "desc");
         return $this->db->get();
     }
@@ -117,6 +118,7 @@ class Menu_model extends CI_Model {
         $this->db->from('menu');
         $this->db->order_by("nome", "asc");
         $this->db->where('id_menu_pai', $id_menu);
+        $this->db->where("ativo = 1");
         return $this->db->get();
     }
 
