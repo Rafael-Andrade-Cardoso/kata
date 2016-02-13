@@ -33,6 +33,17 @@ class Crud_model extends CI_Model {
             }
     }
     
+    function update_complexo($tabela, $where, $data) {
+        $this->db->where($where);
+        $result = $this->db->update($tabela, $data);
+         
+        if ($result){
+                return true;
+            } else {
+                return false;
+            }
+    }
+    
     /*function update_ativos($tabela=NULL, $campo=NULL, $id=NULL){
         if($tabela != NULL && $id != NULL){
             //unset($data['id_menu']);
@@ -129,6 +140,31 @@ class Crud_model extends CI_Model {
         $query = $this->db->get();
         /*echo "<pre>";
         die(print_r($query->result()));*/
+        if($query->num_rows() > 0) {
+            return $query;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    function get_info_instrutor($id_instrutor){
+        $this->db->select('*');
+        $this->db->from('instrutor i');
+        $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = i.id_pessoa_fisica', 'left');
+        $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica', 'left');
+        $this->db->join('endereco end', 'p.id_pessoa = end.id_pessoa', 'left');
+        $this->db->join('ta_cidade cd', 'cd.id_ta_cidade = end.id_ta_cidade', 'left');
+        $this->db->join('ta_estado est', 'est.id_ta_estado = cd.id_ta_estado', 'left');
+        $this->db->join('ta_pais pais', 'pais.id_ta_pais = est.id_ta_pais', 'left');
+        $this->db->join('pessoa_telefone pt', 'p.id_pessoa = pt.id_pessoa', 'left');
+        $this->db->join('ta_tipo_telefone ttt', 'ttt.id_ta_tipo_telefone = pt.id_ta_tipo_telefone', 'left');
+       // $this->db->join('pessoa_dados pd', 'pd.id_pessoa_fisica = pf.id_pessoa_fisica', 'left');
+        $this->db->join('usuario u', 'u.id_pessoa = p.id_pessoa', 'left');
+        $this->db->join('ta_situacao ts', 'ts.id_ta_situacao = u.id_ta_situacao', 'left');
+        $this->db->where('i.id_instrutor = '.$id_instrutor);
+        $query = $this->db->get();
+        
         if($query->num_rows() > 0) {
             return $query;
         }

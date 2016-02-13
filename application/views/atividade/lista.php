@@ -24,7 +24,7 @@
                                           <td><?php echo $value->desc_atividade; ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_ta_atividade); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a href="<?php echo base_url("alteracao/form_alterar_atividade/" . $value->id_ta_atividade); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                               <a type="button" onclick="return deleteReg('<?php echo $value->id_ta_atividade;?>','<?=base_url("exclusao/excluir_atividade");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>

@@ -13,6 +13,14 @@
       <h4 class="mb"><i class="fa fa-angle-right"></i> Dados Pessoais 
         <font color="#FF0202" size="2" class="campos_obrigatorios">Campos obrigatórios*</font>
       </h4>
+        <?php
+            echo validation_errors('<p class="alert alert-danger">', '</p>');
+            if ($this->session->flashdata('edicaook')){
+                echo '<p class="alert alert-success">' . $this->session->flashdata('edicaook').'</p>';
+            }
+            //echo '<pre>';
+            //die(print_r($query));
+        ?>
       <div class="col-md-6 form-group">
         <label class="col-sm-2 col-sm-2 control-label"> Nome<font color="#FF0202">*</font></label>
         <div class="col-sm-10">

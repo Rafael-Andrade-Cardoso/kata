@@ -1231,7 +1231,7 @@ class Cadastro extends MY_Controller {
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         //$data['instrutor'] = $this->crud->get_instrutores();
         $data['turma'] = $this->crud->get_all('turma');   
-        $data['atividade'] = $this->get_all('ta_atividade');     
+        $data['atividade'] = $this->crud->get_where('ta_atividade', 'ativo = 1');     
         $data['horario'] = null;        
         $this->template->load('aula/form_cadastro', $data);
     }

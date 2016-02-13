@@ -14,7 +14,7 @@ class Alteracao extends MY_Controller {
         $data = array();
         $id_aula = $this->uri->segment(3);
         if($id_aula == NULL){
-            redirect('aula/lista');
+            redirect('relatorio/aula');
         }
         
         $data['arte_marcial'] = $this->crud->get_all('arte_marcial')->result();
@@ -126,13 +126,201 @@ class Alteracao extends MY_Controller {
         if($id_turma == NULL){
             redirect(current_url());
         }
-        
+        $i=0;
         $data['arte_marcial'] = $this->crud->get_all('arte_marcial')->result();
         $data['instrutor'] = $this->crud->get_instrutores()->result();
-        $data['query'] = $this->crud->get_turma($id_turma)->row();
-        //echo "<pre>";
-        //die(print_r($data['query']));
+       // $data['query'] = $this->crud->get_turma($id_turma)->result();
+        
+        $query = $this->crud->get_turma($id_turma);
+        /*echo "<pre>";
+        die(print_r($query->result())); */
+        if($query->num_rows() > 1){
+            for($i=0;$i<$query->num_rows();$i++){
+                $data['query'.$i] = $query->row($i);
+            }
+        }
+        //$data['i'] = $i;
         $this->template->load('turma/form_alterar', $data);
+    }
+    
+    public function alterar_turma(){
+        $data = array();
+        $id_turma = $this->uri->segment(3);
+        if($id_turma == NULL){
+            redirect('relatorio/aula');
+        }
+        
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }        
+        
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        $validacoes = array(
+            array(
+                'field' => 'nm_turma',
+                'label' => 'Nome da turma',
+                'rules' => 'trim|required|max_length[50]'
+            ),
+            array(
+                'field' => 'dia_semana',
+                'label' => 'Dia da Semana',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'hr_inicio',
+                'label' => 'Hora Início',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'hr_termino',
+                'label' => 'Hora de Início',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'id_instrutor',
+                'label' => 'Instrutor',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'max_aluno',
+                'label' => 'Máximo de alunos',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'dt_inicio',
+                'label' => 'Data de início',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'valor_mensalidade',
+                'label' => 'Valor mensalidade',
+                'rules' => 'trim|required|max_length[10]'
+            )
+        );
+        
+        if (!empty($data['dia_semana_2'])) {
+            $validacoes_dia_2 = array(
+                array(
+                    'field' => 'dia_semana_2',
+                    'label' => 'Dia da Semana',
+                    'rules' => 'trim|required'  
+                ),
+                array(
+                    'field' => 'hr_inicio_2',
+                    'label' => 'Hora Início',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'hr_termino_2',
+                    'label' => 'Hora de Início',
+                    'rules' => 'trim|required'
+                )
+            );
+            $validacoes = array_merge($validacoes, $validacoes_dia_2);
+        }
+        
+        if (!empty($data['dia_semana_3'])) {
+            $validacoes_dia_3 = array(
+                array(
+                    'field' => 'dia_semana_3',
+                    'label' => 'Dia da Semana',
+                    'rules' => 'trim|required'  
+                ),
+                array(
+                    'field' => 'hr_inicio_3',
+                    'label' => 'Hora Início',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'hr_termino_3',
+                    'label' => 'Hora de Início',
+                    'rules' => 'trim|required'
+                )
+            );
+            $validacoes = array_merge($validacoes, $validacoes_dia_3);
+        }
+        $this->form_validation->set_rules($validacoes);
+        
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === FALSE) {
+            //redirect('relatorio/aula/lista');
+            $this->form_alterar_turma();
+        /* Senão, caso sucesso: */
+        } else {
+                        
+            $id_turma = $this->input->post('id_turma');
+            $data['dia_semana'] = $this->input->post('dia_semana');
+            $data['dia_semana_2'] = $this->input->post('dia_semana_2');
+            $data['dia_semana_3'] = $this->input->post('dia_semana_3');
+            
+            $horarios_turma = $this->crud->get_where('horario', 'id_turma ='.$id_turma)->result();
+            $i=0;
+            $hor = array();
+            foreach($horarios_turma as $value){
+                $hor[$i] = $value->id_horario;
+                $i++;
+            }
+            /**/
+                        
+            $this->db->trans_start();
+            
+            $turma = new stdClass();
+            $turma->nm_turma = $data['nm_turma'];
+            $turma->max_aluno = $data['max_aluno'];
+            $turma->valor_mensalidade = $data['valor_mensalidade'];
+            $turma->dt_inicio = $data['dt_inicio'];
+            $turma->ativo = 1;
+            $this->crud->update('turma', 'id_turma', $id_turma, $turma);
+           // $id_turma = $this->crud->insert('turma', $turma);
+            
+            $horario = new stdClass();
+            $horario->hr_inicio = $data['hr_inicio'];
+            $horario->hr_termino = $data['hr_termino'];
+            $data['dia_semana'] = $this->input->post('dia_semana');
+            $horario->dia_semana = $data['dia_semana'];
+            $horario->id_instrutor = $data['id_instrutor'];
+            //$horario->id_turma = $id_turma;
+            
+            $where = 'id_turma ='.$id_turma .' and id_horario ='.$hor[0];
+            $this->crud->update_complexo('horario', $where, $horario);
+            
+            if (!empty($data['dia_semana_2'])) {
+                $horario_2 = new stdClass();
+                $horario_2->hr_inicio = $data['hr_inicio_2'];
+                $horario_2->hr_termino = $data['hr_termino_2'];
+                $data['dia_semana_2'] = $this->input->post('dia_semana_2');                
+                $horario_2->dia_semana = $data['dia_semana_2'];
+                $horario_2->id_instrutor = $data['id_instrutor'];
+                
+                $where = 'id_turma ='.$id_turma .' and id_horario ='.$hor[1];
+                $this->crud->update_complexo('horario', $where, $horario_2);                
+            }
+            if (!empty($data['dia_semana_3'])) {
+                $horario_3 = new stdClass();
+                $horario_3->hr_inicio = $data['hr_inicio_3'];
+                $horario_3->hr_termino = $data['hr_termino_3'];
+                $data['dia_semana_3'] = $this->input->post('dia_semana_3');
+                $horario_3->dia_semana = $data['dia_semana_3'];
+                $horario_3->id_instrutor = $data['id_instrutor'];
+                
+                $where = 'id_turma ='.$id_turma .' and id_horario ='.$hor[2];
+                $this->crud->update_complexo('horario', $where, $horario_3);                
+            }  
+            /*echo "<pre>";
+            die(print_r($data));*/            
+            $this->db->trans_complete(); $this->db->trans_complete(); 
+                       
+            if ($this->db->trans_status() === TRUE) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                $this->erro();
+            }
+        }
     }
 
     public function lista($qtd = 'null', $inicio = 'null') {
@@ -456,11 +644,11 @@ class Alteracao extends MY_Controller {
             $this->crud->update('matricula_graduacao','id_matricula', $id_matricula->id_matricula , $matricula_graduacao);
             //$this->crud->insert('matricula_graduacao', $matricula_graduacao);
             /* Fecha a transação */
-            $this->db->trans_complete();           
-
+            $this->db->trans_complete(); 
+                       
             if ($this->db->trans_status() === TRUE) {
-                $this->db->trans_commit();
-                $this->sucesso();
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
             } else {
                 $this->db->trans_rollback();
                 log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
@@ -468,6 +656,325 @@ class Alteracao extends MY_Controller {
             }
         }
     
+    }
+    
+    public function form_alterar_instrutor(){
+        $data = array();
+        $id_instrutor = $this->uri->segment(3);
+        if($id_instrutor == NULL){
+            redirect('relatorio/instrutor');
+        }
+        
+        $this->load->model('usuario_model', 'usuario');
+        $data['paises'] = $this->crud->get_all('ta_pais')->result();
+        $data['estados'] = $this->crud->get_all('ta_estado')->result();
+        $data['cidades'] = $this->crud->get_all('ta_cidade')->result();
+        $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
+        $data['situacoes'] = $this->crud->get_all('ta_situacao')->result();
+        $data['tipos_telefone'] = $this->crud->get_all('ta_tipo_telefone')->result();
+        $data['query'] = $this->crud->get_info_instrutor($id_instrutor)->row();
+        /*echo "<pre>";
+        die(print_r($data['query']));*/
+        $this->template->load('instrutor/form_alterar', $data);
+    }
+    
+    function alterar_instrutor() {
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        $data = new stdClass();
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data->$key = $value;
+            }
+        }
+        $id_instrutor = $this->input->post('id_instrutor');
+        $validacoes = array(
+            array(
+                'field' => 'nome',
+                'label' => 'Nome',
+                'rules' => 'trim|required|max_length[50]'
+            ),
+            array(
+                'field' => 'sobrenome',
+                'label' => 'Nome',
+                'rules' => 'trim|required|max_length[100]'
+            ),
+            array(
+                'field' => 'cpf',
+                'label' => 'CPF',
+                'rules' => 'trim|required|max_length[14]'
+            ),
+            array(
+                'field' => 'dt_nascimento',
+                'label' => 'Data de nascimento',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'tipo_sanguineo',
+                'label' => 'Tipo sanguineo',
+                'rules' => 'trim|required|max_length[3]'
+            ),
+            array(
+                'field' => 'sexo',
+                'label' => 'Sexo',
+                'rules' => 'trim|required|max_length[5]'
+            ),
+            array(
+                'field' => 'id_ta_cidade',
+                'label' => 'Cidade',
+                'rules' => 'required|max_length[11]'
+            ),
+            array(
+                'field' => 'id_ta_cidade',
+                'label' => 'Cidade',
+                'rules' => 'required|max_length[11]'
+            ),
+            array(
+                'field' => 'id_ta_cidade',
+                'label' => 'Cidade',
+                'rules' => 'required|max_length[11]'
+            ),
+            array(
+                'field' => 'logradouro',
+                'label' => 'Logradouro',
+                'rules' => 'trim|required|max_length[255]'
+            ),
+            array(
+                'field' => 'numero',
+                'label' => 'Número',
+                'rules' => 'trim|required|max_length[10]'
+            ),
+            array(
+                'field' => 'cep',
+                'label' => 'CEP',
+                'rules' => 'trim|required|max_length[9]'
+            ),
+            array(
+                'field' => 'complemento',
+                'label' => 'Complemento',
+                'rules' => 'trim|required|max_length[255]'
+            ),
+            array(
+                'field' => 'id_ta_tipo_telefone',
+                'label' => 'Tipo do telefone',
+                'rules' => 'trim|required|max_length[11]'
+            ),
+            array(
+                'field' => 'telefone',
+                'label' => 'Telefone',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'email',
+                'label' => 'E-mail',
+                'rules' => 'trim|required'
+            )
+        );
+        if (!empty($data->login)) {
+            $validacores_usuario = array(
+                array(
+                    'field' => 'login',
+                    'label' => 'Login',
+                    'rules' => 'trim|required|max_length[50]'
+                ),
+                array(
+                    'field' => 'senha',
+                    'label' => 'Senha',
+                    'rules' => 'trim|required|max_length[100]'
+                ),
+                array(
+                    'field' => 'id_ta_situacao',
+                    'label' => 'Situação',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'id_ta_tipo_usuario',
+                    'label' => 'Tipo usuário',
+                    'rules' => 'trim|required'
+                )
+            );
+            
+            $validacoes = array_merge($validacoes, $validacores_usuario);
+        }
+        
+        if(!empty($data->id_ta_tipo_telefone_2)){
+            $validacoes_telefone = array(
+                array(
+                    'field' => 'id_ta_tipo_telefone_2',
+                    'label' => 'Tipo do telefone',
+                    'rules' => 'trim|required|max_length[11]'
+                ),
+                array(
+                    'field' => 'telefone_2',
+                    'label' => 'Telefone',
+                    'rules' => 'trim|required'
+                )
+            );
+            $validacoes = array_merge($validacoes, $validacoes_telefone);
+        }
+        
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            
+            $id_pessoa_fisica = $this->crud->get_id('instrutor', 'id_pessoa_fisica', 'id_instrutor='.$id_instrutor)->row();
+            $id_endereco = $this->crud->get_id('endereco', 'id_endereco', 'id_pessoa='.$id_pessoa_fisica->id_pessoa_fisica)->row();
+            //$id_matricula = $this->crud->get_id('matricula', 'id_matricula', 'id_aluno='.$id_aluno)->row();
+            $id_pessoa_telefone = $this->crud->get_id('pessoa_telefone', 'id_pessoa_telefone', 'id_pessoa = '.$id_pessoa_fisica->id_pessoa_fisica)->row();
+            $id_pessoa_dados = $this->crud->get_id('pessoa_dados', 'id_pessoa_dados', 'id_pessoa_fisica='.$id_pessoa_fisica->id_pessoa_fisica)->row();
+            /* Abre uma transação */
+            $this->db->trans_start();
+            
+            /* Dados para cadastro de pessoa */
+            $pessoa = new stdClass();
+            $pessoa->nome = $data->nome;
+            $pessoa->dt_nascimento = $data->dt_nascimento;
+            $pessoa->email = $data->email;
+            //$id_pessoa = $this->crud->insert('pessoa', $pessoa);
+            $this->crud->update('pessoa','id_pessoa', $id_pessoa_fisica->id_pessoa_fisica , $pessoa);
+
+            /* Dados para cadastro de pessoa */
+            $pessoa_fisica = new stdClass();
+            //$pessoa_fisica->id_pessoa_fisica = $id_pessoa;
+            $pessoa_fisica->sobrenome = $data->sobrenome;
+            $pessoa_fisica->tipo_sanguineo = $data->tipo_sanguineo;
+            $pessoa_fisica->sexo = $data->sexo;
+            $pessoa_fisica->cpf = $data->cpf;
+            //$id_pessoa_fisica = $this->crud->insert('pessoa_fisica', $pessoa_fisica);
+            $this->crud->update('pessoa_fisica','id_pessoa_fisica', $id_pessoa_fisica->id_pessoa_fisica , $pessoa_fisica);
+
+            $endereco = new stdClass();
+            $endereco->id_ta_cidade = $data->id_ta_cidade;
+            //$endereco->id_pessoa = $id_pessoa;
+            $endereco->logradouro = $data->logradouro;
+            $endereco->numero = $data->numero;
+            $endereco->complemento = $data->complemento;
+            $endereco->cep = $data->cep;
+            //$this->crud->insert('endereco', $endereco)
+            $this->crud->update('endereco', 'id_endereco', $id_endereco->id_endereco, $endereco);
+
+            $pessoa_telefone = new stdClass();
+            //$pessoa_telefone->id_pessoa = $id_pessoa;
+            $pessoa_telefone->id_ta_tipo_telefone = $data->id_ta_tipo_telefone;
+            $pessoa_telefone->ddd = substr($data->telefone, 1,3);
+            $pessoa_telefone->telefone = substr($data->telefone, 4, strlen($data->telefone));
+            $this->crud->update('pessoa_telefone', 'id_pessoa_telefone',$id_pessoa_telefone->id_pessoa_telefone , $pessoa_telefone); 
+            //$this->crud->insert('pessoa_telefone', $pessoa_telefone);
+                
+            if(!empty($data->id_ta_tipo_telefone_2)){
+                $id_pessoa_telefone_2 = $this->crud->get_id('pessoa_telefone', 'id_pessoa_telefone', 'id_pessoa = '.$id_pessoa_fisica->id_pessoa_fisica)->row(1);
+                $pessoa_telefone_2 = new stdClass();
+                //$pessoa_telefone_2->id_pessoa = $id_pessoa;
+                $pessoa_telefone_2->id_ta_tipo_telefone = $data->id_ta_tipo_telefone_2;
+                $pessoa_telefone_2->ddd = substr($data->telefone_2, 1,3);
+                $pessoa_telefone_2->telefone = substr($data->telefone_2, 4, strlen($data->telefone_2));
+                $this->crud->update('pessoa_telefone', 'id_pessoa_telefone',$id_pessoa_telefone_2->id_pessoa_telefone , $pessoa_telefone_2);
+               // $this->crud->insert('pessoa_telefone', $pessoa_telefone_2);                
+            }
+            
+            if(!empty($data->login)){
+                $id_usuario = $this->crud->get_id('usuario', 'id_usuario', 'id_pessoa='.$id_pessoa_fisica->id_pessoa_fisica)->row();
+                if(!empty($id_usuario->id_usuario)){
+                    $usuario = new stdClass();
+                    $usuario->login = $data->login;
+                    $usuario->senha = hash('sha256', $data->senha);
+                    $usuario->id_ta_situacao = $data->id_ta_situacao;
+                    $usuario->id_ta_tipo_usuario = $data->id_ta_tipo_usuario;
+                    $this->crud->update('usuario', 'id_pessoa',$id_pessoa_fisica->id_pessoa_fisica , $usuario);
+                }else{
+                    $usuario = new stdClass();
+                    $usuario->login = $data->login;
+                    $usuario->senha = hash('sha256', $data->senha);
+                    $usuario->id_ta_situacao = $data->id_ta_situacao;
+                    $usuario->id_ta_tipo_usuario = $data->id_ta_tipo_usuario;
+                    $usuario->id_pessoa = $id_pessoa_fisica->id_pessoa_fisica;
+                    $id_usuario = $this->crud->insert('usuario', $usuario);
+                }
+                //
+                //$id_usuario = $this->crud->insert('usuario', $usuario);
+            }
+            
+            $instrutor = new stdClass();
+            //$instrutor->id_pessoa_fisica = $id_pessoa;
+            $instrutor->ativo = 1;
+            $this->crud->update('instrutor', 'id_instrutor',$id_instrutor , $instrutor);
+            //$this->crud->insert('instrutor', $instrutor);
+
+            /* Fecha a transação */
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === TRUE) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_alterar_instrutor();
+        }
+    }
+    
+    function form_alterar_atividade() {
+        $data = array();
+        $id_atividade = $this->uri->segment(3);
+        if($id_atividade == NULL){
+            redirect('relatorio/aula');
+        }
+        $data['query'] = $this->crud->get_where('ta_atividade', 'id_ta_atividade='.$id_atividade)->row();
+        $this->template->load('atividade/form_alterar', $data);
+    }
+
+    function alterar_atividade() {
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        /*echo "<pre>";
+        die(print_r($data));*/
+        $id_atividade = $this->input->post('id_ta_atividade');
+        $validacoes = array(
+            array(
+                'field' => 'nm_atividade',
+                'label' => 'Nome',
+                'rules' => 'trim|required|max_length[50]'
+            ),
+            array(
+                'field' => 'desc_atividade',
+                'label' => 'Descrição',
+                'rules' => 'trim|required|max_length[255]'
+            )
+        );
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            
+            $this->db->trans_start();
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            
+            $data['ativo'] = 1;
+            $this->crud->update('ta_atividade','id_ta_atividade',$id_atividade , $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            $this->db->trans_complete();
+            
+            if ($this->db->trans_status() === TRUE) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_alterar_atividade();
+        }
     }
     
 
