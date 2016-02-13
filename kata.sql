@@ -1018,3 +1018,8 @@ WHERE m.id_menu = 47;
 
 
 select * from pessoa_dados where id_pessoa_fisica in (select id_pessoa_fisica from pessoa_fisica)
+
+select *, count(e.id_exame) as qtd_alunos from exame e 
+	inner join matricula m on m.id_matricula = e.id_matricula
+	inner join ta_graduacao g on g.id_ta_graduacao = e.id_ta_graduacao
+	group by g.id_ta_graduacao;

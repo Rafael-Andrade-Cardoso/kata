@@ -1061,6 +1061,8 @@ class Cadastro extends MY_Controller {
                 $data[$key] = $value;
             }
         }
+        //echo "<pre>";
+        //die(print_r($data));        
         $validacoes = array(
             array(
                 'field' => 'titulo',
@@ -1069,18 +1071,23 @@ class Cadastro extends MY_Controller {
             ),
             array(
                 'field' => 'dt_vencimento',
-                'label' => 'Nome',
+                'label' => 'Data de vencimento',
                 'rules' => 'required'
             ),
             array(
                 'field' => 'dt_publicacao',
-                'label' => 'URL',
+                'label' => 'Data de publicação',
                 'rules' => 'required'
             ),
             array(
                 'field' => 'descricao',
                 'label' => 'Descrição',
                 'rules' => 'trim'
+            ),
+            array(
+                'field' => 'id_ta_tipo_usuario[]',
+                'label' => 'Grupo',
+                'rules' => 'required'
             )
         );
         $this->form_validation->set_rules($validacoes);
@@ -1093,18 +1100,38 @@ class Cadastro extends MY_Controller {
             $data['dt_criacao'] = date("Y-m-d");
             //$data['ativo'] = 1;
             $id_ta_tipo_usuario = $data['id_ta_tipo_usuario'];
-            unset($data['id_ta_tipo_usuario']);            
-            $id_comunicado = $this->crud->insert('comunicado', $data);
-            if (is_numeric($id_comunicado) && $id_comunicado > 0){
-                $dados['id_comunicado'] = $id_comunicado;
-                
-                foreach ($id_ta_tipo_usuario as $value) {
-                    //$dados['id_ta_tipo_usuario'] = $value;
-                    $dados['id_pessoa'] = $value;
-                    $menuusuario = $this->crud->insert('pessoa_comunicado', $dados);
+            unset($data['id_ta_tipo_usuario']);  
+            //die(print_r($id_ta_tipo_usuario));                       
+            //if (is_numeric($id_comunicado) && $id_comunicado > 0){
+            //$dados['id_comunicado'] = $id_comunicado;
+            // Para cada grupo de usuário escolhido...                
+            foreach ($id_ta_tipo_usuario as $value) {  
+                //$data['id_ta_tipo_usuario'] = $value;
+                $usuarios = $this->crud->get_pessoas_tipo_usuario($value);
+                $usuarios = $usuarios->result();
+                $id_comunicado = $this->crud->insert('comunicado', $data);
+                foreach($usuarios as $usuario) {
+                    $pessoa_comunicado['id_pessoa'] = $usuario->id_pessoa;
+                    $pessoa_comunicado['id_comunicado'] = $id_comunicado;
+                    $id_pessoa_comunicado = $this->crud->insert('pessoa_comunicado', $pessoa_comunicado);
+                    //echo "<pre>";
+                    //die(print_r($pessoa));
                 }
+                //echo "<pre>";
+                //die(print_r($data));     
                 
+                //die(print_r($value));
+                //$dados['id_ta_tipo_usuario'] = $value;
+                //$dados['id_pessoa'] = $value;
+                //$menuusuario = $this->crud->insert('pessoa_comunicado', $dados);
             }
+            if (is_numeric($id_comunicado) && $id_comunicado > 0){
+                $this->sucesso();
+            } else {
+                $this->erro();
+            }
+                
+            //}
         }
     }
     
@@ -1291,6 +1318,10 @@ class Cadastro extends MY_Controller {
                 $data[$key] = $value;
             }
         }
+        //echo "<pre>";
+        //die(print_r($data));
+        
+        
         $atividade = $this->input->post('id_ta_atividade');
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $validacoes = array(
@@ -1331,7 +1362,17 @@ class Cadastro extends MY_Controller {
             $aula->observacao = $data['observacao'];
             /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
             $id_aula = $this->crud->insert('aula', $aula);
-            
+            foreach($data['alunos'] as $id_aluno) {
+                $matricula = $this->crud->get_matricula_alu($id_aluno);
+                $matricula = $matricula->result();
+                //die(print_r($matricula));
+                $presenca['id_aula'] = $id_aula;
+                $presenca['id_matricula'] = $matricula[0]->id_matricula;
+                $presenca['observacao'] = "";
+                $presenca['ativo'] = 1;
+                $id_plano_aula = $this->crud->insert('presenca', $presenca);
+                
+            }
             if(count($atividade)>1){
                 $i=0;
                 while($i < count($data['id_ta_atividade'])){     
@@ -1501,6 +1542,10 @@ class Cadastro extends MY_Controller {
         } else {
             echo "<label class='alunos_exame'>Não há alunos nesta turma.</label>";
         }
+    }
+    
+    public function form_tipo_usuario() {
+        
     }
 
 }

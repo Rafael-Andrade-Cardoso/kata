@@ -2336,3 +2336,8 @@ a {
 .obrigatorio {
     color: #FF0202;
 }
+
+#alunos_exame {
+    padding: 10px;
+    margin: 0 15px;
+}
