@@ -23,8 +23,8 @@
                                           <td><?php echo $value->descricao_situacao; ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_ta_situacao); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_ta_situacao;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a href="<?php echo base_url("alteracao/form_alterar_situacao/" . $value->id_ta_situacao); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_ta_situacao;?>','<?=base_url("exclusao/excluir_situacao");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

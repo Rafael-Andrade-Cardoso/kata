@@ -10,8 +10,8 @@
                 <h4 class="mb"><i class="fa fa-angle-right"></i> Dados</h4>
                 <?php
                     echo validation_errors('<p class="alert alert-danger">', '</p>');
-                    if ($this->session->flashdata('cadastrook')){
-                      echo '<p class="alert alert-success">' . $this->session->flashdata('cadastrook').'</p>';
+                    if ($this->session->flashdata('edicaook')){
+                      echo '<p class="alert alert-success">' . $this->session->flashdata('edicaook').'</p>';
                     }
                 ?>
                 <div class="form-group">

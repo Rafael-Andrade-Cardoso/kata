@@ -62,5 +62,24 @@ class Exclusao extends MY_Controller {
         echo $reg['id'];
 		$status = $this->crud->update_ativos('ta_graduacao', 'id_ta_graduacao', $reg["id"]);         
     }
+    
+    public function excluir_horario(){
+        $reg = $this->input->post();
+        echo $reg['id'];
+		$status = $this->crud->update_ativos('horario', 'id_horario', $reg["id"]);         
+    }
+    
+    public function excluir_situacao(){
+        $reg = $this->input->post();
+        echo $reg['id'];
+		$status = $this->crud->update_ativos('ta_situacao', 'id_ta_situacao', $reg["id"]);         
+    }
+    
+    public function excluir_tipo_telefone(){
+        $reg = $this->input->post();
+        echo $reg['id'];
+		$status = $this->crud->update_ativos('ta_tipo_telefone', 'id_ta_tipo_telefone', $reg["id"]);         
+    }
+    
 
 }

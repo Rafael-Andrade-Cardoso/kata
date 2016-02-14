@@ -446,11 +446,13 @@ class Crud_model extends CI_Model {
     }
     
     function get_horario($qtd = 0, $inicio = 0) {
-        $this->db->select('h.*, p.nome, pf.sobrenome');
+        $this->db->select('h.*, p.nome, pf.sobrenome, t.*');
         $this->db->from('horario h');
+        $this->db->join('turma t', 't.id_turma = h.id_turma');
         $this->db->join('instrutor i', 'i.id_instrutor = h.id_instrutor');
         $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = i.id_pessoa_fisica');
         $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica');
+        $this->db->where('h.ativo = 1');
         $this->db->order_by('hr_inicio','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -491,6 +493,7 @@ class Crud_model extends CI_Model {
     function get_tipo_usuario($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_tipo_usuario');
+        $this->db->where('ativo = 1');
         $this->db->order_by('ds_tipo_usuario','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -504,6 +507,7 @@ class Crud_model extends CI_Model {
     function get_tipo_telefone($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_tipo_telefone');
+        $this->db->where('ativo = 1');
         $this->db->order_by('desc_tipo_telefone','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {

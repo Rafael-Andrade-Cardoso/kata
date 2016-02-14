@@ -22,7 +22,7 @@
                                           <td><a href="basic_table.html#"><?php echo $value->ordem; ?></a></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_ta_graduacao); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a href="<?php echo base_url("alteracao/form_alterar_graduacao/" . $value->id_ta_graduacao); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                               <a type="button" onclick="return deleteReg('<?php echo $value->id_ta_graduacao;?>','<?=base_url("exclusao/excluir_graduacao");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>

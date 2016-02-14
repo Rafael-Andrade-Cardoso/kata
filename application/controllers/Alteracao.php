@@ -317,7 +317,7 @@ class Alteracao extends MY_Controller {
                 redirect(current_url());
             } else {
                 $this->db->trans_rollback();
-                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                log_message('error', 'Erro ao alterar o instrutor.', 'FALSE');
                 $this->erro();
             }
         }
@@ -651,7 +651,7 @@ class Alteracao extends MY_Controller {
                 redirect(current_url());
             } else {
                 $this->db->trans_rollback();
-                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                log_message('error', 'Erro ao alterar a aluno.', 'FALSE');
                 $this->erro();
             }
         }
@@ -909,7 +909,7 @@ class Alteracao extends MY_Controller {
                 redirect(current_url());
             } else {
                 $this->db->trans_rollback();
-                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                log_message('error', 'Erro ao alterar o instrutor.', 'FALSE');
                 $this->erro();
             }
         /* Em caso de falha: */
@@ -929,6 +929,7 @@ class Alteracao extends MY_Controller {
     }
 
     function alterar_atividade() {
+        
         foreach ($this->input->post() as $key => $value){
             if (!is_null($value) && $value != ""){
                 $data[$key] = $value;
@@ -936,6 +937,7 @@ class Alteracao extends MY_Controller {
         }
         /*echo "<pre>";
         die(print_r($data));*/
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $id_atividade = $this->input->post('id_ta_atividade');
         $validacoes = array(
             array(
@@ -968,7 +970,7 @@ class Alteracao extends MY_Controller {
                 redirect(current_url());
             } else {
                 $this->db->trans_rollback();
-                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                log_message('error', 'Erro ao alterar a atividade.', 'FALSE');
                 $this->erro();
             }
         /* Em caso de falha: */
@@ -977,7 +979,7 @@ class Alteracao extends MY_Controller {
         }
     }
     
-    function form_alterar_arte_marcial() {
+    function form_alterar_arte_marcial() {        
         $data = array();
         $id_am = $this->uri->segment(3);
         if($id_am == NULL){
@@ -988,6 +990,7 @@ class Alteracao extends MY_Controller {
     }
     
     function alterar_arte_marcial() {
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         foreach ($this->input->post() as $key => $value){
             if (!is_null($value) && $value != ""){
                 $data[$key] = $value;
@@ -1024,12 +1027,268 @@ class Alteracao extends MY_Controller {
                 redirect(current_url());
             } else {
                 $this->db->trans_rollback();
-                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                log_message('error', 'Erro ao alterar a arte_marcial', 'FALSE');
                 $this->erro();
             }
         /* Em caso de falha: */
         } else {
             $this->form_alterar_arte_marcial();
+        }
+    }
+    
+    function form_alterar_graduacao() {
+        $data = array();
+        $id_g = $this->uri->segment(3);
+        if($id_g == NULL){
+            //redirect('relatorio/graduacao');
+        }
+        $data['query'] = $this->crud->get_where('ta_graduacao', 'id_ta_graduacao='.$id_g)->row();
+        $this->template->load('graduacao/form_alterar', $data);
+    }
+
+    function alterar_graduacao() {
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        $validacoes = array(
+            array(
+                'field' => 'graduacao',
+                'label' => 'Graduação',
+                'rules' => 'trim|required|max_length[50]'
+            )
+        );
+        $id_gra = $this->input->post('id_ta_graduacao');
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            $data['ativo'] = 1;
+            /*echo "<pre>";
+        /*die(print_r($data));*/
+            $this->db->trans_start();
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->update('ta_graduacao', 'id_ta_graduacao', $id_gra, $data);
+            //$id = $this->crud->insert('ta_graduacao', $data);        
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            $this->db->trans_complete();
+            
+            if ($id) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao alterar a graduação.', 'FALSE');
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_alterar_graduacao();
+        }
+    }
+    
+    function form_alterar_horario() {
+        $data = array();
+        $id_h = $this->uri->segment(3);
+        if($id_h == NULL){
+            //redirect('relatorio/graduacao');
+        }
+        $dia_semana = array(0=>'Domingo',1=>'Segunda-feira',2=>'Terça-feira',3=>'Quarta-feira',4=>'Quinta-feira',5=>'Sexta-feira',6=>'Sábado');
+        /*echo "<pre>";
+        die(print_r($dia_semana));*/
+        $data['query'] = $this->crud->get_where('horario', 'id_horario='.$id_h)->row();
+        $data['instrutor'] = $this->crud->get_instrutores()->result();
+        $data['dia_semana'] = $dia_semana;
+        $this->template->load('horario/form_alterar', $data);
+    }
+    
+    public function alterar_horario(){
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        
+        $validacoes = array(            
+            array(
+                'field' => 'dia_semana',
+                'label' => 'Dia da Semana',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'hr_inicio',
+                'label' => 'Hora Início',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'hr_termino',
+                'label' => 'Hora de Início',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'id_instrutor',
+                'label' => 'Instrutor',
+                'rules' => 'required'
+            )
+        );
+        
+        $this->form_validation->set_rules($validacoes);
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+         
+        //die(print_r($data));      
+        if ($this->form_validation->run() === TRUE) {
+            
+            $id_horario = $this->input->post('id_horario');
+            $horario = new stdClass();
+            $horario->hr_inicio = $data['hr_inicio'];
+            $horario->hr_termino = $data['hr_termino'];
+            $horario->dia_semana = $data['dia_semana'];
+            $horario->id_instrutor = $data['id_instrutor'];
+            //$horario->id_turma = $id_turma;
+            $id = $this->crud->update('horario', 'id_horario', $id_horario, $horario);
+            
+            if ($id) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                //die(print_r($id));
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao alterar horário.', 'FALSE');
+                $this->erro();
+            }
+            
+        } else 
+            $this->form_alterar_horario();
+    }
+        
+    public function form_alterar_situacao(){
+        $data = array();
+        $id_situacao = $this->uri->segment(3);
+        if($id_situacao == NULL){
+            redirect('relatorio/situacao');
+        }
+        
+        $data['query'] = $this->crud->get_where('ta_situacao', 'id_ta_situacao ='.$id_situacao)->row();
+        /*echo "<pre>";
+        die(print_r($data['query']));*/
+        $this->template->load('situacao/form_alterar', $data);
+    }
+    
+    function alterar_situacao() {
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        $data = new stdClass();
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data->$key = $value;
+            }
+        }
+        $id_situacao = $this->input->post('id_ta_situacao');
+        
+        $validacoes = array(
+            array(
+                'field' => 'nm_situacao',
+                'label' => 'Nome',
+                'rules' => 'trim|required|max_length[50]'
+            ),
+            array(
+                'field' => 'descricao_situacao',
+                'label' => 'Descrição',
+                'rules' => 'trim|required|max_length[255]'
+            )
+        );
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $this->db->trans_start();            
+            unset($data->id_ta_situacao);
+            /*echo "<pre>";
+            die(print_r($data));*/
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->update('ta_situacao', 'id_ta_situacao', $id_situacao, $data);
+            /*echo "<pre>";
+            die(print_r($id));*/
+            //$id = $this->crud->insert('ta_graduacao', $data);        
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            $this->db->trans_complete();
+            
+            if ($id) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao alterar a situação.', 'FALSE');
+                $this->erro();
+            }
+        } else {
+            $this->form_alterar_situacao();
+        }
+    }
+    
+    public function form_alterar_tipo_telefone(){
+        $data = array();
+        $id_tt = $this->uri->segment(3);
+        if($id_tt == NULL){
+            redirect('relatorio/tipo_telefone');
+        }
+        
+        $data['query'] = $this->crud->get_where('ta_tipo_telefone', 'id_ta_tipo_telefone ='.$id_tt)->row();
+        /*echo "<pre>";
+        die(print_r($data['query']));*/ 
+        $this->template->load('tipo_telefone/form_alterar', $data);
+    }
+    
+    function alterar_tipo_telefone() {
+        $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
+        $data = new stdClass();
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data->$key = $value;
+            }
+        }
+        $id_tt = $this->input->post('id_ta_tipo_telefone');
+        
+        $validacoes = array(
+            array(
+                'field' => 'desc_tipo_telefone',
+                'label' => 'Descrição',
+                'rules' => 'trim|required|max_length[250]'
+            )
+        );
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $this->db->trans_start();            
+            unset($data->id_ta_tipo_telefone);
+            /*echo "<pre>";
+            die(print_r($data));*/
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->update('ta_tipo_telefone', 'id_ta_tipo_telefone', $id_tt, $data);
+            /*echo "<pre>";
+            die(print_r($id));*/
+            //$id = $this->crud->insert('ta_graduacao', $data);        
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            $this->db->trans_complete();
+            
+            if ($id) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao alterar o tipo de telefone.', 'FALSE');
+                $this->erro();
+            }
+        } else {
+            $this->form_alterar_tipo_telefone();
         }
     }
     

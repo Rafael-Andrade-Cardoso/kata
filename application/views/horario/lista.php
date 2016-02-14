@@ -8,6 +8,7 @@
                                   <tr>
                                      <!-- <th> ID</th>-->
                                       <th> Instrutor</th>
+                                      <th> Turma</th>
                                       <th> Hora início</th>
                                       <th> Hora término</th>
                                       <th> Dia da semana</th>
@@ -24,8 +25,9 @@
                                       <tr id="line_menu<?php echo $value->id_horario; ?>">
                                           <!--<td><a href="basic_table.htm#l"><?php echo $value->id_horario; ?></a></td>-->
                                           <td><?php echo $value->nome . " " . $value->sobrenome; ?></td>
-                                          <td><?php echo $value->hr_inicio; ?></td>
-                                          <td><?php echo $value->hr_termino; ?></td>
+                                          <td><?php echo $value->nm_turma; ?></td>
+                                          <td><?php echo substr($value->hr_inicio, 0,5); ?></td>
+                                          <td><?php echo substr($value->hr_termino, 0,5); ?></td>
                                           <td><?php if($value->dia_semana == 0)
                                                         echo "Domingo";
                                                     else if($value->dia_semana == 1)
@@ -43,8 +45,8 @@
                                                 ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_horario); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_horario;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a href="<?php echo base_url("alteracao/form_alterar_horario/" . $value->id_horario); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_horario;?>','<?=base_url("exclusao/excluir_horario");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>
