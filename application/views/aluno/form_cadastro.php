@@ -255,7 +255,7 @@
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 col-sm-2 control-label">Complemento</label>
+      <label class="col-sm-2 col-sm-2 control-label">Complemento<span class="obrigatorio"> *</span></label>
       <div class="col-sm-10">
         <textarea class="form-control" name="complemento" > <?php echo set_value('complemento'); ?> </textarea>
           <?php echo form_error('complemento', '<div class="alert alert-danger">', '</div>'); ?>

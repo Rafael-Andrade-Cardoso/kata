@@ -17,12 +17,12 @@
 
                                       foreach ($tipos_telefone as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_ta_tipo_telefone; ?>">
+                                      <tr id="line<?php echo $value->id_ta_tipo_telefone; ?>">
                                           <td><a href="basic_table.htm#l"><?php echo $value->desc_tipo_telefone; ?></a></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("menu/form_alterar/" . $value->id_ta_tipo_telefone); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_ta_tipo_telefone;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a type="button" OnClick="deleteReg('<?php echo $value->id_ta_tipo_telefone;?>','<?=base_url("exclusao/excluir_tipo_telefone");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

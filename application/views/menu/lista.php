@@ -31,7 +31,7 @@
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("menu/form_alterar/" . $value->id_menu); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_menu;?>','<?=base_url("exclusao/excluir_menu");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a type="button" OnClick="deleteReg('<?php echo $value->id_menu;?>','<?=base_url("exclusao/excluir_menu");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

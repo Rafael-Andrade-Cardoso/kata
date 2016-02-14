@@ -411,7 +411,7 @@ class Cadastro extends MY_Controller {
         $data['tipos_usuario'] = $this->usuario->get_tipo_usuario()->result();
         $data['situacoes'] = $this->crud->get_all('ta_situacao')->result();
         //$data['horario'] = $this->crud->get_horario_somente();
-        $data['turma'] = $this->crud->get_all('turma');
+        $data['turma'] = $this->crud->get_turma_somente();
         $data['id_horario'] = null; 
         $this->template->load('aluno/form_cadastro', $data);
     }
@@ -619,7 +619,9 @@ class Cadastro extends MY_Controller {
             $pessoa_fisica->sobrenome = $data->sobrenome;
             $pessoa_fisica->tipo_sanguineo = $data->tipo_sanguineo;
             $pessoa_fisica->sexo = $data->sexo;
-            $pessoa_fisica->cpf = $data->cpf;
+            if(isset($data->cpf)) {
+                $pessoa_fisica->cpf = $data->cpf;                
+            }
             $this->crud->insert('pessoa_fisica', $pessoa_fisica);
 
             /* Dados para cadastro de dados de pessoa */
@@ -1320,7 +1322,7 @@ class Cadastro extends MY_Controller {
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         //$data['instrutor'] = $this->crud->get_instrutores();
         $data['turma'] = $this->crud->get_all('turma');   
-        $data['atividade'] = $this->crud->get_where('ta_atividade', 'ativo = 1');     
+        $data['atividade'] = $this->crud->get_atividades()->result();     
         $data['horario'] = null;        
         $this->template->load('aula/form_cadastro', $data);
     }
@@ -1563,7 +1565,40 @@ class Cadastro extends MY_Controller {
     }
     
     public function form_tipo_usuario() {
-        
+        $this->template->load('tipo_usuario/form_cadastro');
+    }
+    
+    public function insert_tipo_usuario() {
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        $validacoes = array(
+            array(
+                'field' => 'ds_tipo_usuario',
+                'label' => 'Descrição',
+                'rules' => 'trim|required|max_length[255]'
+            )
+        );
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            $data['ativo'] = 1;
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->insert('ta_tipo_usuario', $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            if (is_numeric($id) && $id > 0){
+                $this->sucesso();
+            } else {
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_tipo_usuario();
+        }
     }
 
 }

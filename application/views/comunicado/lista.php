@@ -26,7 +26,7 @@
                                           <td><?php echo $value->dt_vencimento; ?></td>
                                           <td><?php echo $value->dt_publicacao; ?></td>
                                           <td><?php echo $value->dt_criacao; ?></td>
-                                          <td><?php echo $value->descricao; ?></td>
+                                          <td><?php echo substr($value->descricao, 0, 40); if(strlen($value->descricao) > 40) { echo "...";} ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("menu/form_alterar/" . $value->id_comunicado); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
