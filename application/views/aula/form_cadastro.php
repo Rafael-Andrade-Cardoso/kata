@@ -100,6 +100,10 @@
                         <div class="error"><?php echo form_error('observacao'); ?></div>
                     </div>
                 </div>
+                <label class="col-sm-2 col-sm-2 control-label">Alunos Presentes</label>
+                <div class="col-lg-12" id="alunos_exame">
+                    
+                </div>
 
                 <button class="btn btn-lg btn-primary" >Avançar</button>                
             </div>
@@ -139,6 +143,49 @@
                 //alert(res);
             });
         }
+        
+    function iniciaAjax() { 
+        var req; 
+        
+        try {req = new ActiveXObject("Microsoft.XMLHTTP");} 
+        catch(e){ 
+            try {req = new ActiveXObject("Msxml2.XMLHTTP");} 
+            catch(ex){	
+                try {req = new XMLHttpRequest();} 
+                catch(exc) { 
+                    alert("Esse browser não tem recursos para uso do Ajax!"); 
+                    req = null; 
+                } 
+            } 
+        } 
+        return req; 
+    } 
+    
+    $("#id_turma").change(function() {
+        valIni = document.getElementById("id_turma").value; 
+        ajax = iniciaAjax(); 
+        if(ajax) { 
+            document.getElementById("alunos_exame").innerHTML = "<label class='alunos_exame'>Carregando...</label>";
+            ajax.open("GET", "alunos_turma/" + valIni, true); 
+            ajax.onreadystatechange = function() { 
+                if(ajax.readyState == 4) { 
+                    if(ajax.status == 200) { 
+                        var xx = ajax.responseText; 
+                        document.getElementById("alunos_exame").innerHTML = xx;     
+                    } else { 
+                        alert(ajax.statusText); 
+                    } 
+                }  
+            }
+        ajax.send(null); 
+        } else { 
+            alert("O Ajax nao funcionou corretamente"); 
+        } 
+    });
+    
+    $(document).ready(function(){
+        $('#valor').mask("####,##", {reverse: true});   
+    });
 </script>
 
 <?php echo form_close(); ?>

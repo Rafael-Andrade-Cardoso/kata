@@ -7,6 +7,8 @@
                         $i++;
                     }
                     die(print_r($i));*/
+        //echo "<pre>";
+        //die(print_r($alunos_turma));
     ?>
     <script type="text/javascript">
     
@@ -31,10 +33,10 @@
                     foreach($alunos_turma as $dados) {
                         echo '
                         {
-                        "label": "' . $dados->qtd_aluno . '",
-                        "value": "' . $dados->id_turma . '"
+                        "label": "' . $dados->nm_turma . '",
+                        "value": "' . $dados->qtd_aluno . '"
                         }';
-                        if($i < 1) {
+                        if($i < $dados->n_turmas) {
                             echo ",";
                         } else {
                             break;
@@ -59,61 +61,29 @@
             "dataFormat": "json",
             "dataSource":  {
               "chart": {
-                "caption": "Monthly revenue for last year",
-                "subCaption": "Harry's SuperMart",
-                "xAxisName": "Month",
-                "yAxisName": "Revenues (In USD)",
+                "caption": "Alunos por graduação",
+                "subCaption": "",
+                "xAxisName": "Graduação",
+                "yAxisName": "Qtd. Alunos",
                 "theme": "fint"
             },
             "data": [
-                {
-                  "label": "Jan",
-                  "value": "420000"
-                },
-                {
-                  "label": "Feb",
-                  "value": "810000"
-                },
-                {
-                  "label": "Mar",
-                  "value": "720000"
-                },
-                {
-                  "label": "Apr",
-                  "value": "550000"
-                },
-                {
-                  "label": "May",
-                  "value": "910000"
-                },
-                {
-                  "label": "Jun",
-                  "value": "510000"
-                },
-                {
-                  "label": "Jul",
-                  "value": "680000"
-                },
-                {
-                  "label": "Aug",
-                  "value": "620000"
-                },
-                {
-                  "label": "Sep",
-                  "value": "610000"
-                },
-                {
-                  "label": "Oct",
-                  "value": "490000"
-                },
-                {
-                  "label": "Nov",
-                  "value": "900000"
-                },
-                {
-                  "label": "Dec",
-                  "value": "730000"
-                }
+                <?php
+                $i = 0;
+                    foreach($alunos_graduacao as $dados) {
+                        echo '
+                        {
+                        "label": "' . $dados->graduacao . '",
+                        "value": "' . $dados->qtd_alunos . '"
+                        }';
+                        if($i < $dados->qtd_graduacao) {
+                            echo ",";
+                        } else {
+                            break;
+                        }
+                        $i++;
+                    }
+                ?>
               ]
           }
     

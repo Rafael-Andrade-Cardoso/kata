@@ -12,8 +12,7 @@ class Dashboard extends MY_Controller {
 		$data = array();
         $data['dados'] = $this->crud->get_alunos_turma()->result();
        /*echo "<pre>";
-	   die(print_r($data));*/
-        
+	   die(print_r($data));*/        
         $data['menus'] = $this->crud->get_all('menu');
         //die(print_r($data['menus']));
         $data['tipos_usuario'] = $this->crud->get_tipo_usuario()->result();

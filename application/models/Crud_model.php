@@ -177,7 +177,15 @@ class Crud_model extends CI_Model {
     *
     */
     function get_qtd_alunos_turma(){
-        $sql = "Select count(m.id_matricula) as qtd_aluno, mt.id_turma from matricula_turma as mt	
+        //$sql = "selct count(m.id_matricula) from matricula_turma mt
+        $this->db->select("count(mt.id_matricula) as qtd_aluno, t.nm_turma, count(*) as n_turmas");
+        $this->db->from("matricula_turma mt");
+        $this->db->join("turma t", "t.id_turma = mt.id_turma");   
+        $this->db->group_by("mt.id_turma", "asc");
+        $result = $this->db->get();
+        
+        /*
+        $sql = "Select count(m.id_matricula) as qtd_aluno, mt.id_turma, t.nm_turma, count(*) as n_turmas from matricula_turma as mt	
                                         inner join matricula as m
                                             ON (mt.id_matricula = m.id_matricula)
                                         inner join aluno as a
@@ -191,12 +199,30 @@ class Crud_model extends CI_Model {
                                         left join ta_graduacao as tg
                                             ON (e.id_ta_graduacao = tg.id_ta_graduacao)
                                         left join horario h
-                                            on h.id_turma = mt.id_turma                                                 
+                                            on h.id_turma = mt.id_turma  
+                                        inner join turma t
+                                            on t.id_turma = mt.id_turma                                               
                                         group by mt.id_turma;";
         $result = $this->db->query($sql); 
+        */
         return $result;                           
     }
     
+    function get_alunos_turmas($id_turma) {
+        $sql = "Select a.*, p.nome, pf.sobrenome, mt.id_turma from matricula_turma as mt	
+                                        inner join matricula as m
+                                            ON (mt.id_matricula = m.id_matricula)
+                                        inner join aluno as a
+                                            ON (m.id_aluno = a.id_aluno)
+                                        inner join pessoa_fisica as pf 
+                                            ON(a.id_pessoa_fisica = pf.id_pessoa_fisica)
+                                        inner join pessoa as p
+                                            ON(p.id_pessoa = pf.id_pessoa_fisica)
+                                        Where mt.id_turma = '" . $id_turma . "';";
+        $result = $this->db->query($sql);
+        return $result->result();
+        
+    }
     
     function get_alunos_turma($id_turma = ""){
         $sql = "Select a.*, p.nome, pf.sobrenome, pf.tipo_sanguineo, tg.graduacao, mt.id_turma from matricula_turma as mt	
@@ -550,7 +576,41 @@ class Crud_model extends CI_Model {
             return false;
         }
     }
-
+    
+    function get_proxima_grad($id_matricula) {
+        $this->db->select("*");
+        $this->db->from('ta_graduacao');
+        $this->db->order_by("ordem", "asc");
+        $lista_graduacao = $this->db->get()->result();
+        
+        $this->db->select("*");
+        $this->db->from('exame');
+        $this->db->where('id_matricula =' . $id_matricula);
+        $this->db->order_by("dt_exame", "desc");
+        $this->db->limit(1);
+        $ultima_grad = $this->db->get()->result();
+        //echo "<pre>";
+        //die(print_r($ultima_grad));
+        if(empty($ultima_grad)) {  
+            //die(print_r($lista_graduacao[1]->id_ta_graduacao));
+            return $lista_graduacao[1]->id_ta_graduacao;
+        } else {
+            //echo "<pre>";
+            //die(print_r($lista_graduacao));
+            $flag = 0;
+            foreach($lista_graduacao as $valor){
+                if($flag == 0){
+                    if ($ultima_grad[0]->id_ta_graduacao == $valor->id_ta_graduacao){
+                        $flag = 1;
+                    }
+                } else {
+                    return $valor->id_ta_graduacao;
+                } 
+            }
+        }        
+    }
+    
+    
     function get_mensagens_usuario($id_pessoa) {
         $this->db->select('*, count(*) as qtd');
         $this->db->from('comunicado c');
@@ -605,6 +665,38 @@ class Crud_model extends CI_Model {
         echo "<pre>";
         die(print_r($query->result()));*/
         return $query;
+    }
+    
+    function get_arte_marcial_turma($id_turma) {
+        $this->db->select('t.*, am.id_arte_marcial');
+        $this->db->from('turma t');
+        $this->db->join('horario h', 'h.id_turma = t.id_turma');
+        $this->db->join('aula a', 'a.id_horario = h.id_horario');
+        $this->db->join('arte_marcial am', 'am.id_arte_marcial = a.id_arte_marcial');
+        $this->db->where('t.id_turma =' . $id_turma);
+        $this->db->group_by('t.id_turma');
+        $query = $this->db->get();
+        return $query;
+    }
+    
+    function get_alunos_graduacao() {
+        $this->db->select('*, count(e.id_exame) as qtd_alunos, count(*) as qtd_graduacao');
+        $this->db->from('exame e');
+        $this->db->join('matricula m', 'm.id_matricula = e.id_matricula');
+        $this->db->join('ta_graduacao g', 'g.id_ta_graduacao = e.id_ta_graduacao');
+        $this->db->group_by('g.id_ta_graduacao');
+        $retorno = $this->db->get();
+        return $retorno;
+    }
+    
+    function get_pessoas_tipo_usuario($id_tipo_usuario) {
+        //echo '<pre>';
+        //die(print_r($id_tipo_usuario));
+        $this->db->select('*');
+        $this->db->from('usuario');
+        $this->db->where("id_ta_tipo_usuario =", $id_tipo_usuario);
+        $return = $this->db->get();
+        return $return;
     }
 }
 /*
