@@ -22,7 +22,7 @@
 
                                       foreach ($horarios as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_horario; ?>">
+                                      <tr id="line<?php echo $value->id_horario; ?>">
                                           <!--<td><a href="basic_table.htm#l"><?php echo $value->id_horario; ?></a></td>-->
                                           <td><?php echo $value->nome . " " . $value->sobrenome; ?></td>
                                           <td><?php echo $value->nm_turma; ?></td>

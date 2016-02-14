@@ -22,6 +22,7 @@
                                       $inicio = $this->uri->segment(4);
 
                                       foreach ($turma as $value) {
+                                          //die(print_r($value));
                                   ?>
                                       <tr id="line<?php echo $value->id_turma; ?>">
                                           <!--<td><a href="basic_table.htm#l"><?php echo $value->id_turma; ?></a></td>-->
@@ -35,7 +36,7 @@
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("alteracao/form_alterar_turma/" . $value->id_turma); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_turma;?>','<?=base_url("exclusao/excluir_turma");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a type="button" OnClick="deleteReg('<?php echo $value->id_turma;?>','<?=base_url("exclusao/excluir_turma");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

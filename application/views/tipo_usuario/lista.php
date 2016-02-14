@@ -1,7 +1,7 @@
             <h3><i class="fa fa-angle-right"></i> Lista de usuários</h3>
               <div class="row mt">
                   <div class="col-md-12">
-                      <a href="<?php echo base_url('cadastro/form_usuario'); ?>" class="btn btn-primary">Cadastrar</a><br /><br />
+                      <a href="<?php echo base_url('cadastro/form_tipo_usuario'); ?>" class="btn btn-primary">Cadastrar</a><br /><br />
                       <div class="content-panel">
                           <table class="table table-striped table-advance table-hover">
                               <thead>
@@ -17,12 +17,12 @@
 
                                       foreach ($tipos_usuario as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_ta_tipo_usuario; ?>">
+                                      <tr id="line<?php echo $value->id_ta_tipo_usuario; ?>">
                                           <td><a href="basic_table.htm#l"><?php echo $value->ds_tipo_usuario; ?></a></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                               <a href="<?php echo base_url("menu/form_alterar/" . $value->id_ta_tipo_usuario); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_ta_tipo_usuario;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <a type="button" OnClick="deleteReg('<?php echo $value->id_ta_tipo_usuario;?>','<?=base_url("exclusao/excluir_tipo_usuario");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

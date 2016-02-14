@@ -63,23 +63,30 @@ class Exclusao extends MY_Controller {
 		$status = $this->crud->update_ativos('ta_graduacao', 'id_ta_graduacao', $reg["id"]);         
     }
     
-    public function excluir_horario(){
+
+    public function excluir_horario() {
         $reg = $this->input->post();
         echo $reg['id'];
-		$status = $this->crud->update_ativos('horario', 'id_horario', $reg["id"]);         
+        $status = $this->crud->update_ativos('horario', 'id_horario', $reg['id']);
     }
     
-    public function excluir_situacao(){
+    public function excluir_situacao() {
         $reg = $this->input->post();
         echo $reg['id'];
-		$status = $this->crud->update_ativos('ta_situacao', 'id_ta_situacao', $reg["id"]);         
+        $status = $this->crud->update_ativos('ta_situacao', 'id_ta_situacao', $reg['id']);
     }
     
-    public function excluir_tipo_telefone(){
+    public function excluir_tipo_telefone() {
         $reg = $this->input->post();
         echo $reg['id'];
-		$status = $this->crud->update_ativos('ta_tipo_telefone', 'id_ta_tipo_telefone', $reg["id"]);         
+        $status = $this->crud->update_ativos('ta_tipo_telefone', 'id_ta_tipo_telefone', $reg['id']);
     }
     
+    public function excluir_tipo_usuario() {
+        $reg = $this->input->post();
+        echo $reg['id'];
+        $status = $this->crud->update_ativos('ta_tipo_usuario', 'id_ta_tipo_usuario', $reg['id']);
+    }
+ 
 
 }

@@ -18,7 +18,7 @@
 
                                       foreach ($situacoes as $value) {
                                   ?>
-                                      <tr id="line_menu<?php echo $value->id_ta_situacao; ?>">
+                                      <tr id="line<?php echo $value->id_ta_situacao; ?>">
                                           <td><a href="basic_table.htm#l"><?php echo $value->nm_situacao; ?></a></td>
                                           <td><?php echo $value->descricao_situacao; ?></td>
                                           <td>

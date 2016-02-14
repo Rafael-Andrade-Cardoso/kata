@@ -317,7 +317,7 @@ class Crud_model extends CI_Model {
     function get_atividades($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_atividade');
-        $this->db->where('ta_atividade.ativo = 1');
+        $this->db->where('ativo = 1');
         $this->db->order_by('nm_atividade','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -357,7 +357,7 @@ class Crud_model extends CI_Model {
     }
     
     function get_turma_somente(){
-        $query = $this->db->query('Select * from turma order by nm_turma;');
+        $query = $this->db->query('Select * from turma where ativo = 1 order by nm_turma;');
         //$query = $this->db->query('Select id_turma from turma Where turma.id_horario = '.$id_horario.';');
                                   //die(print_r($query->result()));
         //return $query->result();
@@ -365,14 +365,14 @@ class Crud_model extends CI_Model {
     }
     
     function get_turma_instrutor(){
-        $query = $this->db->query(' Select * from turma as t
-                                        inner join horario as h
+        $query = $this->db->query(' Select t.*, h.id_instrutor, i.*, pf.*, p.* from turma as t
+                                        left join horario as h
                                             ON(t.id_turma = h.id_turma)
-                                        inner join instrutor as i
+                                        left join instrutor as i
                                             ON(h.id_instrutor = i.id_instrutor)
-                                        inner join pessoa_fisica pf 
+                                        left join pessoa_fisica pf 
                                             ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
-                                        inner join pessoa as p 
+                                        left join pessoa as p 
                                             ON(p.id_pessoa = pf.id_pessoa_fisica)
                                         WHERE t.ativo = 1
                                         group by t.id_turma
@@ -383,14 +383,14 @@ class Crud_model extends CI_Model {
     }
 
     function get_turma($id_turma) {
-        $query = $this->db->query(' Select * from turma as t
-                                        inner join horario as h
+        $query = $this->db->query(' Select h.*, t.*, i.*, pf.*, p.* from turma as t
+                                        left join horario as h
                                             ON(t.id_turma = h.id_turma)
-                                        inner join instrutor as i
+                                        left join instrutor as i
                                             ON(h.id_instrutor = i.id_instrutor)
-                                        inner join pessoa_fisica pf 
+                                        left join pessoa_fisica pf 
                                             ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
-                                        inner join pessoa as p 
+                                        left join pessoa as p 
                                             ON(p.id_pessoa = pf.id_pessoa_fisica)
                                         Where t.id_turma = '.$id_turma.';
                                     ');
@@ -452,7 +452,8 @@ class Crud_model extends CI_Model {
         $this->db->join('instrutor i', 'i.id_instrutor = h.id_instrutor');
         $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = i.id_pessoa_fisica');
         $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica');
-        $this->db->where('h.ativo = 1');
+
+        $this->db->where('h.ativo', 1);
         $this->db->order_by('hr_inicio','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -479,7 +480,7 @@ class Crud_model extends CI_Model {
     function get_comunicado($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('comunicado');
-        $this->db->where('comunicado.ativo = 1');
+        $this->db->where('ativo', 1);
         $this->db->order_by('titulo','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -493,7 +494,8 @@ class Crud_model extends CI_Model {
     function get_tipo_usuario($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_tipo_usuario');
-        $this->db->where('ativo = 1');
+
+        $this->db->where('ativo', 1);
         $this->db->order_by('ds_tipo_usuario','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -507,7 +509,7 @@ class Crud_model extends CI_Model {
     function get_tipo_telefone($qtd = 0, $inicio = 0) {
         $this->db->select('*');
         $this->db->from('ta_tipo_telefone');
-        $this->db->where('ativo = 1');
+        $this->db->where('ativo', 1);
         $this->db->order_by('desc_tipo_telefone','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
