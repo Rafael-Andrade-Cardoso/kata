@@ -22,9 +22,10 @@
 										inner join matricula as m
 											ON (m.id_aluno = a.id_aluno)
 									WHERE m.id_ta_situacao = 1 
+                                    AND a.ativo = 1
 									AND m.dt_matricula 
 									BETWEEN "'. $per_ini .'"
-									AND "'. $per_fim .'"
+									AND "'. $per_fim .'"                                   
 									order by ppf.nome;
 									');
 			$data = $query;
@@ -73,7 +74,7 @@
 											inner join turma as t
 												ON(mt.id_turma = t.id_turma)
 											inner join horario as h
-												ON (h.id_horario = t.id_horario)
+												ON (h.id_turma = t.id_turma)
 											inner join instrutor as i
 												ON(h.id_instrutor = i.id_instrutor)
 											inner join pessoa_fisica as pf2  				
@@ -84,6 +85,7 @@
 											BETWEEN "'. $per_ini .'"
 											AND "'. $per_fim .'" 
                                             AND ps.nome = "'.$nome_instrutor.'"
+                                            group by ppf.nome
 											order by ppf.nome;
 									');
             }else{
@@ -107,7 +109,7 @@
 											inner join turma as t
 												ON(mt.id_turma = t.id_turma)
 											inner join horario as h
-												ON (h.id_horario = t.id_horario)
+												ON (h.id_turma = t.id_turma)
 											inner join instrutor as i
 												ON(h.id_instrutor = i.id_instrutor)
 											inner join pessoa_fisica as pf2  				
@@ -117,6 +119,7 @@
 											WHERE t.dt_inicio
 											BETWEEN "'. $per_ini .'"
 											AND "'. $per_fim .'" 
+                                            group by ppf.nome
 											order by ppf.nome;
 									');
             }
@@ -137,9 +140,11 @@
 										inner join horario as h
 											ON (h.id_instrutor = i.id_instrutor)
 										inner join turma as t
-											ON (h.id_horario = t.id_horario)
+											ON (h.id_turma = t.id_turma)
 									WHERE t.dt_final <= "'.  $per_fim . '"
 									AND t.dt_inicio >= "'.  $per_ini . '"
+                                    AND t.ativo = 1
+                                    group by nm_turma                                    
 									order by ppf.nome;
 									');
 			return $query;

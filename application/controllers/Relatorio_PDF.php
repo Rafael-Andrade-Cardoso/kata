@@ -39,7 +39,7 @@
 				$this->pdf->SetXY(65,$y);
 				$this->pdf->Cell(30,6,data_from_db($row['dt_nascimento']),1,0,'R');
 				$this->pdf->SetXY(95,$y);
-				if($row['sexo'] == "F")
+				if($row['sexo'] == 1)
 					$this->pdf->Cell(20,6,"Feminino",1,0,'R');
 				else
 					$this->pdf->Cell(20,6,"Masculino",1,0,'R');
@@ -56,13 +56,13 @@
 			//190 tamanho máximo da celula
 			$this->pdf->SetFont('Arial','B',12);// Configurando a fonte
 			$this->pdf->SetXY(10,55);// Posicionando as células
-			$this->pdf->Cell(55,10,"Nome",1,1,'C');// Configurando as células
-			$this->pdf->SetXY(65,55);
+			$this->pdf->Cell(50,10,"Nome",1,1,'C');// Configurando as células
+			$this->pdf->SetXY(60,55);
 			$this->pdf->Cell(30,10,"Nascimento",1,1,'C');
-			$this->pdf->SetXY(95,55);
+			$this->pdf->SetXY(90,55);
 			$this->pdf->Cell(20,10,"Sexo",1,1,'C');
-			$this->pdf->SetXY(115,55);
-			$this->pdf->Cell(25,10,"CPF",1,1,'C');
+			$this->pdf->SetXY(110,55);
+			$this->pdf->Cell(30,10,"CPF",1,1,'C');
 			$this->pdf->SetXY(140,55);
 			$this->pdf->Cell(60,10,utf8_decode("E-mail"),1,1,'C');
 			
@@ -70,25 +70,25 @@
 			$y = 65;
 			foreach($result->result_array() as $row){
 				$this->pdf->SetXY(10,$y);
-				$this->pdf->Cell(55,6,$row['nome']. " " . $row['sobrenome'],1,0,'L');//,$fill);
-				$this->pdf->SetXY(65,$y);
+				$this->pdf->Cell(50,6,$row['nome']. " " . $row['sobrenome'],1,0,'L');//,$fill);
+				$this->pdf->SetXY(60,$y);
 				$this->pdf->Cell(30,6,data_from_db($row['dt_nascimento']),1,0,'R');
-				$this->pdf->SetXY(95,$y);
+				$this->pdf->SetXY(90,$y);
 				if($row['sexo'] == "F")
 					$this->pdf->Cell(20,6,"Feminino",1,0,'R');
 				else
 					$this->pdf->Cell(20,6,"Masculino",1,0,'R');
 				
-				$this->pdf->SetXY(115,$y);
-				$this->pdf->Cell(25,6,$row['cpf'],1,0,'R');
+				$this->pdf->SetXY(110,$y);
+				$this->pdf->Cell(30,6,$row['cpf'],1,0,'R');
 				$this->pdf->SetXY(140,$y);
 				$this->pdf->Cell(60,6,$row['email'],1,0,'L');
 				$y = $y+6; 		
 			}
 		}
 		
-		function aluno_instrutor($per_ini, $per_fim){
-			$result = $this->relatorio_model->aluno_instrutor($per_ini, $per_fim);
+		function aluno_instrutor($per_ini, $per_fim, $nome_instrutor){
+			$result = $this->relatorio_model->aluno_instrutor($per_ini, $per_fim,$nome_instrutor);
 			//200 tamanho máximo da celula
 			$this->pdf->SetFont('Arial','B',12);// Configurando a fonte
 			$this->pdf->SetXY(10,55);// Posicionando as células
@@ -107,7 +107,7 @@
 				$this->pdf->SetXY(65,$y);
 				$this->pdf->Cell(40,6,data_from_db($row['nasc_aluno']),1,0,'R');
 				$this->pdf->SetXY(105,$y);
-				if($row['sexo_aluno'] == "F")
+				if($row['sexo_aluno'] == 1)
 					$this->pdf->Cell(40,6,"Feminino",1,0,'R');
 				else
 					$this->pdf->Cell(40,6,"Masculino",1,0,'R');
@@ -120,18 +120,16 @@
 		
 		function turma($per_ini, $per_fim){
 			$result = $this->relatorio_model->get_turma($per_ini, $per_fim);
-			//200 tamanho máximo da celula
+			//200 tamanho máximo da folha
 			$this->pdf->SetFont('Arial','B',12);// Configurando a fonte
-			$this->pdf->SetXY(10,55);
-			$this->pdf->Cell(50,10,"Instrutor",1,1,'C');
-			$this->pdf->SetXY(60,55);// Posicionando as células			
-			$this->pdf->Cell(22.5,10,"Hora inicio",1,1,'C');// Configurando as células
-			$this->pdf->SetXY(82.5,55);
-			$this->pdf->Cell(22.5,10,"Hora Fim",1,1,'C');
-			$this->pdf->SetXY(105,55);
-			$this->pdf->Cell(30,10,"Dia da semana",1,1,'C');
-			$this->pdf->SetXY(135,55);
-			$this->pdf->Cell(40,10,utf8_decode("Máximo de alunos"),1,1,'C');
+            $this->pdf->SetXY(10,55);
+			$this->pdf->Cell(30,10,"Nome da turma",1,1,'C');
+			$this->pdf->SetXY(40,55);
+			$this->pdf->Cell(60,10,"Instrutor",1,1,'C');
+			$this->pdf->SetXY(100,55);// Posicionando as células
+			$this->pdf->Cell(30,10,utf8_decode("Data de início"),1,1,'C');
+			$this->pdf->SetXY(130,55);
+			$this->pdf->Cell(45,10,utf8_decode("Máximo de alunos"),1,1,'C');
 			$this->pdf->SetXY(175,55);
 			$this->pdf->Cell(25,10,utf8_decode("Valor"),1,1,'C');
 			
@@ -139,28 +137,13 @@
 			$y = 65;
 			foreach($result->result_array() as $row){
 				$this->pdf->SetXY(10,$y);
-				$this->pdf->Cell(50,6,$row['nome']. " ". $row['sobrenome'],1,0,'L');
-				$this->pdf->SetXY(60,$y);
-				$this->pdf->Cell(22.5,6,$row['hr_inicio'],1,0,'R');//,$fill);
-				$this->pdf->SetXY(82.5,$y);
-				$this->pdf->Cell(22.5,6,$row['hr_termino'],1,0,'R');
-				$this->pdf->SetXY(105,$y);
-				if($row['dia_semana'] == 0)
-					$this->pdf->Cell(30,6,"Domingo",1,0,'L');
-				else if($row['dia_semana'] == 1)
-					$this->pdf->Cell(30,6,"Segunda",1,0,'L');
-				else if($row['dia_semana'] == 2)
-					$this->pdf->Cell(30,6,utf8_decode("Terça"),1,0,'L');
-				else if($row['dia_semana'] == 3)
-					$this->pdf->Cell(30,6,"Quarta",1,0,'L');
-				else if($row['dia_semana'] == 4)
-					$this->pdf->Cell(30,6,"Quinta",1,0,'L');
-				else if($row['dia_semana'] == 5)
-					$this->pdf->Cell(30,6,"Sexta",1,0,'L');
-				else if($row['dia_semana'] == 6)
-					$this->pdf->Cell(30,6,utf8_decode("Sábado"),1,0,'L');
-				$this->pdf->SetXY(135,$y);
-				$this->pdf->Cell(40,6,$row['max_aluno'],1,0,'R');
+				$this->pdf->Cell(30,6,$row['nm_turma'],1,0,'L');
+                $this->pdf->SetXY(40,$y);
+				$this->pdf->Cell(60,6,$row['nome']. " ". $row['sobrenome'],1,0,'L');
+				$this->pdf->SetXY(100,$y);
+				$this->pdf->Cell(30,6,data_from_db($row['dt_inicio']),1,0,'R');
+				$this->pdf->SetXY(130,$y);
+				$this->pdf->Cell(45,6,$row['max_aluno'],1,0,'R');
 				$this->pdf->SetXY(175,$y);
 				$this->pdf->Cell(25,6,$row['valor_mensalidade'],1,0,'R');
 				$y = $y+6; 		
@@ -237,7 +220,7 @@
 				$this->pdf->SetXY(65,$y);
 				$this->pdf->Cell(40,6,data_from_db($row['dt_nascimento']),1,0,'R');//,$fill);
 				$this->pdf->SetXY(105,$y);
-				if($row['sexo'] == "F")
+				if($row['sexo'] == 1)
 					$this->pdf->Cell(20,6,"Feminino",1,0,'R');
 				else
 					$this->pdf->Cell(20,6,"Masculino",1,0,'R');
