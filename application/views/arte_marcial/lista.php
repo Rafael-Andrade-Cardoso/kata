@@ -23,7 +23,7 @@
                                           <td><?php echo $value->descricao; ?></td>
                                           <td>
                                               <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_arte_marcial); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                              <a href="<?php echo base_url("alteracao/form_alterar_arte_marcial/" . $value->id_arte_marcial); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                               <a type="button" onclick="return deleteReg('<?php echo $value->id_arte_marcial;?>','<?=base_url("exclusao/excluir_arte_marcial");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>

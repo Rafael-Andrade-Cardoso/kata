@@ -977,6 +977,62 @@ class Alteracao extends MY_Controller {
         }
     }
     
+    function form_alterar_arte_marcial() {
+        $data = array();
+        $id_am = $this->uri->segment(3);
+        if($id_am == NULL){
+            redirect('relatorio/arte_marcial');
+        }
+        $data['query'] = $this->crud->get_where('arte_marcial', 'id_arte_marcial='.$id_am)->row();
+        $this->template->load('arte_marcial/form_alterar', $data);
+    }
+    
+    function alterar_arte_marcial() {
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        $id_am = $this->input->post('id_arte_marcial');
+        $validacoes = array(
+            array(
+                'field' => 'nm_arte_marcial',
+                'label' => 'Nome',
+                'rules' => 'trim|required|max_length[50]'
+            ),
+            array(
+                'field' => 'descricao',
+                'label' => 'Descrição',
+                'rules' => 'trim|required|max_length[255]'
+            )
+        );
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+        $data['ativo'] = 1;
+        /*echo "<pre>";
+        die(print_r($data));*/
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            $this->db->trans_start();
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->update('arte_marcial', 'id_arte_marcial', $id_am, $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+            $this->db->trans_complete();
+            
+            if ($this->db->trans_status() === TRUE) {
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao inserir a aluno.', 'FALSE');
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_alterar_arte_marcial();
+        }
+    }
+    
 
     public function sucesso($msg = null) {
         if ($msg != null){
