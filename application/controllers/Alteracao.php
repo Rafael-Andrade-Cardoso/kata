@@ -1290,8 +1290,61 @@ class Alteracao extends MY_Controller {
         } else {
             $this->form_alterar_tipo_telefone();
         }
+    }    
+    
+    public function form_alterar_tipo_usuario(){
+        $data = array();
+        $id_tu = $this->uri->segment(3);
+        if($id_tu == NULL){
+            redirect('relatorio/tipo_usuario');
+        }
+        
+        $data['query'] = $this->crud->get_where('ta_tipo_usuario', 'id_ta_tipo_usuario ='.$id_tu)->row();
+        /*echo "<pre>";
+        die(print_r($data['query']));*/ 
+        $this->template->load('tipo_usuario/form_alterar', $data);
     }
     
+    public function alterar_tipo_usuario() {
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        $validacoes = array(
+            array(
+                'field' => 'ds_tipo_usuario',
+                'label' => 'Descrição',
+                'rules' => 'trim|required|max_length[255]'
+            )
+        );
+        /* Configura as validações */
+        $this->form_validation->set_rules($validacoes);
+
+        /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+        if ($this->form_validation->run() === TRUE) {
+            $id_tipo = $data['id_ta_tipo_usuario'];
+            unset($data['id_ta_tipo_usuario']);
+            $data['ativo'] = 1;
+            
+            /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+            $id = $this->crud->update('ta_tipo_usuario', 'id_ta_tipo_usuario', $id_tipo, $data);
+            /* Verifica se o retorno da função é um valor numérico e maior que 0 */
+           /* echo "<pre>";
+            die(print_r($id));*/
+            if ($id > 0){
+                $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
+                redirect(current_url());
+            } else {
+                $this->db->trans_rollback();
+                log_message('error', 'Erro ao alterar o tipo de usuário.', 'FALSE');
+                $this->erro();
+            }
+        /* Em caso de falha: */
+        } else {
+            $this->form_alterar_tipo_usuario();
+        }
+    }
 
     public function sucesso($msg = null) {
         if ($msg != null){
