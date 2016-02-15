@@ -1156,9 +1156,6 @@ class Cadastro extends MY_Controller {
     public function form_turma(){
         $data['arte_marcial'] = $this->get_all('arte_marcial');
         $data['instrutor'] = $this->crud->get_instrutores()->result();
-
-        //echo "<pre>";
-        //die(print_r($data));
         $this->template->load('turma/form_cadastro', $data);
     }
     
@@ -1169,28 +1166,12 @@ class Cadastro extends MY_Controller {
                 $data[$key] = $value;
             }
         }
-        //die(print_r($data));
         $this->form_validation->set_error_delimiters('<span class="alert alert-danger">', '</span>');
         $validacoes = array(
             array(
                 'field' => 'nm_turma',
                 'label' => 'Nome da turma',
                 'rules' => 'trim|required|max_length[50]'
-            ),
-            array(
-                'field' => 'dia_semana',
-                'label' => 'Dia da Semana',
-                'rules' => 'trim|required'
-            ),
-            array(
-                'field' => 'hr_inicio',
-                'label' => 'Hora Início',
-                'rules' => 'trim|required'
-            ),
-            array(
-                'field' => 'hr_termino',
-                'label' => 'Hora de Início',
-                'rules' => 'trim|required'
             ),
             array(
                 'field' => 'id_arte_marcial',
@@ -1216,50 +1197,22 @@ class Cadastro extends MY_Controller {
                 'field' => 'valor_mensalidade',
                 'label' => 'Valor mensalidade',
                 'rules' => 'trim|required|max_length[10]'
-            )
-        );
-        
-        if (!empty($data['dia_semana_2'])) {
-            $validacoes_dia_2 = array(
-                array(
-                    'field' => 'dia_semana_2',
-                    'label' => 'Dia da Semana',
-                    'rules' => 'trim|required'  
-                ),
-                array(
-                    'field' => 'hr_inicio_2',
-                    'label' => 'Hora Início',
-                    'rules' => 'trim|required'
-                ),
-                array(
-                    'field' => 'hr_termino_2',
-                    'label' => 'Hora de Início',
-                    'rules' => 'trim|required'
-                )
-            );
-            $validacoes = array_merge($validacoes, $validacoes_dia_2);
-        }
-        
-        if (!empty($data['dia_semana_3'])) {
-            $validacoes_dia_3 = array(
-                array(
-                    'field' => 'dia_semana_3',
-                    'label' => 'Dia da Semana',
-                    'rules' => 'trim|required'  
-                ),
-                array(
-                    'field' => 'hr_inicio_3',
-                    'label' => 'Hora Início',
-                    'rules' => 'trim|required'
-                ),
-                array(
-                    'field' => 'hr_termino_3',
-                    'label' => 'Hora de Início',
-                    'rules' => 'trim|required'
-                )
-            );
-            $validacoes = array_merge($validacoes, $validacoes_dia_3);
-        }
+            ),
+            array(
+                'field' => 'dia_semana[0]',
+                'label' => 'Dia da Semana',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'hr_inicio[0]',
+                'label' => 'Hora Início',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'hr_termino[0]',
+                'label' => 'Hora de Início',
+                'rules' => 'trim|required'
+            ));
         
         $this->form_validation->set_rules($validacoes);
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
@@ -1276,16 +1229,21 @@ class Cadastro extends MY_Controller {
             $turma->ativo = 1;
             
             $id_turma = $this->crud->insert('turma', $turma);
+            foreach ($data['dia_semana'] as $key => $value) {
+                    if (($data['dia_semana'][$key] != null) && ($data['dia_semana'][$key] != '-1') && ($data['dia_semana'][$key] != '') && ($data['hr_inicio'][$key] != '') && ($data['hr_inicio'][$key] != '0') && ($data['hr_termino'][$key] != '') && ($data['hr_termino'][$key] != 0)) {
+                        $horario = array();
+                        $horario['hr_inicio'] = $data['hr_inicio'][$key];
+                        $horario['hr_termino'] = $data['hr_termino'][$key];
+                        $horario['dia_semana'] = $data['dia_semana'][$key];
+                        $horario['id_instrutor'] = $data['id_instrutor'];
+                        $horario['id_turma'] = $id_turma;
+                        $horario['ativo'] = 1;
+                        $this->crud->insert('horario', $horario);
+                    }
+            }
             
-            $horario = new stdClass();
-            $horario->hr_inicio = $data['hr_inicio'];
-            $horario->hr_termino = $data['hr_termino'];
-            $horario->dia_semana = $data['dia_semana'];
-            $horario->id_instrutor = $data['id_instrutor'];
-            $horario->id_turma = $id_turma;
-            
-            $this->crud->insert('horario', $horario);            
-            
+                        
+            /*
             if (!empty($data['dia_semana_2'])) {
                 $horario_2 = new stdClass();
                 $horario_2->hr_inicio = $data['hr_inicio_2'];
@@ -1306,15 +1264,16 @@ class Cadastro extends MY_Controller {
                 
                 $this->crud->insert('horario', $horario_3);                 
             }            
-            
+            */
             if (is_numeric($id_turma) && $id_turma > 0){
                 $this->sucesso();
             } else {
                 $this->erro();
             }
         /* Em caso de falha: */
-        } else 
+        } else { 
             $this->form_turma();
+        }
     }
     
     // Cadastra aula e as presenças

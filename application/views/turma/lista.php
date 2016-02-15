@@ -1,7 +1,7 @@
             <h3><i class="fa fa-angle-right"></i> Lista de turmas</h3>
               <div class="row mt">
                   <div class="col-md-12">
-                      <a href="<?php echo base_url('cadastrar/form_turma'); ?>" class="btn btn-primary">Cadastrar</a><br /><br />
+                      <a href="<?php echo base_url('cadastro/form_turma'); ?>" class="btn btn-primary">Cadastrar</a><br /><br />
                       <div class="content-panel">
                           <table class="table table-striped table-advance table-hover">
                               <thead>

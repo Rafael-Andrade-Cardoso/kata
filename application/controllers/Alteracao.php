@@ -129,16 +129,33 @@ class Alteracao extends MY_Controller {
         $i=0;
         $data['arte_marcial'] = $this->crud->get_all('arte_marcial')->result();
         $data['instrutor'] = $this->crud->get_instrutores()->result();
+<<<<<<< HEAD
        // $data['query'] = $this->crud->get_turma($id_turma)->result();
         
         $query = $this->crud->get_turma($id_turma);
         /*echo "<pre>";
         die(print_r($query->result())); */
         if($query->num_rows() >= 1){
+=======
+       // $data['query'] = $this->crud->get_turma($id_turma)->result();        
+        $turma = $this->crud->get_turma_somente($id_turma)->row();
+        $horarios = $this->crud->get_horarios_turma($id_turma)->result();
+        //echo "<pre>";
+        //die(print_r($turma));
+        /*
+        if($query->num_rows() > 0){
+>>>>>>> 82eff9ccf27536deb9316bd7126372fd1926ee47
             for($i=0;$i<$query->num_rows();$i++){
-                $data['query'.$i] = $query->row($i);
+                $data['horarios']['query'.$i] = $query->row($i);
             }
         }
+        */
+        $data['turma'] = $turma;
+        $data['horarios'] = $horarios;
+        $data['id_turma'] = $id_turma;
+        $data['nm_turma'] = $turma->nm_turma;
+        $data['id_instrutor'] = $horarios[0]->id_instrutor;
+        
         //$data['i'] = $i;
         $this->template->load('turma/form_alterar', $data);
     }
@@ -164,17 +181,17 @@ class Alteracao extends MY_Controller {
                 'rules' => 'trim|required|max_length[50]'
             ),
             array(
-                'field' => 'dia_semana',
+                'field' => 'dia_semana[0]',
                 'label' => 'Dia da Semana',
                 'rules' => 'trim|required'
             ),
             array(
-                'field' => 'hr_inicio',
+                'field' => 'hr_inicio[0]',
                 'label' => 'Hora Início',
                 'rules' => 'trim|required'
             ),
             array(
-                'field' => 'hr_termino',
+                'field' => 'hr_termino[0]',
                 'label' => 'Hora de Início',
                 'rules' => 'trim|required'
             ),
@@ -199,7 +216,7 @@ class Alteracao extends MY_Controller {
                 'rules' => 'trim|required|max_length[10]'
             )
         );
-        
+        /*
         if (!empty($data['dia_semana_2'])) {
             $validacoes_dia_2 = array(
                 array(
@@ -241,6 +258,7 @@ class Alteracao extends MY_Controller {
             );
             $validacoes = array_merge($validacoes, $validacoes_dia_3);
         }
+        */
         $this->form_validation->set_rules($validacoes);
         
         /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
@@ -250,17 +268,18 @@ class Alteracao extends MY_Controller {
         /* Senão, caso sucesso: */
         } else {
                         
-            $id_turma = $this->input->post('id_turma');
-            $data['dia_semana'] = $this->input->post('dia_semana');
+            //$id_turma = $this->input->post('id_turma');
+            //$data['dia_semana'] = $this->input->post('dia_semana');
+            /*
             $data['dia_semana_2'] = $this->input->post('dia_semana_2');
             $data['dia_semana_3'] = $this->input->post('dia_semana_3');
-            
+            */
             $horarios_turma = $this->crud->get_where('horario', 'id_turma ='.$id_turma)->result();
             $i=0;
             $hor = array();
+           
             foreach($horarios_turma as $value){
-                $hor[$i] = $value->id_horario;
-                $i++;
+                $this->crud->delete('horario', 'id_turma', $value->id_turma);
             }
             /**/
                         
@@ -273,51 +292,29 @@ class Alteracao extends MY_Controller {
             $turma->dt_inicio = $data['dt_inicio'];
             $turma->ativo = 1;
             $this->crud->update('turma', 'id_turma', $id_turma, $turma);
-           // $id_turma = $this->crud->insert('turma', $turma);
+            // $id_turma = $this->crud->insert('turma', $turma);
             
-            $horario = new stdClass();
-            $horario->hr_inicio = $data['hr_inicio'];
-            $horario->hr_termino = $data['hr_termino'];
-            $data['dia_semana'] = $this->input->post('dia_semana');
-            $horario->dia_semana = $data['dia_semana'];
-            $horario->id_instrutor = $data['id_instrutor'];
-            //$horario->id_turma = $id_turma;
+            foreach ($data['dia_semana'] as $key => $value) {
+                //die(print_r($data['dia_semana']));
+                    if (($data['dia_semana'][$key] != null) && ($data['dia_semana'][$key] != '-1') && ($data['dia_semana'][$key] != '') && ($data['hr_inicio'][$key] != '') && ($data['hr_inicio'][$key] != '0') && ($data['hr_termino'][$key] != '') && ($data['hr_termino'][$key] != 0)) {
+                        $horario = array();
+                        $horario['hr_inicio'] = $data['hr_inicio'][$key];
+                        $horario['hr_termino'] = $data['hr_termino'][$key];
+                        $horario['dia_semana'] = $data['dia_semana'][$key];
+                        $horario['id_instrutor'] = $data['id_instrutor'];
+                        $horario['id_turma'] = $id_turma;
+                        $horario['ativo'] = 1;
+                        $this->crud->insert('horario', $horario);
+                    }
+            }    
             
-            $where = 'id_turma ='.$id_turma .' and id_horario ='.$hor[0];
-            $this->crud->update_complexo('horario', $where, $horario);
-            
-            if (!empty($data['dia_semana_2'])) {
-                $horario_2 = new stdClass();
-                $horario_2->hr_inicio = $data['hr_inicio_2'];
-                $horario_2->hr_termino = $data['hr_termino_2'];
-                $data['dia_semana_2'] = $this->input->post('dia_semana_2');                
-                $horario_2->dia_semana = $data['dia_semana_2'];
-                $horario_2->id_instrutor = $data['id_instrutor'];
-                
-                $where = 'id_turma ='.$id_turma .' and id_horario ='.$hor[1];
-                $this->crud->update_complexo('horario', $where, $horario_2);                
-            }
-            if (!empty($data['dia_semana_3'])) {
-                $horario_3 = new stdClass();
-                $horario_3->hr_inicio = $data['hr_inicio_3'];
-                $horario_3->hr_termino = $data['hr_termino_3'];
-                $data['dia_semana_3'] = $this->input->post('dia_semana_3');
-                $horario_3->dia_semana = $data['dia_semana_3'];
-                $horario_3->id_instrutor = $data['id_instrutor'];
-                
-                $where = 'id_turma ='.$id_turma .' and id_horario ='.$hor[2];
-                $this->crud->update_complexo('horario', $where, $horario_3);                
-            }  
-            /*echo "<pre>";
-            die(print_r($data));*/            
-            $this->db->trans_complete(); $this->db->trans_complete(); 
-                       
+            $this->db->trans_complete(); 
             if ($this->db->trans_status() === TRUE) {
                 $this->session->set_flashdata('edicaook', 'Edição efetuada com sucesso');
                 redirect(current_url());
             } else {
                 $this->db->trans_rollback();
-                log_message('error', 'Erro ao alterar o instrutor.', 'FALSE');
+                log_message('error', 'Erro ao alterar o turma.', 'FALSE');
                 $this->erro();
             }
         }
