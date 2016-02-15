@@ -28,6 +28,13 @@
                                 <label>
                                     <input type="radio" id="6" name="relatorio" value="Relatório de alunos por graduação."> Relatório de alunos por graduação.
                                 </label><br />  
+                                <label>
+                                    <input type="radio" id="7" name="relatorio" value="Relatório do valor das mensalidades por aluno."> Relatório do valor das mensalidades por aluno.
+                                </label><br /> 
+                                <label>
+                                    <input type="radio" id="8" name="relatorio" value="Relatório de exames."> Relatório de exames.
+                                </label><br />
+                                
                                 <div class="error"><?php echo form_error('relatorio'); ?></div>                                                
                             </div>                                                    
                            
@@ -178,8 +185,53 @@
                             </div>
                         </div>
                     <button type="submit" id="botao" class="btn btn-theme">Gerar pdf</button>    
-                    </div> <!-- form-panel -->                 
-                                                        
+                    </div> <!-- form-panel -->   
+                    
+                    <div class="form-panel" id="periodo7" >                       
+                        <div>                        
+                            <h4 class="mb"><i class="fa fa-angle-right"></i> Selecione o período que deseja imprimir! </h4>               
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">Data inícial das matriculas<font color="#FF0202">*</font></label>                                        
+                                    <div class="col-sm-3">
+                                        <input type="date" id="dt_inicio_7" class="form-control" name="dt_inicio_7">
+                                    </div>
+                                    <div class="error"><?php echo form_error('dt_inicio_7'); ?></div>                                        
+                            </div>
+                            
+                            <div class="form-group">      
+                                <label class="col-sm-2 col-sm-2 control-label">Data final das mastriculas<font color="#FF0202">*</font></label>
+                                <div class="col-sm-3">
+                                    <input type="date" id="dt_fim_7" class="form-control" name="dt_fim_7">
+                                </div>
+                                <div class="error"><?php echo form_error('dt_fim_7'); ?></div>
+                            </div>
+                        </div>
+                    <button type="submit" id="botao" class="btn btn-theme">Gerar pdf</button>    
+                    </div> <!-- form-panel -->                    
+                    
+                    <div class="form-panel" id="periodo8" >                       
+                        <div>                        
+                            <h4 class="mb"><i class="fa fa-angle-right"></i> Selecione o período que deseja imprimir! </h4>               
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 col-sm-2 control-label">Data inícial das matriculas<font color="#FF0202">*</font></label>                                        
+                                    <div class="col-sm-3">
+                                        <input type="date" id="dt_inicio_8" class="form-control" name="dt_inicio_8">
+                                    </div>
+                                    <div class="error"><?php echo form_error('dt_inicio_8'); ?></div>                                        
+                            </div>
+                            
+                            <div class="form-group">      
+                                <label class="col-sm-2 col-sm-2 control-label">Data final das mastriculas<font color="#FF0202">*</font></label>
+                                <div class="col-sm-3">
+                                    <input type="date" id="dt_fim_8" class="form-control" name="dt_fim_8">
+                                </div>
+                                <div class="error"><?php echo form_error('dt_fim_8'); ?></div>
+                            </div>
+                        </div>
+                    <button type="submit" id="botao" class="btn btn-theme">Gerar pdf</button>    
+                    </div> <!-- form-panel -->                    
           		</div><!-- col-lg-8-->      	
             </div><!-- /row -->
 
@@ -198,6 +250,10 @@
             var data_1 = document.getElementById("dt_inicio_5").value;            
         else if(document.getElementById("dt_inicio_6").value != '')
             var data_1 = document.getElementById("dt_inicio_6").value;
+        else if(document.getElementById("dt_inicio_7").value != '')
+            var data_1 = document.getElementById("dt_inicio_7").value;
+        else if(document.getElementById("dt_inicio_8").value != '')
+            var data_1 = document.getElementById("dt_inicio_8").value;
             
         if(document.getElementById("dt_fim").value != "")   
             var data_2 = document.getElementById("dt_fim").value;
@@ -210,7 +266,11 @@
         else if(document.getElementById("dt_fim_5").value != "")   
             var data_2 = document.getElementById("dt_fim_5").value;
         else if(document.getElementById("dt_fim_6").value != "")   
-            var data_2 = document.getElementById("dt_fim_6").value;        
+            var data_2 = document.getElementById("dt_fim_6").value;  
+        else if(document.getElementById("dt_fim_7").value != "")   
+            var data_2 = document.getElementById("dt_fim_7").value; 
+        else if(document.getElementById("dt_fim_8").value != "")   
+            var data_2 = document.getElementById("dt_fim_8").value;
         
         if(data_1 != ""){
             if ((data_1 > data_2)) {
@@ -246,6 +306,8 @@
         $( "#periodo4" ).fadeOut( "fast" );
         $( "#periodo5" ).fadeOut( "fast" );
         $( "#periodo6" ).fadeOut( "fast" ); 
+        $( "#periodo7" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
     });
         
     $( "#1" ).click(function() {
@@ -255,6 +317,8 @@
         $( "#periodo4" ).fadeOut( "fast" );
         $( "#periodo5" ).fadeOut( "fast" );
         $( "#periodo6" ).fadeOut( "fast" );
+        $( "#periodo7" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
     });
     $( "#2" ).click(function() {
         $( "#periodo2" ).fadeIn( "slow", "linear" );
@@ -263,6 +327,8 @@
         $( "#periodo4" ).fadeOut( "fast" );
         $( "#periodo5" ).fadeOut( "fast" );
         $( "#periodo6" ).fadeOut( "fast" );
+        $( "#periodo7" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
     });
     $( "#3" ).click(function() {
         $( "#periodo3" ).fadeIn( "slow", "linear" );
@@ -271,6 +337,8 @@
         $( "#periodo4" ).fadeOut( "fast" );
         $( "#periodo5" ).fadeOut( "fast" );
         $( "#periodo6" ).fadeOut( "fast" );
+        $( "#periodo7" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
     });
     $( "#4" ).click(function() {
         $( "#periodo4" ).fadeIn( "slow", "linear" );
@@ -279,6 +347,8 @@
         $( "#periodo1" ).fadeOut( "fast" );
         $( "#periodo5" ).fadeOut( "fast" );
         $( "#periodo6" ).fadeOut( "fast" );
+        $( "#periodo7" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
     });
     $( "#5" ).click(function() {
         $( "#periodo5" ).fadeIn( "slow", "linear" );
@@ -287,6 +357,8 @@
         $( "#periodo4" ).fadeOut( "fast" );
         $( "#periodo1" ).fadeOut( "fast" );
         $( "#periodo6" ).fadeOut( "fast" );
+        $( "#periodo7" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
     });
     $( "#6" ).click(function() {
         $( "#periodo6" ).fadeIn( "slow", "linear" );
@@ -295,6 +367,28 @@
         $( "#periodo4" ).fadeOut( "fast" );
         $( "#periodo5" ).fadeOut( "fast" );
         $( "#periodo1" ).fadeOut( "fast" );
+        $( "#periodo7" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
+    });
+    $( "#7" ).click(function() {
+        $( "#periodo7" ).fadeIn( "slow", "linear" );
+        $( "#periodo2" ).fadeOut( "fast" );
+        $( "#periodo3" ).fadeOut( "fast" );
+        $( "#periodo4" ).fadeOut( "fast" );
+        $( "#periodo5" ).fadeOut( "fast" );
+        $( "#periodo1" ).fadeOut( "fast" );
+        $( "#periodo6" ).fadeOut( "fast" );
+        $( "#periodo8" ).fadeOut( "fast" );
+    });
+    $( "#8" ).click(function() {
+        $( "#periodo8" ).fadeIn( "slow", "linear" );
+        $( "#periodo2" ).fadeOut( "fast" );
+        $( "#periodo3" ).fadeOut( "fast" );
+        $( "#periodo4" ).fadeOut( "fast" );
+        $( "#periodo5" ).fadeOut( "fast" );
+        $( "#periodo1" ).fadeOut( "fast" );
+        $( "#periodo6" ).fadeOut( "fast" );
+        $( "#periodo7" ).fadeOut( "fast" );
     });
     
 </script>

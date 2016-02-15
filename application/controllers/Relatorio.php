@@ -255,21 +255,27 @@ class Relatorio extends MY_Controller {
         $this->pagination->initialize($config);
         $data = array();
         
-        if(!empty($this->input->post("id_horario")))
-            $id_turma = $this->input->post("id_horario");
+        if(!empty($this->input->post("id_turma")))
+            $id_turma = $this->input->post("id_turma");
         else  
             $id_turma = NULL;
        //$id_turma = $this->input->post("id_horario");
        // die(print_r($id_turma));
         //$result = $this->crud->get_alunos_turma($id_turma);
         if(!is_null($id_turma)){
-            $result = $this->crud->get_alunos_turma($id_turma);
+            $result = $this->crud->get_alunos_turma($id_turma)->result();
             //die(print_r($result));  
             $data['aluno'] = $result;  
         } 
-            
+        $data['turma'] = $this->crud->get_all('turma')->result();
         $data['horario'] = $this->crud->get_horario_somente();
         $data['paginacao'] = $this->pagination->create_links();
+       /* if(!is_null($id_turma)){
+            $result = $this->crud->get_alunos_turma($id_turma);
+            echo "<pre>";
+            die(print_r($data));  
+        } */
+                
         $this->template->load('aluno_turma/lista', $data);  
        
     }

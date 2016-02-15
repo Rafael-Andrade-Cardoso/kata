@@ -47,7 +47,11 @@
 				$this->pdf->Cell(25,6,$row['cpf'],1,0,'R');
 				$this->pdf->SetXY(140,$y);
 				$this->pdf->Cell(60,6,$row['observacao'],1,0,'L');
-				$y = $y+6; 		
+				$y = $y+6;
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     } 		
 			}
 		}
 		
@@ -83,7 +87,11 @@
 				$this->pdf->Cell(30,6,$row['cpf'],1,0,'R');
 				$this->pdf->SetXY(140,$y);
 				$this->pdf->Cell(60,6,$row['email'],1,0,'L');
-				$y = $y+6; 		
+				$y = $y+6; 
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     }		
 			}
 		}
 		
@@ -114,7 +122,11 @@
 				
 				$this->pdf->SetXY(145,$y);
 				$this->pdf->Cell(55,6,$row['nome_instrutor']. " " .$row['sobrenome_instrutor'],1,0,'L');
-				$y = $y+6; 		
+				$y = $y+6; 
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     }		
 			}
 		}
 		
@@ -146,7 +158,11 @@
 				$this->pdf->Cell(45,6,$row['max_aluno'],1,0,'R');
 				$this->pdf->SetXY(175,$y);
 				$this->pdf->Cell(25,6,$row['valor_mensalidade'],1,0,'R');
-				$y = $y+6; 		
+				$y = $y+6; 
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     }		
 			}
 		}
 		
@@ -195,7 +211,11 @@
 				$this->pdf->Cell(30,6,data_from_db($row['dt_aula']),1,0,'R');
 				$this->pdf->SetXY(175,$y);
 				$this->pdf->Cell(25,6,$row['nm_arte_marcial'],1,0,'R');
-				$y = $y+6; 		
+				$y = $y+6;
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     } 		
 			}
 		}
 		
@@ -226,13 +246,80 @@
 					$this->pdf->Cell(20,6,"Masculino",1,0,'R');
 				$this->pdf->SetXY(125,$y);
 				$this->pdf->Cell(75,6,$row['graduacao'],1,0,'L');
-				$y = $y+6; 		
+				$y = $y+6;
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     } 		
 			}
 		}	
 		
-		function aulas(){
-		
-		}	
+		function valor_aluno($per_ini, $per_fim){
+            $result = $this->relatorio_model->get_valor_aluno($per_ini, $per_fim);
+            
+            $this->pdf->SetFont('Arial','B',12);// Configurando a fonte
+			$this->pdf->SetXY(10,55);
+			$this->pdf->Cell(70,10,"Aluno",1,1,'C');
+			$this->pdf->SetXY(80,55);// Posicionando as células			
+			$this->pdf->Cell(50,10,"Data de Nascimento",1,1,'C');// Configurando as células
+			$this->pdf->SetXY(130,55);
+			$this->pdf->Cell(20,10,"Sexo",1,1,'C');
+			$this->pdf->SetXY(150,55);
+			$this->pdf->Cell(50,10,utf8_decode("Valor"),1,1,'C');
+            
+            $this->pdf->SetFont('Arial','B',10);// Configurando a fonte
+			$y = 65;
+			foreach($result->result_array() as $row){
+				$this->pdf->SetXY(10,$y);
+				$this->pdf->Cell(70,6,$row['nome']. " ". $row['sobrenome'],1,0,'L');
+				$this->pdf->SetXY(80,$y);
+				$this->pdf->Cell(50,6,data_from_db($row['dt_nascimento']),1,0,'R');//,$fill);
+				$this->pdf->SetXY(130,$y);
+				if($row['sexo'] == 1)
+					$this->pdf->Cell(20,6,"Feminino",1,0,'R');
+				else
+					$this->pdf->Cell(20,6,"Masculino",1,0,'R');
+				$this->pdf->SetXY(150,$y);
+				$this->pdf->Cell(50,6,"R$ ".($row['valor_mensalidade'] - $row['desconto']).",00",1,0,'R');
+				$y = $y+6;
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     }
+            }	
+        }
+        
+        function exame_aluno($per_ini, $per_fim){
+            $result = $this->relatorio_model->get_exame_aluno($per_ini, $per_fim);
+            
+            $this->pdf->SetFont('Arial','B',12);// Configurando a fonte
+			$this->pdf->SetXY(10,55);
+			$this->pdf->Cell(70,10,"Aluno",1,1,'C');
+			$this->pdf->SetXY(80,55);// Posicionando as células			
+			$this->pdf->Cell(30,10,"Data do exame",1,1,'C');// Configurando as células
+			$this->pdf->SetXY(110,55);
+			$this->pdf->Cell(60,10,"local",1,1,'C');
+			$this->pdf->SetXY(170,55);
+			$this->pdf->Cell(30,10,utf8_decode("Valor"),1,1,'C');
+            
+            $this->pdf->SetFont('Arial','B',10);// Configurando a fonte
+			$y = 65;
+			foreach($result->result_array() as $row){
+				$this->pdf->SetXY(10,$y);
+				$this->pdf->Cell(70,6,$row['nome']. " ". $row['sobrenome'],1,0,'L');
+				$this->pdf->SetXY(80,$y);
+				$this->pdf->Cell(30,6,data_from_db($row['dt_exame']),1,0,'R');//,$fill);
+				$this->pdf->SetXY(110,$y);
+                $this->pdf->Cell(60,6,utf8_decode($row['local']),1,0,'R');
+				$this->pdf->SetXY(170,$y);
+				$this->pdf->Cell(30,6,"R$ ".($row['valor']),1,0,'R');
+				$y = $y+6;
+                if (($this->pdf->GetY() + 19) > 267) {
+                    $this->pdf->AddPage();
+                    $y = 35; 		
+			     }
+            }
+        }
 			
 		function gerar_pdf($dados = NULL) {
 			/* Carrega a biblioteca do CodeIgniter responsável pela validação dos formulários */
@@ -290,7 +377,14 @@
                 }else if($this->input->post('dt_inicio_6') != ""){
 				    $per_ini = $this->input->post('dt_inicio_6');			
 				    $per_fim = $this->input->post('dt_fim_6');
+                }else if($this->input->post('dt_inicio_7') != ""){
+				    $per_ini = $this->input->post('dt_inicio_7');			
+				    $per_fim = $this->input->post('dt_fim_7');
+                }else if($this->input->post('dt_inicio_8') != ""){
+				    $per_ini = $this->input->post('dt_inicio_8');			
+				    $per_fim = $this->input->post('dt_fim_8');
                 }
+                
 				//echo $per_fim;
 				//$tp_report = "teste";
 							
@@ -335,9 +429,12 @@
 				else if($tp_report == "Relatório de alunos por graduação."){
 					$this->aluno_grad($per_ini, $per_fim);
 					$nome_report = "Aluno graduação.pdf";
-				}else if($tp_report == "Relatório de aulas."){
-					$this->aulas();
-					$nome_report = "Relatório de aulas.";
+				}else if($tp_report == "Relatório do valor das mensalidades por aluno."){
+					$this->valor_aluno($per_ini, $per_fim);
+					$nome_report = "Relatório de valores.pdf";
+				}else if($tp_report == "Relatório de exames."){
+					$this->exame_aluno($per_ini, $per_fim);
+					$nome_report = "Relatório de exames.pdf";
 				}
 				$this->pdf->Output($nome_report,"D");
 			}
