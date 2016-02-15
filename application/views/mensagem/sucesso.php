@@ -20,7 +20,7 @@
                 $nova_url = $bodytag = str_replace("relatorio/insert_", "listar/", $this->uri->uri_string());
             ?>
             <a href="<?php echo $nova_url; ?>">Listar registros </a>
-            <a href="<?php echo base_url('dashboard'); ?>">Concluído </a>
+            <a href="<?php echo base_url('inicio'); ?>">Concluído </a>
         </div>
     </div>
 </div>

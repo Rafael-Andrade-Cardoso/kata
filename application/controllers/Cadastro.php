@@ -712,6 +712,8 @@ class Cadastro extends MY_Controller {
         //$id_turma = "id_turma";
         
         $info = $this->crud->get_info_turma($id_turma)->result();
+        $qtd_aluno = $this->crud->get_qtd_alunos_turma($id_turma)->row();
+        //die(print_r($qtd_aluno));
        /* echo "<pre>";
         die(print_r($info));*/
         //die(print_r($this->object_to_option($estados, 'id_ta_estado', 'nm_estado')));
@@ -723,7 +725,8 @@ class Cadastro extends MY_Controller {
             $aux = "";
             //$option .= "<option value='" . $each->$value . "'>" . $each->$display . "</option>";
             if ($ultimo_instrutor != $each->nome ." ". $each->sobrenome) {
-                $aux ="<div class='col-lg-11 dias_aula_instrutor'> Instrutor: <b>" . $each->nome ." ". $each->sobrenome . "</b></div>";
+                $aux ="<br /><div class='col-lg-8 dias_aula_instrutor'> Instrutor: <b>" . $each->nome ." ". $each->sobrenome . "</b></div>";
+                $aux .="<div class='col-lg-3 dias_aula_instrutor'>Qtd. Alunos: <b>" . $qtd_aluno->qtd_aluno ."/". $each->max_aluno . "</b></div>";
             }          
             if (isset($each->dia_semana) && $each->dia_semana != $ultimo_dia){  
                 switch($each->dia_semana){

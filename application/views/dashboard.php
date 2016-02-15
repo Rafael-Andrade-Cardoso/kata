@@ -1,21 +1,32 @@
     <h3><i class="fa fa-angle-right"></i> Dashboard</h3><hr />
     <div class="col-md-6 com-sm-10" id="chartContainer">FusionCharts XT will load here!</div>
     <div class="col-md-6 com-sm-10" id="chartContainer1">FusionCharts XT will load here!</div>
-    <?php 
-    /*
-                    $i = 0;
-                    foreach($alunos_turma as $dados) {
-                        $i++;
+    <div class="col-lg-12 col-md-12 col-sm-12 mb">
+        <div class="content-panel pn">
+            <div id="blog-bg">
+                    <div class="blog-title">Tempo para exame</div>
+                </div>
+                    <div class="blog-text">
+                    <?php
+                    foreach($get_alunos_hora_exame as $key => $aluno) {
+                        if ($aluno->qtd_aulas > 1) {
+                        echo "<div class='aluno-exame'>";
+                        echo $aluno->nome . " " . $aluno->sobrenome;
+                        echo $aluno->qtd_aulas;
+                        echo "</div>";          
+                        }          
                     }
-                    die(print_r($i));*/
-        //echo "<pre>";
-        //die(print_r($alunos_graduacao));
-        //Faixas brancas
+                    ?><br />
+                    
+                <a href="<?php echo base_url('cadastro/form_exame'); ?>" class="btn btn-lg btn-primary col-lg-12">Marcar exame</a><br /><br />
+            </div>
+        </div>
+    </div>
+    <?php 
         $faixas_coloridas = 0;
         foreach($alunos_graduacao as $dados) {
             $faixas_coloridas += $dados->qtd_alunos;
         }
-        //die(print_r($faixas_coloridas));
         $faixas_brancas = $qtd_alunos - $faixas_coloridas;
         
     ?>

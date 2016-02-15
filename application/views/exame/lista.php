@@ -10,8 +10,8 @@
                                       <th> Aluno</th>
                                       <th> Graduação</th>
                                       <th> Data exame</th>
-                                      <th class="hidden-sm hidden-xs"> Valor</th>
                                       <th> Local</th>
+                                      <th class="hidden-sm hidden-xs"> Valor</th>
                                       <th class="hidden-sm hidden-xs"> Descrição</th>
                                       <th></th>
                                   </tr>
@@ -22,19 +22,20 @@
                                       $inicio = $this->uri->segment(4);
 
                                       foreach ($exames as $value) {
+                                      //debug($value);
                                   ?>
-                                      <tr id="line<?php echo $value->id_instrutor; ?>">
+                                      <tr id="line<?php echo $value->id_exame; ?>">
                                           <td><a href="basic_table.html#"><?php echo $value->nm_arte_marcial; ?></a></td>
                                           <td><?php echo $value->nome . " " . $value->sobrenome; ?></td>
+                                          <td class="hidden-sm hidden-xs"><?php echo $value->graduacao; ?></td>
                                           <td><?php echo data_from_db($value->dt_exame); ?></td>
-                                          <td class="hidden-sm hidden-xs"><?php echo $value->valor; ?></td>
                                           <td><?php echo $value->local; ?></td>
-                                          <td class="hidden-sm hidden-xs"><?php echo $value->descricao; ?></td>
-                                          <td><span class="label label-info label-mini"><?php echo $value->email; ?></span></td>
+                                          <td class="hidden-sm hidden-xs"><?php echo $value->valor; ?></td>
+                                          <td><span class="label label-info label-mini"><?php echo $value->descricao; ?></span></td>
                                           <td>
-                                              <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                              <a href="<?php echo base_url("menu/form_alterar/" . $value->id_instrutor); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_instrutor;?>','menu/excluir/');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                              <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
+                                              <!--<a href="<?php echo base_url("alteracao/form_exame/" . $value->id_exame); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>-->
+                                              <a type="button" onclick="return deleteReg('<?php echo $value->id_exame;?>','<?=base_url("exclusao/excluir_exame");?>');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
 
                                           </td>
                                       </tr>

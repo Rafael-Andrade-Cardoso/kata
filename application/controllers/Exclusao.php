@@ -87,6 +87,12 @@ class Exclusao extends MY_Controller {
         echo $reg['id'];
         $status = $this->crud->update_ativos('ta_tipo_usuario', 'id_ta_tipo_usuario', $reg['id']);
     }
+    
+    public function excluir_exame() {
+        $reg = $this->input->post();
+        echo $reg['id'];
+        $status = $this->crud->update_ativos('exame', 'id_exame', $reg['id']);
+    }
  
 
 }

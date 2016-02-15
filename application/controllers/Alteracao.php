@@ -1362,6 +1362,94 @@ class Alteracao extends MY_Controller {
         $menus = $this->menu->get_menu();
         return $menus;
     }
+    
+    function form_exame($id_exame = null) {
+        $data = array();
+        $id_exame = $this->uri->segment(3);
+        if($id_exame == NULL){
+            redirect('relatorio/exame');
+        }
+        $exame = $this->crud->get_exame(null, null, $id_exame)->row();
+        debug($exame);
+        $data['arte_marcial'] = $this->get_all('arte_marcial');
+        $data['graduacao'] = $this->get_all('ta_graduacao');
+        $data['aluno'] = $this->crud->get_alunos()->result();
+        $data['turma'] = $this->crud->get_turma_somente()->result();
+        $this->template->load('exame/form_cadastro', $data);
+    }
+
+    function alterar_exame() {
+        foreach ($this->input->post() as $key => $value){
+            if (!is_null($value) && $value != ""){
+                $data[$key] = $value;
+            }
+        }
+        //die(print_r($data['alunos']));
+        //$alunos
+        // die(print_r($data));
+        $validacoes = array(
+            array(
+                'field' => 'id_turma',
+                'label' => 'Arte marcial',
+                'rules' => 'trim|required|max_length[11]'
+            ),
+            array(
+                'field' => 'alunos[]',
+                'label' => 'Alunos',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'dt_exame',
+                'label' => 'Data do exame',
+                'rules' => 'trim|required'
+            ),
+            array(
+                'field' => 'local',
+                'label' => 'Valor',
+                'rules' => 'trim|max_length[255]'
+            )
+        );
+            
+            //unset($data['id_aluno']);
+            /* Configura as validações */
+            $this->form_validation->set_rules($validacoes);
+            /* Executa a validação e caso houver erro chama a função que retorna ao formulário */
+            if ($this->form_validation->run() === TRUE) { 
+                //echo "<pre>";
+                //die(print_r($data)); 
+                foreach($data['alunos'] as $key => $aluno){
+                    $id_matricula = $this->crud->get_matricula_alu($data['alunos'][$key])->result();
+                    $id_matricula = $id_matricula[0]->id_matricula;
+                    //die(print_r($id_matricula));
+                    $id_ta_graduacao = $this->crud->get_proxima_grad($id_matricula);
+                    $exame = array();
+                    $id_arte_marcial = $this->crud->get_arte_marcial_turma($data['id_turma'])->result();
+                    //echo "<pre>";
+                    //die(print_r($id_arte_marcial));
+                    $exame['id_ta_graduacao'] = $id_ta_graduacao;              
+                    $exame['id_arte_marcial'] = $id_arte_marcial[0]->id_arte_marcial;            
+                    $exame['id_matricula'] = $id_matricula;             
+                    $exame['dt_exame'] = $data['dt_exame'];              
+                    $exame['valor'] = $data['valor'];              
+                    $exame['local'] = $data['local'];              
+                    $exame['descricao'] = $data['descricao'];                              
+                    //die(print_r($data['alunos'][$key]));
+                    //array_push($id_matricula, $data);
+                    //die(print_r($exame));        
+                    /* Chama a função de inserção de dados e em caso de sucesso retorna o id inserido */
+                    $id = $this->crud->insert('exame', $exame);
+                    /* Verifica se o retorno da função é um valor numérico e maior que 0 */                                
+                }
+                if (is_numeric($id) && $id > 0){
+                    $this->sucesso();
+                } else {
+                    $this->erro();
+                }
+            /* Em caso de falha: */
+            } else {
+                $this->form_exame();
+            }
+    }   
 
 }
 /*

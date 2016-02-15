@@ -988,7 +988,7 @@ PANELS CONFIGURATIONS
 /*Panel Size*/
 
 .pn {
-	height: 250px;
+	height: auto;
 	box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -1159,7 +1159,7 @@ PANELS CONFIGURATIONS
 	background: #ffffff;
 	box-shadow: 0px 3px 2px #aab2bd;
 	padding-top: 15px;
-	padding-bottom: 5px;
+	padding-bottom: 15px;
 }
 .content-panel h4 {
 	margin-left: 10px;
@@ -1364,7 +1364,7 @@ PANELS CONFIGURATIONS
 
 /* BLOG PANEL */
 #blog-bg {
-	background: url(../img/blog-bg.jpg) no-repeat center top;
+	background: url(../img/blackbelt.png) no-repeat center top;
 	margin-top: -15px;
 	background-attachment: relative;
 	background-position: center center;
@@ -1381,7 +1381,7 @@ PANELS CONFIGURATIONS
 }
 #blog-bg .badge {
 	position: absolute;
-	top: 20px;
+	top: 30px;
 	left: 35px;
 }
 .badge-popular {
@@ -1396,19 +1396,20 @@ PANELS CONFIGURATIONS
 }
 .blog-title {
 	background: rgba(0,0,0,0.5);
-	bottom: 100px;
-	padding: 6px;
+	top: 100px;
+	padding: 10px;
 	color: white;
+    font-size: 15pt;
 	font-weight: 700;
 	position: absolute;
 	display: block;
-	width: 120px;
+	width: 250px;
 }
 .blog-text {
-	margin-left: 8px;
+	margin-left: 15px;
 	margin-right: 8px;
 	margin-top: 15px;
-	font-size: 12px;
+	font-size: 12pt;
 }
 
 /* Calendar Configuration */
@@ -2340,4 +2341,13 @@ a {
 #alunos_exame {
     padding: 10px;
     margin: 0 15px;
+}
+
+.aluno-exame {
+  color: #245269;
+  /*color: #3c763d;*/
+  width: 50%;
+  height: auto;
+  margin-bottom: 5px;
+  display: block;
 }

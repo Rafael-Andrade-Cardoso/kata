@@ -186,6 +186,7 @@ class Relatorio extends MY_Controller {
 
     public function exame($qtd = 'null', $inicio = 'null') {
         $consulta = $this->crud->get_exame();
+        //die('teste');
         $num_rows = $consulta->num_rows();
         $config = $this->config_pagination('relatorio/exame', $num_rows);
 

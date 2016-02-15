@@ -71,7 +71,7 @@ class Crud_model extends CI_Model {
     }
 
     function get_all($table) {
-        return $this->db->get($table);
+        return $this->db->get_where($table, "ativo = 1");
     }
 
     function get_pagination($table, $qtd = 0, $inicio = 0){
@@ -176,11 +176,14 @@ class Crud_model extends CI_Model {
     *   Retorna quantidade de alunos por turma
     *
     */
-    function get_qtd_alunos_turma(){
+    function get_qtd_alunos_turma($id_turma = null){
         //$sql = "selct count(m.id_matricula) from matricula_turma mt
         $this->db->select("count(mt.id_matricula) as qtd_aluno, t.nm_turma, count(*) as n_turmas");
         $this->db->from("matricula_turma mt");
         $this->db->join("turma t", "t.id_turma = mt.id_turma");   
+        if (!is_null($id_turma)) {
+            $this->db->where('t.id_turma', $id_turma);
+        }
         $this->db->group_by("mt.id_turma", "asc");
         $result = $this->db->get();
         
@@ -304,6 +307,7 @@ class Crud_model extends CI_Model {
         $this->db->join('menu_tipo_usuario mtu', 'mtu.id_menu = m.id_menu');
         $this->db->join('ta_tipo_usuario tu', 'tu.id_ta_tipo_usuario = mtu.id_ta_tipo_usuario');
         $this->db->where('m.ativo = 1');
+        $this->db->order_by('m.nome','asc');
         $this->db->order_by('m.ordem','asc');
         $query = $this->db->get();
         if($query->num_rows() > 0) {
@@ -427,6 +431,8 @@ class Crud_model extends CI_Model {
     function get_info_turma($id_turma){
         $query=$this->db->query('
                                 Select * from horario as h
+                                    inner join turma as t
+                                        on t.id_turma = h.id_turma
                                     inner join instrutor as i
                                         ON(h.id_instrutor = i.id_instrutor)
                                     inner join pessoa_fisica pf 
@@ -542,7 +548,7 @@ class Crud_model extends CI_Model {
         }
     }
 
-    function get_exame($qtd = 0, $inicio = 0) {
+    function get_exame($qtd = 0, $inicio = 0, $id_exame = null) {
         $this->db->select('e.*, am.nm_arte_marcial, p.nome, pf.sobrenome, tg.graduacao');
         $this->db->from('exame e');
         $this->db->join('arte_marcial am', 'am.id_arte_marcial = e.id_arte_marcial', 'left');
@@ -551,9 +557,13 @@ class Crud_model extends CI_Model {
         $this->db->join('aluno a', 'a.id_pessoa_fisica = m.id_pessoa_fisica', 'left');
         $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = a.id_pessoa_fisica', 'left');
         $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica', 'left');
-        $this->db->order_by('dt_exame','asc');
+        $this->db->where('e.ativo', 1);
+        if(!is_null($id_exame)) {
+            $this->db->where('e.id_exame', $id_exame);
+        }
+        $this->db->order_by('dt_exame','desc');
         $query = $this->db->get();
-        debug($query->result());
+        //debug($query->result());
         if($query->num_rows() > 0) {
             return $query;
         }
@@ -684,6 +694,7 @@ class Crud_model extends CI_Model {
                                         inner join turma as t
                                             ON(h.id_turma = t.id_turma)
                                        WHERE a.ativo = 1
+                                       ORDER BY a.dt_aula desc
                                        ;
                                     ');
         }
@@ -725,6 +736,22 @@ class Crud_model extends CI_Model {
         $this->db->where("id_ta_tipo_usuario =", $id_tipo_usuario);
         $return = $this->db->get();
         return $return;
+    }
+    
+    function get_alunos_hora_exame() {
+        $this->db->select('*, count(pr.id_aula) as qtd_aulas');
+        $this->db->from('matricula m');
+        $this->db->join('presenca pr', 'pr.id_matricula = m.id_matricula');
+        $this->db->join('aluno al', 'al.id_aluno = m.id_aluno');
+        $this->db->join('pessoa_fisica pf', 'pf.id_pessoa_fisica = al.id_pessoa_fisica');
+        $this->db->join('pessoa p', 'p.id_pessoa = pf.id_pessoa_fisica');
+        $this->db->group_by('m.id_matricula');
+        $this->db->order_by('qtd_aulas');
+        $this->db->where('m.ativo', 1);
+        $this->db->where('al.ativo', 1);
+        $return = $this->db->get();
+        return $return;
+        
     }
 }
 /*
