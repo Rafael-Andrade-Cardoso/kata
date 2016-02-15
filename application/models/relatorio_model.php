@@ -198,6 +198,46 @@
 			return $query;
 		}
 		
+        public function get_valor_aluno($per_ini, $per_fim){
+            $query = $this->db->query('SELECT * from aluno as a										
+                                        inner join pessoa_fisica as pf 
+												ON (a.id_pessoa_fisica = pf.id_pessoa_fisica)
+										inner join pessoa as p 
+											ON (pf.id_pessoa_fisica = p.id_pessoa)										
+										inner join matricula as m
+											ON (m.id_aluno = a.id_aluno)
+                                        inner join matricula_turma as mt
+                                            ON(mt.id_matricula = m.id_matricula)
+                                        inner join turma t
+                                            ON(mt.id_turma - t.id_turma)
+                                        WHERE m.dt_matricula <= "'.  $per_fim . '"
+                                        AND m.dt_matricula >= "'.  $per_ini . '"
+                                        And a.ativo = 1
+                                        group by p.nome
+                                        order by p.nome;
+                                        ');
+            return $query;
+        }
+        
+        public function get_exame_aluno($per_ini, $per_fim){
+            $query = $this->db->query('Select * from aluno a
+                                        inner join pessoa_fisica pf
+                                            ON(a.id_pessoa_fisica = pf.id_pessoa_fisica)
+                                        inner join pessoa p
+                                            ON(pf.id_pessoa_fisica = p.id_pessoa)
+                                        inner join matricula m
+                                            on(m.id_aluno = a.id_aluno)
+                                        inner join exame e
+                                            ON(e.id_matricula = m.id_matricula)
+                                        WHERE m.dt_matricula <= "'.  $per_fim . '"
+                                        AND m.dt_matricula >= "'.  $per_ini . '"
+                                        And a.ativo = 1
+                                        group by p.nome
+                                        order by p.nome;
+                                    ');
+             return $query;
+        }
+        
 		public function recebe(){
 			$query=$this->db->query('SELECT * FROM pessoa');
 			$data = (array) $query->result();
