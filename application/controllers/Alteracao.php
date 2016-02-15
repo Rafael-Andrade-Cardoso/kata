@@ -134,7 +134,7 @@ class Alteracao extends MY_Controller {
         $query = $this->crud->get_turma($id_turma);
         /*echo "<pre>";
         die(print_r($query->result())); */
-        if($query->num_rows() > 1){
+        if($query->num_rows() >= 1){
             for($i=0;$i<$query->num_rows();$i++){
                 $data['query'.$i] = $query->row($i);
             }
