@@ -566,7 +566,7 @@ class Crud_model extends CI_Model {
         $this->db->select('count(mat.id_matricula) as qtd, tg.graduacao, tg.id_ta_graduacao');
         $this->db->from('matricula mat');
         $this->db->join('matricula_graduacao mg', 'mg.id_matricula = mat.id_matricula');
-        $this->db->join('ta_graduacao tg', 'tg.id_ta_graduacao = mg.id_ta_graduacao');
+        $this->db->join('ta_graduacao tg', 'tg.id_ta_graduacao = mg.id_ta_graduacao', 'inner');
         $this->db->group_by('tg.id_ta_graduacao');
         $query = $this->db->get();
         if($query->num_rows() > 0) {

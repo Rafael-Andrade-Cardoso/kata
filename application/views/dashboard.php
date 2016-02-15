@@ -1,14 +1,23 @@
     <h3><i class="fa fa-angle-right"></i> Dashboard</h3><hr />
     <div class="col-md-6 com-sm-10" id="chartContainer">FusionCharts XT will load here!</div>
     <div class="col-md-6 com-sm-10" id="chartContainer1">FusionCharts XT will load here!</div>
-    <?php /*
+    <?php 
+    /*
                     $i = 0;
                     foreach($alunos_turma as $dados) {
                         $i++;
                     }
                     die(print_r($i));*/
         //echo "<pre>";
-        //die(print_r($alunos_turma));
+        //die(print_r($alunos_graduacao));
+        //Faixas brancas
+        $faixas_coloridas = 0;
+        foreach($alunos_graduacao as $dados) {
+            $faixas_coloridas += $dados->qtd_alunos;
+        }
+        //die(print_r($faixas_coloridas));
+        $faixas_brancas = $qtd_alunos - $faixas_coloridas;
+        
     ?>
     <script type="text/javascript">
     
@@ -70,7 +79,13 @@
             "data": [
                 <?php
                 $i = 0;
+                    echo '
+                        {
+                        "label": "' . "Faixa Branca" . '",
+                        "value": "' . $faixas_brancas . '"
+                        },';
                     foreach($alunos_graduacao as $dados) {
+                        
                         echo '
                         {
                         "label": "' . $dados->graduacao . '",

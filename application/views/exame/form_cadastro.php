@@ -13,7 +13,6 @@
                     }
                 ?>
 
-                   <!--
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Arte marcial</label>
                     <div class="col-sm-10">
@@ -32,7 +31,6 @@
                         <div class="error"><?php echo form_error('id_arte_marcial'); ?></div>
                     </div>
                 </div>
-                -->
                 
                 <div class="form-group">
                     <label class="col-sm-2 col-sm-2 control-label">Turma<span class="obrigatorio"> *</span></label>

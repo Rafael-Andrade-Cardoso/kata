@@ -12,6 +12,7 @@ class Inicio extends MY_Controller {
 		$data = array();
         $data['alunos_turma'] = $this->crud->get_qtd_alunos_turma()->result();
 		$data['alunos_graduacao'] = $this->crud->get_alunos_graduacao()->result();	
+		$data['qtd_alunos'] = $this->crud->get_alunos()->num_rows();
 		$this->template->load('dashboard', $data);
 	}
 	
