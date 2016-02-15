@@ -14,112 +14,45 @@
                     </div>  
                     <div class="error"><?php echo form_error('nm_turma'); ?></div>
                 </div> 
-                <!-- Primeira aula -->
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Dia da Semana<font color="#FF0202">*</font></label></label>
-                        <font color="#00CC00"><span class="glyphicon glyphicon-plus" id="toggle_plus" aria-hidden="true"></span></font>                                   
-                    <div class="col-sm-4">
-                        <select name="dia_semana" class="form-control" title="Selecione um tipo sanguíneo">
-                            <option value="">Escolha um dia da semana</option>
-                            <option value="0">Domingo</option>
-                            <option value="1">Segunda-feira</option>
-                            <option value="2">Terça-feira</option>
-                            <option value="3">Quarta-feira</option>
-                            <option value="4">Quinta-feira</option>
-                            <option value="5">Sexta-feira</option>
-                            <option value="6">Sábado</option>                              
-                        </select>                        
-                    <div class="error"><?php echo form_error('dia_semana'); ?></div>
-                    </div>
-                </div>                    
-                        
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Horario de início<font color="#FF0202">*</font></label></label>
-                    <div class="col-sm-2" class="form-control">
-                        <input type="time" class="form-control" name="hr_inicio" id="hr_inicio">
-                    </div>  
-                    <div class="error"><?php echo form_error('hr_inicio'); ?></div>                  
-                </div>
+                <div id="horarios">
+                    <div id="dia_semana">        
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Dia da Semana</label>
+                                <font color="#00CC00"><span class="glyphicon glyphicon-plus" onclick="duplicarCampos()" id="toggle_plus" aria-hidden="true"></span></font>
+                                <!--<font color="#00CC00"><span class="glyphicon glyphicon-minus" onclick="removerCampos()" id="toggle_minus" aria-hidden="true"></span></font>-->                                   
+                            <div class="col-sm-4">
+                                <select name="dia_semana[]" class="form-control" title="Selecione um dia">
+                                    <?php
+                                            echo "<option value='-1'>Escolha um dia da semana</option>";
+                                            echo "<option value='0'>Domingo</option>";
+                                            echo "<option value='1'>Segunda-feira</option>";
+                                            echo "<option value='2'>Terça-feira</option>";
+                                            echo "<option value='3'>Quarta-feira</option>";
+                                            echo "<option value='4'>Quinta-feira</option>";
+                                            echo "<option value='5'>Sexta-feira</option>";
+                                            echo "<option value='6'>Sábado</option>";
+                                    ?>                           
+                                </select>                                    
+                                <div class="error"><?php echo form_error('dia_semana[]'); ?></div>
+                            </div>                  
+                        </div>
                             
-                <div class="form-group">
-                    <label class="col-sm-2 col-sm-2 control-label">Horario de termino<font color="#FF0202">*</font></label></label>
-                    <div class="col-sm-2" class="form-control">
-                        <input type="time"  class="form-control" name="hr_termino" id="hr_termino">
-                    </div>
-                    <div class="error"><?php echo form_error('hr_termino'); ?></div>
-                </div>
-                                          
-                <!-- Segunda aula -->    
-                <div id="dia_semana_2">        
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Dia da Semana</label>
-                            <font color="#00CC00"><span class="glyphicon glyphicon-plus" id="toggle_plus_2" aria-hidden="true"></span></font>
-                            <font color="#00CC00"><span class="glyphicon glyphicon-minus" id="toggle_minus" aria-hidden="true"></span></font>                                   
-                        <div class="col-sm-4">
-                            <select name="dia_semana_2" class="form-control" title="Selecione um tipo sanguíneo">
-                                <option value="">Escolha um dia da semana</option>
-                                <option value="0">Domingo</option>
-                                <option value="1">Segunda-feira</option>
-                                <option value="2">Terça-feira</option>
-                                <option value="3">Quarta-feira</option>
-                                <option value="4">Quinta-feira</option>
-                                <option value="5">Sexta-feira</option>
-                                <option value="6">Sábado</option>                              
-                            </select>                                    
-                            <div class="error"><?php echo form_error('dia_semana_2'); ?></div>
-                        </div>                  
-                    </div>
-                        
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Horario de início</label>
-                        <div class="col-sm-2" class="form-control">
-                            <input type="time" class="form-control" name="hr_inicio_2" id="hr_inicio_2">
-                        </div>  
-                        <div class="error"><?php echo form_error('hr_inicio_2'); ?></div>                  
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Horario de termino</label>
-                        <div class="col-sm-2" class="form-control">
-                            <input type="time"  class="form-control" name="hr_termino_2" id="hr_termino_2">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Horario de início</label>
+                            <div class="col-sm-2" class="form-control">
+                                <input type="time" class="form-control" name="hr_inicio[]" id="hr_inicio[]" >
+                            </div>  
+                            <div class="error"><?php echo form_error('hr_inicio'); ?></div>                  
                         </div>
-                        <div class="error"><?php echo form_error('hr_termino_2'); ?></div>
-                    </div>                 
-                        
-                </div>
-                <!-- Terceira aula -->    
-                <div id="dia_semana_3">        
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Dia da Semana</label>
-                            <font color="#00CC00"><span class="glyphicon glyphicon-minus" id="toggle_minus_2" aria-hidden="true"></span></font>                                   
-                        <div class="col-sm-4">
-                            <select name="dia_semana_3" class="form-control" title="Selecione um tipo sanguíneo">
-                                <option value="">Escolha um dia da semana</option>
-                                <option value="0">Domingo</option>
-                                <option value="1">Segunda-feira</option>
-                                <option value="2">Terça-feira</option>
-                                <option value="3">Quarta-feira</option>
-                                <option value="4">Quinta-feira</option>
-                                <option value="5">Sexta-feira</option>
-                                <option value="6">Sábado</option>                              
-                            </select>                                    
-                            <div class="error"><?php echo form_error('dia_semana_3'); ?></div>
-                        </div>                  
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Horario de termino</label>
+                            <div class="col-sm-2" class="form-control">
+                                <input type="time"  class="form-control" name="hr_termino[]" id="hr_termino[]" >
+                            </div>
+                            <div class="error"><?php echo form_error('hr_termino'); ?></div>
+                        </div>                 
+                            
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Horario de início</label>
-                        <div class="col-sm-2" class="form-control">
-                            <input type="time" class="form-control" name="hr_inicio_3" id="hr_inicio_3">
-                        </div>  
-                        <div class="error"><?php echo form_error('hr_inicio_3'); ?></div>                  
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">Horario de termino</label>
-                        <div class="col-sm-2" class="form-control">
-                            <input type="time"  class="form-control" name="hr_termino_3" id="hr_termino_3">
-                        </div>
-                        <div class="error"><?php echo form_error('hr_termino_3'); ?></div>
-                    </div> 
                 </div>
             </div>
         </div>
@@ -199,6 +132,26 @@
 
 <script type="text/javascript">
 
+   function duplicarCampos(){
+        var clone = document.getElementById('dia_semana').cloneNode(true);
+        var destino = document.getElementById('horarios');
+        destino.appendChild (clone);
+        var camposClonados = clone.getElementsByTagName('input');
+        for(i=0; i<camposClonados.length;i++){
+            camposClonados[i].value = '';
+        }
+    }
+    function removerCampos(id){
+        var node1 = document.getElementById('destino');
+        node1.removeChild(node1.childNodes[0]);
+    }
+    /*
+    Children.remove = function(i) {
+        while (i--) {
+            Children.container.find('label:last').remove();
+        }
+    }
+    */
         $(document).ready(function(){             
             $('#valor_mensalidade').mask("###,##", {reverse: true});
             $("#max_aluno").mask("99", {selectOnFocus: true});    
@@ -255,11 +208,11 @@
         });
 
         $("#hr_inicio").blur(function(){
-            var data_1 = document.getElementById("hr_inicio").value;
-            var data_2 = document.getElementById("hr_termino").value;
-            if(data_1 != "" && data_2 !=""){            
-                if ((data_1 > data_2)) {
-                    alert("Hora de início da aula deve ser menor que a final");
+            var inicio = document.getElementById("hr_inicio").value;
+            var termino = document.getElementById("hr_termino").value;
+            if(inicio != "" && termino !=""){            
+                if ((inicio > termino)) {
+                    alert("Hora de início ("+inicio+") da aula deve ser menor que a final ("+termino+")");
                     $("#hr_inicio").focus();
                     return false;    
                 }  
@@ -267,12 +220,12 @@
         });
         
         $("#hr_termino").blur(function(){
-            var data_1 = document.getElementById("hr_inicio").value;
-            var data_2 = document.getElementById("hr_termino").value;
-            if(data_2 != ""){
-                if(data_1 != ""){
-                    if ((data_1 > data_2)) {
-                        alert("Hora de início da aula deve ser menor que a final");
+            var inicio = document.getElementById("hr_inicio").value;
+            var termino = document.getElementById("hr_termino").value;
+            if(termino != ""){
+                if(inicio != ""){
+                    if ((inicio > termino)) {
+                    alert("Hora de início ("+inicio+") da aula deve ser menor que a final ("+termino+")");
                         $("#hr_inicio").focus();
                         return false;    
                     }    

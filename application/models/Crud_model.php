@@ -61,9 +61,9 @@ class Crud_model extends CI_Model {
         }
     }*/
 
-    function delete($id) {
-        $this->db->where('id_aluno', $id);
-        return $this->db->delete('aluno');
+    function delete($tabela, $campo, $id) {
+        $this->db->where($campo, $id);
+        return $this->db->delete($tabela);
     }
 
     function full_menu_list(){
@@ -356,12 +356,21 @@ class Crud_model extends CI_Model {
         }
     }
     
-    function get_turma_somente(){
-        $query = $this->db->query('Select * from turma where ativo = 1 order by nm_turma;');
+    function get_turma_somente($id_turma = null){
+        $this->db->select('*');
+        $this->db->from('turma');
+        $this->db->where('ativo', 1);
+        if(!is_null($id_turma)) {
+            $this->db->where('id_turma', $id_turma);
+        }
+        $this->db->order_by('nm_turma', 'asc');
+        $return = $this->db->get();
+        
+        //$query = $this->db->query('Select * from turma where ativo = 1 order by nm_turma;');
         //$query = $this->db->query('Select id_turma from turma Where turma.id_horario = '.$id_horario.';');
                                   //die(print_r($query->result()));
         //return $query->result();
-        return $query;
+        return $return;
     }
     
     function get_turma_instrutor(){
@@ -383,16 +392,20 @@ class Crud_model extends CI_Model {
     }
 
     function get_turma($id_turma) {
-        $query = $this->db->query(' Select h.*, t.*, i.*, pf.*, p.* from turma as t
+        $query = $this->db->query(' Select a.*, h.*, t.*, i.*, pf.*, p.* from turma as t
                                         left join horario as h
                                             ON(t.id_turma = h.id_turma)
+                                        left join aula as a
+                                            ON(a.id_horario = h.id_horario)
                                         left join instrutor as i
                                             ON(h.id_instrutor = i.id_instrutor)
                                         left join pessoa_fisica pf 
                                             ON(i.id_pessoa_fisica = pf.id_pessoa_fisica) 	
                                         left join pessoa as p 
                                             ON(p.id_pessoa = pf.id_pessoa_fisica)
-                                        Where t.id_turma = '.$id_turma.';
+                                        Where t.id_turma = 8
+                                        and t.ativo = 1
+                                        group by t.id_turma;
                                     ');
         if($query->num_rows() > 0) {
             return $query;
@@ -401,6 +414,15 @@ class Crud_model extends CI_Model {
             return false;
         }
     }
+    
+    function get_horarios_turma($id_turma) {
+        $this->db->select('*');
+        $this->db->from('horario');
+        $this->db->where('id_turma', $id_turma);
+        $return = $this->db->get();
+        return $return;        
+    }
+    
     
     function get_info_turma($id_turma){
         $query=$this->db->query('
