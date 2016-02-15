@@ -129,14 +129,6 @@ class Alteracao extends MY_Controller {
         $i=0;
         $data['arte_marcial'] = $this->crud->get_all('arte_marcial')->result();
         $data['instrutor'] = $this->crud->get_instrutores()->result();
-<<<<<<< HEAD
-       // $data['query'] = $this->crud->get_turma($id_turma)->result();
-        
-        $query = $this->crud->get_turma($id_turma);
-        /*echo "<pre>";
-        die(print_r($query->result())); */
-        if($query->num_rows() >= 1){
-=======
        // $data['query'] = $this->crud->get_turma($id_turma)->result();        
         $turma = $this->crud->get_turma_somente($id_turma)->row();
         $horarios = $this->crud->get_horarios_turma($id_turma)->result();
@@ -144,7 +136,6 @@ class Alteracao extends MY_Controller {
         //die(print_r($turma));
         /*
         if($query->num_rows() > 0){
->>>>>>> 82eff9ccf27536deb9316bd7126372fd1926ee47
             for($i=0;$i<$query->num_rows();$i++){
                 $data['horarios']['query'.$i] = $query->row($i);
             }
